@@ -8,25 +8,22 @@ import {BrowserRouter, Route} from "react-router-dom";
 import Music from "./components/Music/Music";
 import News from "./components/News/News";
 import Settings from "./components/Settings/Settings";
-import {showTextInTextArea, StatePropsType} from "./redux/state";
+import {StoreType} from "./redux/state";
 
 type AppStatePropsType = {
-    state: StatePropsType
-    addMessage: (message:string)=>void
-    addPost: ()=>void
-    showTextInTextArea: showTextInTextArea
+    store: StoreType
 }
 
-function App(props: AppStatePropsType) {
+const App: React.FC<AppStatePropsType>= (props)=> {
     return (
         <div className="app-wrapper">
             <Header/>
             <Navbar/>
             <div className="app-wrapper-content">
-                <Route path='/dialogs' render={() => <Dialogs state={props.state.dialogsPage} addMessage={props.addMessage}/>}/>
+                <Route path='/dialogs' render={() => <Dialogs state={props.store.getState.bind(props.store)().dialogsPage} addMessage={props.store.addMessage.bind(props.store)}/>}/>
 
 
-                <Route path='/profile' render={() => <Profile postsState={props.state.profilePage} addPost={props.addPost} showTextInTextArea={props.showTextInTextArea} />}/>
+                <Route path='/profile' render={() => <Profile postsState={props.store.getState.bind(props.store)().profilePage} addPost={props.store.addPost.bind(props.store)} showTextInTextArea={props.store.showTextInTextArea.bind(props.store)} />}/>
 
 
 

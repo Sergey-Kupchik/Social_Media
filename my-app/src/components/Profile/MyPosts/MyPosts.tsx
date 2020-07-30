@@ -1,13 +1,13 @@
 import React, {ChangeEvent} from "react";
 import styles from './MyPosts.module.css';
 import Post, {PostType} from "./Post/Post";
-import {addPostType, showTextInTextArea} from "../../../redux/state";
+
 
 type MyPostsPropsType = {
     postsState: Array<PostType>
-    addPost: addPostType
+    addPost: () => void
     textAreaState: string
-    showTextInTextArea: showTextInTextArea
+    showTextInTextArea: (text: string) => void
 
 }
 
