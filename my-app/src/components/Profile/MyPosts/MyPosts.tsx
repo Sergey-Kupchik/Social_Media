@@ -1,7 +1,7 @@
 import React, {ChangeEvent, KeyboardEvent} from "react";
 import styles from './MyPosts.module.css';
 import Post, {PostType} from "./Post/Post";
-import {DispatchType} from "../../../redux/state";
+import {AddPostAC, DispatchType, ShowTextInTextareaAC} from "../../../redux/state";
 
 
 type MyPostsPropsType = {
@@ -15,18 +15,11 @@ const MyPosts: React.FC<MyPostsPropsType> = (props) => {
     let newPostElement = React.createRef<HTMLTextAreaElement>();
 
     const publishNewPost = () => {
-        let action = {
-            type: "ADD-POST"
-        }
-        props.dispatch(action)
+        props.dispatch(AddPostAC())
     }
 
     const onChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        let action = {
-            type: "SHOW-TEXT-IN-TEXTAREA",
-            text: e.currentTarget.value
-        }
-        props.dispatch(action);
+        props.dispatch(ShowTextInTextareaAC(e.currentTarget.value));
     }
 
     const onKeyPress=(e:KeyboardEvent<HTMLTextAreaElement>)=>{

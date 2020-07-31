@@ -2,26 +2,35 @@ import {DialogsPagePropsType} from "../components/Dialogs/Dialogs";
 import {PostsStatePropsType} from "../components/Profile/Profile";
 import {v1} from "uuid";
 
+
+export const AddPostAC = () =>({type: "ADD-POST"} as const);
+export const ShowTextInTextareaAC = (NewText: string) => ({
+    type: "SHOW-POST-IN-TEXTAREA",
+    text: NewText
+} as const);
+export const SendMessageOrderAC = (Newmessage: string) => ({
+    type: "SEND-MESSAGE",
+    message: Newmessage
+} as const);
+export const ShowMessageInTextareaAC = (newText: string) => ({
+    type: "SHOW-MESSAGE-IN-TEXTAREA",
+    newText: newText
+}as const);
+
+
 export type StatePropsType = {
     dialogsPage: DialogsPagePropsType
     profilePage: PostsStatePropsType
 }
 
-export type DispatchType = (action:ActionsTypes)=>void
+export type DispatchType = (action: ActionsTypes) => void
 
-type AddPostActionType={
-    type:"ADD-POST"
-}
-type ShowTextInTextAreaActionType={
-    type:"SHOW-TEXT-IN-TEXTAREA"
-    text: string
-}
-type SendMessageActionType={
-    type:"SEND-MESSAGE"
-    message: string
-}
 
-export type ActionsTypes = AddPostActionType | ShowTextInTextAreaActionType | SendMessageActionType
+export type ActionsTypes =
+    ReturnType<typeof AddPostAC>
+    | ReturnType<typeof ShowTextInTextareaAC>
+    | ReturnType<typeof SendMessageOrderAC>
+    | ReturnType<typeof ShowMessageInTextareaAC>
 
 
 export type StoreType = {
@@ -51,6 +60,7 @@ const store: StoreType = {
                 {id: v1(), message: "How should I know?"},
                 {id: v1(), message: "How should I know?"}
             ],
+            newMessageInTextArea: ""
         },
         profilePage: {
             posts: [
@@ -68,21 +78,24 @@ const store: StoreType = {
     _rerenderEntireTree() {
         console.log("state changed");
     },
-    getState (){
+    getState() {
         return this._state
     },
-    dispatch (action){
-        if (action.type ==="ADD-POST"){
+    dispatch(action) {
+        if (action.type === "ADD-POST") {
             let newPost = {id: v1(), message: this._state.profilePage.newPostInTextArea, likesCount: 0}
             this._state.profilePage.posts.unshift(newPost);
             this._state.profilePage.newPostInTextArea = "";
             this._rerenderEntireTree();
-        } else if (action.type ==="SHOW-TEXT-IN-TEXTAREA"){
+        } else if (action.type === "SHOW-POST-IN-TEXTAREA") {
             this._state.profilePage.newPostInTextArea = action.text;
             this._rerenderEntireTree();
-        } else if (action.type ==="SEND-MESSAGE") {
+        } else if (action.type === "SEND-MESSAGE") {
             let newMessage = {id: v1(), message: action.message};
             this._state.dialogsPage.messages.push(newMessage);
+            this._rerenderEntireTree();
+        } else if (action.type === "SHOW-MESSAGE-IN-TEXTAREA") {
+            this._state.dialogsPage.newMessageInTextArea = action.newText;
             this._rerenderEntireTree();
         }
     }
