@@ -7,17 +7,17 @@ export type StatePropsType = {
     profilePage: PostsStatePropsType
 }
 
-export type DispatchType = (action:any)=>void
+export type DispatchType = (action:ActionsTypes)=>void
 
 type AddPostActionType={
-    type: "ADD-POST"
+    type:"ADD-POST"
 }
 type ShowTextInTextAreaActionType={
-    type: "SHOW-TEXT-IN-TEXTAREA"
+    type:"SHOW-TEXT-IN-TEXTAREA"
     text: string
 }
 type SendMessageActionType={
-    type: "SEND-MESSAGE"
+    type:"SEND-MESSAGE"
     message: string
 }
 
