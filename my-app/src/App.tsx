@@ -20,12 +20,10 @@ const App: React.FC<AppStatePropsType>= (props)=> {
             <Header/>
             <Navbar/>
             <div className="app-wrapper-content">
-                <Route path='/dialogs' render={() => <Dialogs state={props.store.getState.bind(props.store)().dialogsPage} addMessage={props.store.addMessage.bind(props.store)}/>}/>
+                <Route path='/dialogs' render={() => <Dialogs stateForDialogsPage={props.store.getState.bind(props.store)().dialogsPage} dispatch={props.store.dispatch.bind(props.store)}/>}/>
 
 
-                <Route path='/profile' render={() => <Profile postsState={props.store.getState.bind(props.store)().profilePage} addPost={props.store.addPost.bind(props.store)} showTextInTextArea={props.store.showTextInTextArea.bind(props.store)} />}/>
-
-
+                <Route path='/profile' render={() => <Profile postsState={props.store.getState.bind(props.store)().profilePage} dispatch={props.store.dispatch.bind(props.store)}/>}/>
 
                 <Route path='/music' component={Music}/>
                 <Route path='/news' component={News}/>
