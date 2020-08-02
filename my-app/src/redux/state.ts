@@ -3,7 +3,7 @@ import {PostsStatePropsType} from "../components/Profile/Profile";
 import {v1} from "uuid";
 
 
-export const AddPostAC = () =>({type: "ADD-POST"} as const);
+export const AddPostAC = () => ({type: "ADD-POST"} as const);
 export const ShowTextInTextareaAC = (NewText: string) => ({
     type: "SHOW-POST-IN-TEXTAREA",
     text: NewText
@@ -15,7 +15,7 @@ export const SendMessageOrderAC = (Newmessage: string) => ({
 export const ShowMessageInTextareaAC = (newText: string) => ({
     type: "SHOW-MESSAGE-IN-TEXTAREA",
     newText: newText
-}as const);
+} as const);
 
 
 export type StatePropsType = {
@@ -82,21 +82,29 @@ const store: StoreType = {
         return this._state
     },
     dispatch(action) {
-        if (action.type === "ADD-POST") {
-            let newPost = {id: v1(), message: this._state.profilePage.newPostInTextArea, likesCount: 0}
-            this._state.profilePage.posts.unshift(newPost);
-            this._state.profilePage.newPostInTextArea = "";
-            this._rerenderEntireTree();
-        } else if (action.type === "SHOW-POST-IN-TEXTAREA") {
-            this._state.profilePage.newPostInTextArea = action.text;
-            this._rerenderEntireTree();
-        } else if (action.type === "SEND-MESSAGE") {
-            let newMessage = {id: v1(), message: action.message};
-            this._state.dialogsPage.messages.push(newMessage);
-            this._rerenderEntireTree();
-        } else if (action.type === "SHOW-MESSAGE-IN-TEXTAREA") {
-            this._state.dialogsPage.newMessageInTextArea = action.newText;
-            this._rerenderEntireTree();
+
+        switch (action.type) {
+            case "ADD-POST":
+                let newPost = {id: v1(), message: this._state.profilePage.newPostInTextArea, likesCount: 0}
+                this._state.profilePage.posts.unshift(newPost);
+                this._state.profilePage.newPostInTextArea = "";
+                this._rerenderEntireTree();
+                break;
+            case "SHOW-POST-IN-TEXTAREA":
+                this._state.profilePage.newPostInTextArea = action.text;
+                this._rerenderEntireTree();
+                break;
+            case "SEND-MESSAGE":
+                let newMessage = {id: v1(), message: action.message};
+                this._state.dialogsPage.messages.push(newMessage);
+                this._rerenderEntireTree();
+                break;
+            case "SHOW-MESSAGE-IN-TEXTAREA":
+                this._state.dialogsPage.newMessageInTextArea = action.newText;
+                this._rerenderEntireTree();
+                break;
+            default:
+                throw new Error("Wrong type of action")
         }
     }
 }

@@ -23,7 +23,6 @@ const MyPosts: React.FC<MyPostsPropsType> = (props) => {
     }
 
     const onKeyPress=(e:KeyboardEvent<HTMLTextAreaElement>)=>{
-        debugger
         if (e.key==="Enter"){
             publishNewPost();
         }
