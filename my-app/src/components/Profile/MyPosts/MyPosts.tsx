@@ -1,7 +1,8 @@
 import React, {ChangeEvent, KeyboardEvent} from "react";
 import styles from './MyPosts.module.css';
 import Post, {PostType} from "./Post/Post";
-import {AddPostAC, DispatchType, ShowTextInTextareaAC} from "../../../redux/state";
+import {DispatchType} from "../../../redux/state";
+import {AddPostAC, ShowTextInTextareaAC} from "../../../redux/profileReducer";
 
 
 type MyPostsPropsType = {

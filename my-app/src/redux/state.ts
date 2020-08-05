@@ -1,26 +1,15 @@
 import {DialogsPagePropsType} from "../components/Dialogs/Dialogs";
 import {PostsStatePropsType} from "../components/Profile/Profile";
 import {v1} from "uuid";
+import {AddPostAC, profileReducer, ShowTextInTextareaAC} from "./profileReducer";
+import {dilogsReducer, ShowMessageInTextareaAC, SendMessageOrderAC} from "./dialogsReducer";
 
 
-export const AddPostAC = () => ({type: "ADD-POST"} as const);
-export const ShowTextInTextareaAC = (NewText: string) => ({
-    type: "SHOW-POST-IN-TEXTAREA",
-    text: NewText
-} as const);
-export const SendMessageOrderAC = (Newmessage: string) => ({
-    type: "SEND-MESSAGE",
-    message: Newmessage
-} as const);
-export const ShowMessageInTextareaAC = (newText: string) => ({
-    type: "SHOW-MESSAGE-IN-TEXTAREA",
-    newText: newText
-} as const);
 
-
-export type StatePropsType = {
+export type StateType = {
     dialogsPage: DialogsPagePropsType
     profilePage: PostsStatePropsType
+    sidebar: {}
 }
 
 export type DispatchType = (action: ActionsTypes) => void
@@ -34,10 +23,10 @@ export type ActionsTypes =
 
 
 export type StoreType = {
-    _state: StatePropsType
+    _state: StateType
     subscriber: (callback: () => void) => void
     _rerenderEntireTree: () => void
-    getState: () => StatePropsType
+    getState: () => StateType
     dispatch: DispatchType
 }
 
@@ -70,7 +59,8 @@ const store: StoreType = {
                 {id: v1(), message: "Or not", likesCount: 2}
             ],
             newPostInTextArea: ""
-        }
+        },
+        sidebar: {}
     },
     subscriber(callback: () => void) {
         this._rerenderEntireTree = callback
@@ -83,29 +73,9 @@ const store: StoreType = {
     },
     dispatch(action) {
 
-        switch (action.type) {
-            case "ADD-POST":
-                let newPost = {id: v1(), message: this._state.profilePage.newPostInTextArea, likesCount: 0}
-                this._state.profilePage.posts.unshift(newPost);
-                this._state.profilePage.newPostInTextArea = "";
-                this._rerenderEntireTree();
-                break;
-            case "SHOW-POST-IN-TEXTAREA":
-                this._state.profilePage.newPostInTextArea = action.text;
-                this._rerenderEntireTree();
-                break;
-            case "SEND-MESSAGE":
-                let newMessage = {id: v1(), message: action.message};
-                this._state.dialogsPage.messages.push(newMessage);
-                this._rerenderEntireTree();
-                break;
-            case "SHOW-MESSAGE-IN-TEXTAREA":
-                this._state.dialogsPage.newMessageInTextArea = action.newText;
-                this._rerenderEntireTree();
-                break;
-            default:
-                throw new Error("Wrong type of action")
-        }
+        this._state.dialogsPage=dilogsReducer(this._state.dialogsPage,action);
+        this._state.profilePage=profileReducer(this._state.profilePage,action);
+        this._rerenderEntireTree();
     }
 }
 

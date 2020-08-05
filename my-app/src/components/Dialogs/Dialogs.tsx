@@ -2,7 +2,8 @@ import React, {ChangeEvent, KeyboardEvent} from 'react';
 import styles from './Dialogs.module.css';
 import Message, {MessageType} from './Message/Message';
 import Dialog, {DialogWithFriend} from "./Dialog/Dialog";
-import {DispatchType, SendMessageOrderAC, ShowMessageInTextareaAC} from '../../redux/state';
+import {DispatchType} from '../../redux/state';
+import {SendMessageOrderAC, ShowMessageInTextareaAC} from "../../redux/dialogsReducer";
 
 export type DialogsPagePropsType = {
     dialogs: Array<DialogWithFriend>
