@@ -12,8 +12,18 @@ export const ShowTextInTextareaAC = (NewText: string) => ({
     text: NewText
 } as const);
 
+const initialState:PostsStatePropsType = {
+    posts: [
+        {id: v1(), message: "Hola Ladies", likesCount: 0},
+        {id: v1(), message: "How are you?", likesCount: 12},
+        {id: v1(), message: "I'm glad to see you", likesCount: 432},
+        {id: v1(), message: "Or not", likesCount: 2}
+    ],
+    newPostInTextArea: ""
+}
 
-export const profileReducer = (state: PostsStatePropsType, action: ActionsTypes):PostsStatePropsType => {
+
+export const profileReducer = (state=initialState, action: ActionsTypes):PostsStatePropsType => {
     switch (action.type) {
         case AddPostString:
             let newPost = {id: v1(), message: state.newPostInTextArea, likesCount: 0}

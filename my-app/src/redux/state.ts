@@ -3,13 +3,14 @@ import {PostsStatePropsType} from "../components/Profile/Profile";
 import {v1} from "uuid";
 import {AddPostAC, profileReducer, ShowTextInTextareaAC} from "./profileReducer";
 import {dilogsReducer, ShowMessageInTextareaAC, SendMessageOrderAC} from "./dialogsReducer";
+import {sidebarReducer, SidebarType} from './sidebarReducer';
 
 
 
 export type StateType = {
     dialogsPage: DialogsPagePropsType
     profilePage: PostsStatePropsType
-    sidebar: {}
+    sidebar: SidebarType
 }
 
 export type DispatchType = (action: ActionsTypes) => void
@@ -24,8 +25,8 @@ export type ActionsTypes =
 
 export type StoreType = {
     _state: StateType
-    subscriber: (callback: () => void) => void
-    _rerenderEntireTree: () => void
+    subscribe: (callback: () => void) => void
+    _callSubscriber: () => void
     getState: () => StateType
     dispatch: DispatchType
 }
@@ -62,10 +63,12 @@ const store: StoreType = {
         },
         sidebar: {}
     },
-    subscriber(callback: () => void) {
-        this._rerenderEntireTree = callback
+
+    subscribe(callback: () => void) {
+        debugger
+        this._callSubscriber = callback
     },
-    _rerenderEntireTree() {
+    _callSubscriber() {
         console.log("state changed");
     },
     getState() {
@@ -75,7 +78,8 @@ const store: StoreType = {
 
         this._state.dialogsPage=dilogsReducer(this._state.dialogsPage,action);
         this._state.profilePage=profileReducer(this._state.profilePage,action);
-        this._rerenderEntireTree();
+        this._state.sidebar=sidebarReducer(this._state.profilePage,action);
+        this._callSubscriber();
     }
 }
 

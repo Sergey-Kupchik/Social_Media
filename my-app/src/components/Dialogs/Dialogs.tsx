@@ -36,9 +36,7 @@ const Dialogs: React.FC<DialogsType> = (props) => {
     }
     const onChange=(e:ChangeEvent<HTMLTextAreaElement>)=>{
 
-        console.log(props.stateForDialogsPage.newMessageInTextArea)
         props.dispatch(ShowMessageInTextareaAC(e.currentTarget.value));
-        console.log(props.stateForDialogsPage.newMessageInTextArea)
     }
 
     return (<div className={styles.dialogs}>

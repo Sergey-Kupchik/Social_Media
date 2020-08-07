@@ -7,6 +7,26 @@ const SendMessageString = "SEND-MESSAGE";
 
 const ShowMessageInTextareaString = "SHOW-MESSAGE-IN-TEXTAREA";
 
+const initialState:DialogsPagePropsType = {
+    dialogs: [
+        {id: v1(), name: "Mike"},
+        {id: v1(), name: "Silas"},
+        {id: v1(), name: "Mariana"},
+        {id: v1(), name: "Jimmy"},
+        {id: v1(), name: "Andy"},
+        {id: v1(), name: "Delfin"}
+    ],
+    messages: [
+        {id: v1(), message: "That's a good question! I'll find out"},
+        {id: v1(), message: "I have the exact same question"},
+        {id: v1(), message: "I have no clue"},
+        {id: v1(), message: "Why don't we ask Alex?"},
+        {id: v1(), message: "How should I know?"},
+        {id: v1(), message: "How should I know?"}
+    ],
+    newMessageInTextArea: ""
+}
+
 export const SendMessageOrderAC = (Newmessage: string) => ({
     type: SendMessageString,
     message: Newmessage
@@ -18,7 +38,7 @@ export const ShowMessageInTextareaAC = (newText: string) => ({
 } as const);
 
 
-export const dilogsReducer = (state: DialogsPagePropsType, action: ActionsTypes): DialogsPagePropsType => {
+export const dilogsReducer = (state =initialState, action: ActionsTypes): DialogsPagePropsType => {
     switch (action.type) {
         case SendMessageString:
             let newMessage = {id: v1(), message: action.message};

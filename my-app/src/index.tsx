@@ -5,7 +5,8 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import {BrowserRouter} from "react-router-dom";
-import store from "./redux/state";
+import { store } from './redux/reduxStore';
+;
 
 
 const rerenderEntireTree =()=>{
@@ -18,8 +19,9 @@ const rerenderEntireTree =()=>{
         document.getElementById('root')
     );
 }
-store.subscriber(rerenderEntireTree);
+store.subscribe(rerenderEntireTree);
 rerenderEntireTree();
+
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

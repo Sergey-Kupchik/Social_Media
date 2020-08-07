@@ -11,7 +11,7 @@ import Settings from "./components/Settings/Settings";
 import {StoreType} from "./redux/state";
 
 type AppStatePropsType = {
-    store: StoreType
+    store: StoreType | any
 }
 
 const App: React.FC<AppStatePropsType>= (props)=> {
