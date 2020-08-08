@@ -1,13 +1,14 @@
-import {ActionsTypes} from "./state";
-import {DialogsPagePropsType} from "../components/Dialogs/Dialogs";
+import {ActionsTypes, DialogsPageType} from './state';
+
 import {v1} from "uuid";
+
 
 
 const SendMessageString = "SEND-MESSAGE";
 
 const ShowMessageInTextareaString = "SHOW-MESSAGE-IN-TEXTAREA";
 
-const initialState:DialogsPagePropsType = {
+const initialState:DialogsPageType = {
     dialogs: [
         {id: v1(), name: "Mike"},
         {id: v1(), name: "Silas"},
@@ -27,9 +28,9 @@ const initialState:DialogsPagePropsType = {
     newMessageInTextArea: ""
 }
 
-export const SendMessageOrderAC = (Newmessage: string) => ({
+export const SendMessageOrderAC = (NewMessage: string) => ({
     type: SendMessageString,
-    message: Newmessage
+    message: NewMessage
 } as const);
 
 export const ShowMessageInTextareaAC = (newText: string) => ({
@@ -38,11 +39,12 @@ export const ShowMessageInTextareaAC = (newText: string) => ({
 } as const);
 
 
-export const dilogsReducer = (state =initialState, action: ActionsTypes): DialogsPagePropsType => {
+export const dilogsReducer = (state =initialState, action: ActionsTypes): DialogsPageType => {
     switch (action.type) {
         case SendMessageString:
             let newMessage = {id: v1(), message: action.message};
             state.messages.push(newMessage);
+            state.newMessageInTextArea="";
             return state;
         case ShowMessageInTextareaString:
             state.newMessageInTextArea = action.newText;

@@ -2,7 +2,8 @@ import React from "react";
 import MyPosts from "./MyPosts/MyPosts";
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
 import {PostType} from "./MyPosts/Post/Post";
-import {DispatchType} from "../../redux/state";
+import {DispatchType, StoreType} from '../../redux/state';
+import MyPostsConteiner from './MyPosts/MyPostsConteiner';
 
 
 type ProfilePropsType = {

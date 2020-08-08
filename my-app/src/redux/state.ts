@@ -1,14 +1,21 @@
-import {DialogsPagePropsType} from "../components/Dialogs/Dialogs";
 import {PostsStatePropsType} from "../components/Profile/Profile";
 import {v1} from "uuid";
 import {AddPostAC, profileReducer, ShowTextInTextareaAC} from "./profileReducer";
 import {dilogsReducer, ShowMessageInTextareaAC, SendMessageOrderAC} from "./dialogsReducer";
 import {sidebarReducer, SidebarType} from './sidebarReducer';
+import {DialogWithFriend} from '../components/Dialogs/Dialog/Dialog';
+import {MessageType} from '../components/Dialogs/Message/Message';
 
+
+export type DialogsPageType = {
+    dialogs: Array<DialogWithFriend>
+    messages: Array<MessageType>
+    newMessageInTextArea: string
+}
 
 
 export type StateType = {
-    dialogsPage: DialogsPagePropsType
+    dialogsPage: DialogsPageType
     profilePage: PostsStatePropsType
     sidebar: SidebarType
 }
@@ -23,7 +30,7 @@ export type ActionsTypes =
     | ReturnType<typeof ShowMessageInTextareaAC>
 
 
-export type StoreType = {
+export type OldStoreType = {
     _state: StateType
     subscribe: (callback: () => void) => void
     _callSubscriber: () => void
@@ -31,7 +38,13 @@ export type StoreType = {
     dispatch: DispatchType
 }
 
-const store: StoreType = {
+export type StoreType = {
+    subscribe: (callback: () => void) => void
+    getState: () => StateType
+    dispatch: DispatchType
+}
+
+const store: OldStoreType = {
     _state: {
         dialogsPage: {
             dialogs: [
