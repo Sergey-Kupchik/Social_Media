@@ -1,7 +1,7 @@
 import React, {ChangeEvent, KeyboardEvent} from 'react';
-import styles from './Dialogs.module.css';
+import styles from './Dialogues.module.css';
 import Message, {MessageType} from './Message/Message';
-import Dialog, {DialogWithFriend} from './Dialog/Dialog';
+import Dialogue, {DialogWithFriend} from './Dialog/Dialogue';
 
 
 
@@ -13,8 +13,8 @@ type DialogsType = {
     textareaValue: string
 }
 
-export const Dialogs: React.FC<DialogsType> = (props) => {
-    const dialoguesList = props.dialogs.map(d => <Dialog id={d.id} name={d.name}/>);
+export const Dialogues: React.FC<DialogsType> = (props) => {
+    const dialoguesList = props.dialogs.map(d => <Dialogue id={d.id} name={d.name}/>);
     const messagesList = props.messages.map(m => <Message id={m.id} message={m.message}/>);
 
     const messageElementRef = React.createRef<HTMLTextAreaElement>();

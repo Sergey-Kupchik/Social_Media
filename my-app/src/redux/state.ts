@@ -1,9 +1,9 @@
 import {PostsStatePropsType} from "../components/Profile/Profile";
 import {v1} from "uuid";
 import {AddPostAC, profileReducer, ShowTextInTextareaAC} from "./profileReducer";
-import {dilogsReducer, ShowMessageInTextareaAC, SendMessageOrderAC} from "./dialogsReducer";
+import {diloguesReducer, ShowMessageInTextareaAC, SendMessageOrderAC} from "./dialogsReducer";
 import {sidebarReducer, SidebarType} from './sidebarReducer';
-import {DialogWithFriend} from '../components/Dialogs/Dialog/Dialog';
+import {DialogWithFriend} from '../components/Dialogs/Dialog/Dialogue';
 import {MessageType} from '../components/Dialogs/Message/Message';
 
 
@@ -89,7 +89,7 @@ const store: OldStoreType = {
     },
     dispatch(action) {
 
-        this._state.dialogsPage=dilogsReducer(this._state.dialogsPage,action);
+        this._state.dialogsPage=diloguesReducer(this._state.dialogsPage,action);
         this._state.profilePage=profileReducer(this._state.profilePage,action);
         this._state.sidebar=sidebarReducer(this._state.profilePage,action);
         this._callSubscriber();

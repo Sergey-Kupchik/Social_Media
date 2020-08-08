@@ -8,7 +8,7 @@ import Music from "./components/Music/Music";
 import News from "./components/News/News";
 import Settings from "./components/Settings/Settings";
 import {StoreType} from "./redux/state";
-import  {DialoguesContainer} from './components/Dialogs/DialogsConteiner';
+import  {DialoguesContainer} from './components/Dialogs/DialoguesConteiner';
 
 
 

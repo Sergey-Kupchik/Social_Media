@@ -1,10 +1,10 @@
 import React, {ChangeEvent, KeyboardEvent} from 'react';
-import styles from './Dialogs.module.css';
+import styles from './Dialogues.module.css';
 import Message, {MessageType} from './Message/Message';
-import Dialog, {DialogWithFriend} from "./Dialog/Dialog";
+import Dialogue, {DialogWithFriend} from "./Dialog/Dialogue";
 import {DispatchType, StoreType, ActionsTypes} from '../../redux/state';
 import {SendMessageOrderAC, ShowMessageInTextareaAC} from "../../redux/dialogsReducer";
-import { Dialogs } from './Dialogs';
+import { Dialogues } from './Dialogues';
 
 
 
@@ -28,6 +28,6 @@ export const DialoguesContainer: React.FC<DialoguesContainerPropsType> = (props)
     const textareaValue = props.store.getState.bind(props.store)().dialogsPage.newMessageInTextArea
 
     return (
-        <Dialogs dialogs={dialogues} messages={messages} onSendMessage={onSendMessage} ShowMessageInTextarea={ShowMessageInTextarea} textareaValue={textareaValue}/>
+        <Dialogues dialogs={dialogues} messages={messages} onSendMessage={onSendMessage} ShowMessageInTextarea={ShowMessageInTextarea} textareaValue={textareaValue}/>
     )
 }

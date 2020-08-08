@@ -39,7 +39,7 @@ export const ShowMessageInTextareaAC = (newText: string) => ({
 } as const);
 
 
-export const dilogsReducer = (state =initialState, action: ActionsTypes): DialoguesPageType => {
+export const diloguesReducer = (state =initialState, action: ActionsTypes): DialoguesPageType => {
     switch (action.type) {
         case SendMessageString:
             let newMessage = {id: v1(), message: action.message};
