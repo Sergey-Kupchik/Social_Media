@@ -8,7 +8,7 @@ import Music from "./components/Music/Music";
 import News from "./components/News/News";
 import Settings from "./components/Settings/Settings";
 import {StoreType} from "./redux/state";
-import  {DialogsContainer} from './components/Dialogs/DialogsConteiner';
+import  {DialoguesContainer} from './components/Dialogs/DialogsConteiner';
 
 
 
@@ -23,7 +23,7 @@ const App: React.FC<AppStatePropsType>= (props)=> {
             <Header/>
             <Navbar/>
             <div className="app-wrapper-content">
-                <Route path='/dialogs' render={() =><DialogsContainer store={props.store}/>}/>
+                <Route path='/dialogs' render={() =><DialoguesContainer store={props.store}/>}/>
 
 
 

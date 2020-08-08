@@ -7,7 +7,7 @@ import {DialogWithFriend} from '../components/Dialogs/Dialog/Dialog';
 import {MessageType} from '../components/Dialogs/Message/Message';
 
 
-export type DialogsPageType = {
+export type DialoguesPageType = {
     dialogs: Array<DialogWithFriend>
     messages: Array<MessageType>
     newMessageInTextArea: string
@@ -15,7 +15,7 @@ export type DialogsPageType = {
 
 
 export type StateType = {
-    dialogsPage: DialogsPageType
+    dialogsPage: DialoguesPageType
     profilePage: PostsStatePropsType
     sidebar: SidebarType
 }

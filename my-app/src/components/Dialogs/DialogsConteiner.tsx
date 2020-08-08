@@ -8,11 +8,11 @@ import { Dialogs } from './Dialogs';
 
 
 
-type DialogsContainerPropsType = {
+type DialoguesContainerPropsType = {
     store: StoreType
 }
 
-export const DialogsContainer: React.FC<DialogsContainerPropsType> = (props) => {
+export const DialoguesContainer: React.FC<DialoguesContainerPropsType> = (props) => {
     const dialogues = props.store.getState.bind(props.store)().dialogsPage.dialogs;
     const messages = props.store.getState.bind(props.store)().dialogsPage.messages;
 

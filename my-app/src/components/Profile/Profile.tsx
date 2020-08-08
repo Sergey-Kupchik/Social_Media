@@ -3,7 +3,7 @@ import MyPosts from "./MyPosts/MyPosts";
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
 import {PostType} from "./MyPosts/Post/Post";
 import {DispatchType, StoreType} from '../../redux/state';
-import MyPostsConteiner from './MyPosts/MyPostsConteiner';
+import MyPostsConteiner from './MyPosts/MyPostsContainer';
 
 
 type ProfilePropsType = {

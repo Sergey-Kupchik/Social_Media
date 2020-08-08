@@ -1,4 +1,4 @@
-import {ActionsTypes, DialogsPageType} from './state';
+import {ActionsTypes, DialoguesPageType} from './state';
 
 import {v1} from "uuid";
 
@@ -8,7 +8,7 @@ const SendMessageString = "SEND-MESSAGE";
 
 const ShowMessageInTextareaString = "SHOW-MESSAGE-IN-TEXTAREA";
 
-const initialState:DialogsPageType = {
+const initialState:DialoguesPageType = {
     dialogs: [
         {id: v1(), name: "Mike"},
         {id: v1(), name: "Silas"},
@@ -39,7 +39,7 @@ export const ShowMessageInTextareaAC = (newText: string) => ({
 } as const);
 
 
-export const dilogsReducer = (state =initialState, action: ActionsTypes): DialogsPageType => {
+export const dilogsReducer = (state =initialState, action: ActionsTypes): DialoguesPageType => {
     switch (action.type) {
         case SendMessageString:
             let newMessage = {id: v1(), message: action.message};
