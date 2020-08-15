@@ -14,7 +14,7 @@ import  {DialoguesContainer} from './components/Dialogs/DialoguesConteiner';
 
 
 export type AppStatePropsType = {
-    store: StoreType
+
 }
 
 const App: React.FC<AppStatePropsType>= (props)=> {
@@ -23,11 +23,9 @@ const App: React.FC<AppStatePropsType>= (props)=> {
             <Header/>
             <Navbar/>
             <div className="app-wrapper-content">
-                <Route path='/dialogs' render={() =><DialoguesContainer store={props.store}/>}/>
+                <Route path='/dialogs' render={() =><DialoguesContainer />}/>
 
-
-
-                <Route path='/profile' render={() => <Profile postsState={props.store.getState.bind(props.store)().profilePage} dispatch={props.store.dispatch.bind(props.store)}/>}/>
+                {/*<Route path='/profile' render={() => <Profile postsState={props.store.getState.bind(props.store)().profilePage} dispatch={props.store.dispatch.bind(props.store)}/>}/>*/}
 
                 <Route path='/music' component={Music}/>
                 <Route path='/news' component={News}/>
