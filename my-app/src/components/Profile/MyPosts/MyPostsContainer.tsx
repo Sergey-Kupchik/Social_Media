@@ -1,34 +1,43 @@
 import React, {ChangeEvent, KeyboardEvent} from 'react';
-import styles from './MyPosts.module.css';
-import Post, {PostType} from './Post/Post';
-import {DispatchType, StoreType} from '../../../redux/state';
 import {AddPostAC, ShowTextInTextareaAC} from '../../../redux/profileReducer';
-import MyPosts from './MyPosts';
+import {MyPosts} from './MyPosts';
+import {StoreType} from '../../../redux/state';
+import {StoreContext} from '../../../StoreContext';
 
 
 type MyPostsConteinerPropsType = {
-    store:StoreType
+    // store: StoreType
 }
 
-const MyPostsConteiner: React.FC<MyPostsConteinerPropsType> = (props) => {
-    let newPostElement = React.createRef<HTMLTextAreaElement>();
-
-    const publishNewPost = () => {
-        props.store.dispatch(AddPostAC())
-    }
-
-    const onChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        props.store.dispatch(ShowTextInTextareaAC(e.currentTarget.value));
-    }
-
-    const onKeyPress=(e:KeyboardEvent<HTMLTextAreaElement>)=>{
-        if (e.key==="Enter"){
-            publishNewPost();
-        }
-    }
+export const MyPostsConteiner: React.FC<MyPostsConteinerPropsType> = (props) => {
 
     return (
-        <MyPosts postsState={} textAreaState={} dispatch={}/>
+        <StoreContext.Consumer>
+            {(store) => {
+                const publishNewPost = () => {
+                    store.dispatch(AddPostAC())
+                }
+                const onChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+                    store.dispatch(ShowTextInTextareaAC(e.currentTarget.value));
+                }
+
+                const onKeyPress = (e: KeyboardEvent<HTMLTextAreaElement>) => {
+                    if (e.key === 'Enter') {
+                        publishNewPost();
+                    }
+                }
+
+                const valueForPost = store.getState.bind(store)().profilePage.newPostInTextArea;
+                const listOfPosts = store.getState.bind(store)().profilePage.posts
+
+                return <MyPosts publishNewPost={publishNewPost}
+                                onChange={onChange}
+                                onKeyPress={onKeyPress}
+                                listOfPosts={listOfPosts}
+                                valueForPost={valueForPost}/>
+            }}
+
+        </StoreContext.Consumer>
     )
 }
-export default 12;
+export default 12
