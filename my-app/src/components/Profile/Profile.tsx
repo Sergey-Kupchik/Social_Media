@@ -10,7 +10,11 @@ type ProfilePropsType = {
     // store: StoreType
 }
 
-type PostsStatePropsType={}
+export type PostsStatePropsType = {
+    posts: Array<PostType>
+    newPostInTextArea:string
+
+}
 
 
 const Profile: React.FC<ProfilePropsType> = (props) => {

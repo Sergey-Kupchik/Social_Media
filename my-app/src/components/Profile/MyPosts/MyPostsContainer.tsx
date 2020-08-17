@@ -23,6 +23,7 @@ export const MyPostsConteiner: React.FC<MyPostsConteinerPropsType> = (props) => 
 
                 const onKeyPress = (e: KeyboardEvent<HTMLTextAreaElement>) => {
                     if (e.key === 'Enter') {
+
                         publishNewPost();
                     }
                 }
