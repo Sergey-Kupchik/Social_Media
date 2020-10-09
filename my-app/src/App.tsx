@@ -21,15 +21,17 @@ const App: React.FC<AppStatePropsType>= (props)=> {
     return (
         <div className="app-wrapper">
             <Header/>
-            <Navbar/>
-            <div className="app-wrapper-content">
-                <Route path='/dialogs' render={() =><DialoguesContainer />}/>
+            <div className="content-container">
+                <Navbar/>
+                <div className="app-wrapper-content">
+                    <Route path='/dialogs' render={() => <DialoguesContainer/>}/>
 
-                <Route path='/profile' render={() => <Profile/>}/>
+                    <Route path='/profile' render={() => <Profile/>}/>
 
-                <Route path='/music' component={Music}/>
-                <Route path='/news' component={News}/>
-                <Route path='/settings' component={Settings}/>
+                    <Route path='/music' component={Music}/>
+                    <Route path='/news' component={News}/>
+                    <Route path='/settings' component={Settings}/>
+                </div>
             </div>
         </div>
     );

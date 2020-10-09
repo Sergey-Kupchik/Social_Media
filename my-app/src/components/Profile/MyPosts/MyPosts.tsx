@@ -26,8 +26,7 @@ export const MyPosts: React.FC<MyPostsPropsType> = (props) => {
                 </div>
             </div>
             <div className={styles.posts}>
-                {props.listOfPosts.map(p => <Post id={p.id} message={p.message} likesCount={p.likesCount}/>)}
+                {props.listOfPosts.map(p => <Post id={p.id} message={p.message} likesCount={p.likesCount} key={p.id}/>)}
             </div>
         </div>
-    )
-}
+    )}

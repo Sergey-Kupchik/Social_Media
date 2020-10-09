@@ -4,7 +4,6 @@ import Message, {MessageType} from './Message/Message';
 import Dialogue, {DialogWithFriend} from './Dialog/Dialogue';
 
 
-
 type DialogsType = {
     dialogs: Array<DialogWithFriend>
     messages: Array<MessageType>
@@ -14,8 +13,8 @@ type DialogsType = {
 }
 
 export const Dialogues: React.FC<DialogsType> = (props) => {
-    const dialoguesList = props.dialogs.map(d => <Dialogue id={d.id} name={d.name}/>);
-    const messagesList = props.messages.map(m => <Message id={m.id} message={m.message}/>);
+    const dialoguesList = props.dialogs.map(d => <Dialogue id={d.id} name={d.name} key={d.id}/>);
+    const messagesList = props.messages.map(m => <Message id={m.id} message={m.message} key={m.id}/>);
 
     const messageElementRef = React.createRef<HTMLTextAreaElement>();
 
@@ -34,21 +33,22 @@ export const Dialogues: React.FC<DialogsType> = (props) => {
         props.ShowMessageInTextarea(e);
     }
 
-    return (<div className={styles.dialogs}>
-        <div className={styles.dialogsItem}>
-            {dialoguesList}
-        </div>
-        <div className={styles.messages}>
-            {messagesList}
-            <textarea ref={messageElementRef}
-                      className={styles.text}
-                      onKeyPress={onKeyPress}
-                      value={props.textareaValue}
-                      onChange={onChange}
-            ></textarea>
-            <div>
-                <button onClick={sendMessage} className={styles.button}>Send</button>
+    return (
+        <div className={styles.dialogsApp}>
+            <div className={styles.messages}>
+                {messagesList}
+                <textarea ref={messageElementRef}
+                          className={styles.text}
+                          onKeyPress={onKeyPress}
+                          value={props.textareaValue}
+                          onChange={onChange}
+                ></textarea>
+                <div>
+                    <button onClick={sendMessage} className={styles.button}>Send</button>
+                </div>
             </div>
-        </div>
-    </div>)
+            <div className={styles.usersList}>
+                {dialoguesList}
+            </div>
+        </div>)
 }
