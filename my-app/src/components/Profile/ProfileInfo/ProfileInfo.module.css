@@ -1,30 +1,9 @@
-.profileInfo_wrapper{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+
+.img img {
+    width: 800px;
+    height: 500px;
 }
-
-
-.img {
-    background: url("https://iqonic.design/themes/socialv/html/images/page-img/profile-bg1.jpg") left 10% bottom 20%/cover no-repeat border-box;
-;
-    width: 95%;
-    height: 33vh;
-    padding: 0.72rem;
-    position: relative;
-}
-
-/*.img img {*/
-/*    width: 80vw;*/
-/*    height: 340px;*/
-/*}*/
 
 .descriptionBlok {
     padding: 10px;
-    /*background-color: red;*/
-    flex: 0 0 100%;
-    font-size: 1.5rem;
-    color: var(--gray);
-    text-align: center;
 }

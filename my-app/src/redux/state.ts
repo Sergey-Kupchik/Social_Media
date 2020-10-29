@@ -1,23 +1,16 @@
+import {DialogsPagePropsType} from "../components/Dialogs/Dialogs";
 import {PostsStatePropsType} from "../components/Profile/Profile";
 import {v1} from "uuid";
 import {AddPostAC, profileReducer, ShowTextInTextareaAC} from "./profileReducer";
-import {diloguesReducer, ShowMessageInTextareaAC, SendMessageOrderAC} from "./dialogsReducer";
-import {sidebarReducer, SidebarType} from './sidebarReducer';
-import {DialogWithFriend} from '../components/Dialogs/Dialog/Dialogue';
-import {MessageType} from '../components/Dialogs/Message/Message';
+import {dilogsReducer, ShowMessageInTextareaAC, SendMessageOrderAC} from "./dialogsReducer";
+import {followAC, set_usersAC, unfollowAC} from './usersReducer';
 
-
-export type DialoguesPageType = {
-    dialogs: Array<DialogWithFriend>
-    messages: Array<MessageType>
-    newMessageInTextArea: string
-}
 
 
 export type StateType = {
-    dialogsPage: DialoguesPageType
+    dialogsPage: DialogsPagePropsType
     profilePage: PostsStatePropsType
-    sidebar: SidebarType
+    sidebar: {}
 }
 
 export type DispatchType = (action: ActionsTypes) => void
@@ -28,23 +21,21 @@ export type ActionsTypes =
     | ReturnType<typeof ShowTextInTextareaAC>
     | ReturnType<typeof SendMessageOrderAC>
     | ReturnType<typeof ShowMessageInTextareaAC>
+    | ReturnType<typeof unfollowAC>
+    | ReturnType<typeof followAC>
+    | ReturnType<typeof set_usersAC>
 
 
-export type OldStoreType = {
-    _state: StateType
-    subscribe: (callback: () => void) => void
-    _callSubscriber: () => void
-    getState: () => StateType
-    dispatch: DispatchType
-}
 
 export type StoreType = {
+    _state: StateType
     subscribe: (callback: () => void) => void
+    _rerenderEntireTree: () => void
     getState: () => StateType
     dispatch: DispatchType
 }
 
-const store: OldStoreType = {
+const oldStore: StoreType = {
     _state: {
         dialogsPage: {
             dialogs: [
@@ -76,12 +67,10 @@ const store: OldStoreType = {
         },
         sidebar: {}
     },
-
     subscribe(callback: () => void) {
-        debugger
-        this._callSubscriber = callback
+        this._rerenderEntireTree = callback
     },
-    _callSubscriber() {
+    _rerenderEntireTree() {
         console.log("state changed");
     },
     getState() {
@@ -89,12 +78,8 @@ const store: OldStoreType = {
     },
     dispatch(action) {
 
-        this._state.dialogsPage=diloguesReducer(this._state.dialogsPage,action);
+        this._state.dialogsPage=dilogsReducer(this._state.dialogsPage,action);
         this._state.profilePage=profileReducer(this._state.profilePage,action);
-        this._state.sidebar=sidebarReducer(this._state.profilePage,action);
-        this._callSubscriber();
+        this._rerenderEntireTree();
     }
 }
-
-
-export default store;

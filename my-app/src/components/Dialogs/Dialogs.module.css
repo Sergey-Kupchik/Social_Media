@@ -13,10 +13,6 @@
 
 /*}*/
 
-/*.messages {*/
-/*    padding: 10px;*/
-
-/*}*/
 
 /*.message {*/
 /*    padding: 10px;*/
@@ -66,35 +62,58 @@
     display: flex;
     justify-content: space-between;
 }
-.usersList{
-    background-color:var(--lightGreen);
+
+.usersList {
+    background-color: var(--lightGreen);
     /*min-height: 60vh;*/
     flex: 0 0 15%;
     border-radius: 4px;
-    -webkit-box-shadow: -2px 2px 2px 0px rgba(189,189,189,1);
-    -moz-box-shadow: -2px 2px 2px 0px rgba(189,189,189,1);
-    box-shadow: -2px 2px 2px 0px rgba(189,189,189,1);
+    -webkit-box-shadow: -2px 2px 2px 0px rgba(189, 189, 189, 1);
+    -moz-box-shadow: -2px 2px 2px 0px rgba(189, 189, 189, 1);
+    box-shadow: -2px 2px 2px 0px rgba(189, 189, 189, 1);
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     /*align-items: center;*/
 
 }
-.usersList div{
+
+.usersList div {
     flex: 0 0 50%;
 }
 
-.dialog{
+.dialogs {
+    display: flex;
+}
+
+.dialogsItem {
+    flex: 1 1 15%;
+    background-color: var(--lightGreen);
     display: flex;
 
+
 }
+
+.dialog {
+    display: flex;
+flex-direction: row;
+
+}
+
 .dialog:hover {
-    background-color:var(--white);
+    background-color: var(--white);
 }
-.dialog NavLink{
+
+.dialog NavLink {
     display: flex;
 }
-.dialog a{
+
+.messages {
+    padding: 10px;
+    flex: 1 1 85%;
+}
+
+.dialog a {
     color: var(--primery);
     font-family: 'Inter', sans-serif;
     text-decoration: none;
@@ -106,9 +125,11 @@
     align-items: center;
     justify-content: center;
 }
-.dialog a span{
+
+.dialog a span {
     flex: 0 0 100%;
 }
-.dialog a:hover{
-font-weight: bold;
+
+.dialog a:hover {
+    font-weight: bold;
 }

@@ -1,5 +1,5 @@
 .header {
-    height: 40px;
+    height: 50px;
     display: flex;
     align-items: center;
     -webkit-box-shadow: 0px 2px 2px 0px rgba(189,189,189,1);
@@ -13,14 +13,14 @@
 }
 
 .desktop {
-    height: 40px;
+    height: 50px;
     display: none;
     margin: auto;
     margin-left: 0.5rem;
 }
 
 .mobile {
-    height: 40px;
+    height: 50px;
     display: block;
     margin: auto;
     margin-left: 0.3rem;
@@ -34,8 +34,7 @@
     justify-content: space-between;
     align-items: center;
 }
-@media (min-width: 768px){
-    .site_logo{
+@media (min-width: 768px){  .site_logo{
         flex: 0 0 9.4rem;
     }
     .bar {

@@ -24,37 +24,15 @@ body {
     --gray: #757575;
     --lightGreen: #e6f0ef;
     --iq-light: #fafafb;
-
 }
 
-/*:root{*/
-/*    liteBlue: #3399ff;*/
-/*    --primary:#20B2AA;*/
-/*}*/
-/*.app-wrapper {*/
-/*    height: 100%;*/
-/*    margin: 0 auto;*/
-/*    display: grid;*/
-/*    grid-template-areas:*/
-/*    "h h "*/
-/*    "n c ";*/
-/*    grid-template-rows: 40px 1fr;*/
-/*    grid-template-columns: 2fr 10fr;*/
-/*    !*grid-gap: 10px;*!*/
-/*}*/
-/*.app-wrapper-content {*/
-/*    grid-area: c;*/
-/*    background-color: deepskyblue;*/
-/*    padding: 10px;*/
-/*}*/
 
 
 .app_wrapper {
     display: flex;
     flex-direction: column;
     min-height: 100%;
-    /*display: flex;*/
-    /*flex-direction: column;*/
+
     justify-content: center;
     align-items: center;
 
@@ -65,32 +43,21 @@ body {
     flex-direction: column;
 }
 
-/*.app_wrapper_content{*/
-/*    flex: 1;*/
-/*}*/
 
-/*.app-wrapper Header {*/
-/*    background-color: lavender;*/
-/*    display: flex;*/
-/*    justify-content: flex-start;*/
-/*}*/
 .content-container {
     display: flex;
     height: 100vw;
     margin-top: 0.16rem;
-
-
-
-
 }
 
 .app-wrapper-content {
     background-color: darkorchid;
     background-color: var(--iq-light);
-    margin-left: 0.17rem;
-    /*margin-right: 0.17rem;*/
-    margin-top: 0.17rem;
+    margin-left: 0.13rem;
     flex: 1;
     height: 100%;
 }
+
+
+
 

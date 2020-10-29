@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './Navbar.module.css';
 import {NavLink} from 'react-router-dom';
-import {FaUserCircle, FaFacebookMessenger, FaRegNewspaper,FaHeadphones, FaBarcode} from 'react-icons/fa';
+import {FaUserCircle, FaFacebookMessenger, FaRegNewspaper,FaHeadphones, FaBarcode, FaUsers} from 'react-icons/fa';
 
 
 const Navbar = () => {
@@ -31,6 +31,14 @@ const Navbar = () => {
                     <span className={styles.item_value}>Music</span>
                 </NavLink>
             </div>
+
+            <div className={styles.item}>
+                <NavLink to="/users" activeClassName={styles.active} className={styles.navLink}>
+                    <FaUsers size={"1.5rem"} color="#20B2AA"/>
+                    <span className={styles.item_value}>Users</span>
+                </NavLink>
+            </div>
+
             <div className={styles.item}>
                 <NavLink to="/settings" activeClassName={styles.active} className={styles.navLink}>
                     <FaBarcode size={"1.5rem"} color="#20B2AA"/>

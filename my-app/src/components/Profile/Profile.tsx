@@ -1,13 +1,12 @@
 import React from "react";
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
 import {PostType} from "./MyPosts/Post/Post";
-import {DispatchType, StoreType} from '../../redux/state';
-import {MyPostsConteiner} from './MyPosts/MyPostsContainer';
-
+import {MyPostsContainer} from './MyPosts/MyPostsConteiner';
 
 
 type ProfilePropsType = {
-    // store: StoreType
+    // store: StoreRedusType
+
 }
 
 export type PostsStatePropsType = {
@@ -16,12 +15,11 @@ export type PostsStatePropsType = {
 
 }
 
-
 const Profile: React.FC<ProfilePropsType> = (props) => {
     return (
         <div>
             <ProfileInfo/>
-            <MyPostsConteiner/>
+            <MyPostsContainer/>
         </div>
     )
 }
