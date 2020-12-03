@@ -1,42 +1,64 @@
 import React from 'react';
-import {UsersPagePropsType, UsersType} from '../../redux/usersReducer';
-import styles from './Users.module.css';
-import axios from 'axios';
+import ReactPaginate from 'react-paginate';
 import userPhoto from '../../assets/images/user.png';
+import styles from './Users.module.css';
+import {follow_user, unfollow_user, UsersType} from '../../redux/usersReducer';
+import {FaUserAlt} from 'react-icons/fa';
+import {NavLink} from 'react-router-dom';
 
 
 type UsersPropsType = {
     users: Array<UsersType>
-    followUser: (userID: number | string) => void
-    unfollowUser: (userID: number | string) => void
-    set_users: (users: Array<UsersType>) => void
+    totalCount: number
+    pageSize: number
+    currentPage: number
+    follow_user: (userID: number | string) => void
+    unfollow_user: (userID: number | string) => void
+    onSetNewCurrentPage: (pageNumber: number) => void
 }
 
+export const Users: React.FC<UsersPropsType> = (props) => {
 
-export class Users extends React.Component<UsersPropsType> {
-    componentDidMount() {
-        axios.get('https://social-network.samuraijs.com/api/1.0/users').then(response => this.props.set_users(response.data.items))
+
+    let pagesQuantity = Math.ceil(props.totalCount / props.pageSize);
+    let pagesArray = [];
+    for (let i = 1; i <= pagesQuantity; i++) {
+        pagesArray.push(i)
     }
 
-    render() {
-        return <>
-            <div>{this.props.users.map(u => <div key={u.id}>
+    return <>            <ReactPaginate pageCount={pagesQuantity}
+                                        marginPagesDisplayed={1}
+                                        pageRangeDisplayed={2}
+                                        initialPage={props.currentPage}
+                                        onPageChange={(p) => {
+                                            props.onSetNewCurrentPage(p.selected)
+                                        }}
+                                        breakClassName={styles.breakMe}
+                                        containerClassName={styles.pagination}
+                                        activeClassName={styles.active}
+
+    />
+
+        <div>{props.users.map((u, i) => <div key={i}>
         <span>
             <div>
-                <img src={(u.photos.small == undefined ? userPhoto : u.photos.small)} alt="Photo of user"
-                     className={styles.userPhoto}/>
+                <NavLink to={'/profile/' + u.id}>
+                    <img src={(u.photos.small == undefined ? userPhoto : u.photos.small)}
+                         alt="Photo of user"
+                         className={styles.userPhoto}/>
+                </NavLink>
             </div>
             <div>
                 {u.followed ? <button onClick={() => {
-                        this.props.followUser(u.id)
+                        props.follow_user(u.id)
                     }}>Unfollow</button> :
                     <button onClick={() => {
-                        this.props.unfollowUser(u.id)
+                        props.unfollow_user(u.id)
                     }}>Following</button>}
 
             </div>
         </span>
-                <span>
+            <span>
             <span>
                 <div>{u.name}</div>
             <div>{u.status}</div>
@@ -46,8 +68,7 @@ export class Users extends React.Component<UsersPropsType> {
                 <div>u.location.city</div>
             </span>
         </span>
-            </div>)}
-            </div>
-        </>;
-    }
+        </div>)}
+        </div>
+    </>
 }
