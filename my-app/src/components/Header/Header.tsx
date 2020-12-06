@@ -4,8 +4,16 @@ import logoRF from './logoRF.png';
 import logoRF_mobile from './logoRF_mobile.png';
 import {FaAlignJustify, FaAngleDoubleRight, FaEnvelope, FaConciergeBell, FaUserAlt} from 'react-icons/fa'
 import {NavLink} from 'react-router-dom';
+import { SiteLogo } from './SiteLogoComp/SiteLogo';
 
-const Header = () => {
+type HeaderPropsType = {
+    registeredUserLogin: null | string,
+    isAuth: boolean,
+    isFetching: boolean,
+    logOutAuthUserData: () => void,
+}
+
+export const Header = (props:HeaderPropsType) => {
     let [hideMenu, setHideMenu] = useState<boolean>(false);
     const onMenuStyle = {
         display: hideMenu ? 'none' : 'block',
@@ -15,10 +23,7 @@ const Header = () => {
     };
     return (
         <header className={styles.header}>
-            <div className={styles.site_logo}>
-                <img src={logoRF} alt="Rain Forest" className={styles.desktop}/>
-                <img src={logoRF_mobile} alt="Rain Forest" className={styles.mobile}/>
-            </div>
+            <SiteLogo/>
             <div className={styles.bar}>
                 <div className={styles.left_content}>
                     <FaAlignJustify size={'1.3rem'} color={'#20B2AA'} style={onMenuStyle} onClick={() => {
@@ -30,8 +35,11 @@ const Header = () => {
                 </div>
                 <div className={styles.right_content}>
                     <div className={styles.icon_avatar}>
-                        <div className={styles.icon_avatar_text}><NavLink to="/profile"><FaUserAlt size={'1.3rem'} color={'#20B2AA'}/>
-                            <div className={styles.icon_messages_text}>Profile</div></NavLink></div>
+                        <div className={styles.icon_avatar_text}><NavLink to="/profile"><FaUserAlt size={'1.3rem'}
+                                                                                                   color={'#20B2AA'}/>
+                            <div className={styles.icon_messages_text}>{props.isAuth? props.registeredUserLogin: <>Profile</>}</div>
+
+                        </NavLink></div>
                     </div>
                     <div className={styles.icon_messages}>
                         <NavLink to="/dialogs"> <FaEnvelope size={'1.3rem'} color={'#20B2AA'}/>
@@ -45,12 +53,11 @@ const Header = () => {
                             </div>
                         </a>
                     </div>
-                    <div className={styles.sign_off}>
-                        <a href="#">Sign Off</a>
+                    <div className={styles.sign_off} onClick={props.logOutAuthUserData}>
+                        <a href="#">Log Out</a>
                     </div>
                 </div>
             </div>
         </header>
     )
 }
-export default Header

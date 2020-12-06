@@ -10,6 +10,7 @@ import {
     toggle_isFetching,
     unfollow_user,
 } from './usersReducer';
+import {logOutAuthUserData, setAuthUserData, toggleIsFetchingInAuthReducer} from './authReducer';
 
 
 export type StateType = {
@@ -33,6 +34,9 @@ export type ActionsTypes =
     | ReturnType<typeof set_users_currentPage>
     | ReturnType<typeof toggle_isFetching>
     | ReturnType<typeof setNewProfile>
+    | ReturnType<typeof setAuthUserData>
+    | ReturnType<typeof logOutAuthUserData>
+    | ReturnType<typeof toggleIsFetchingInAuthReducer>
 
 
 

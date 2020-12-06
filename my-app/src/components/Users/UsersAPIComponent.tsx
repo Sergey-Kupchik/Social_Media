@@ -28,7 +28,6 @@ export class UsersAPIComponent extends React.Component<UsersAPIComponentPropsTyp
             this.props.set_users_total_count(response.data.totalCount)
             this.props.set_users(response.data.items)
             this.props.toggle_isFetching(false);
-
         })
     }
 
