@@ -12,6 +12,7 @@ import axios from 'axios';
 
 
 type  HeaderContainerPropsType = {
+    registeredUserId:  null | string,
     registeredUserLogin: null | string,
     isAuth: boolean,
     isFetching: boolean,
@@ -32,12 +33,13 @@ class HeaderContainer extends React.Component<HeaderContainerPropsType> {
 
 
     render() {
-        return <Header isAuth={this.props.isAuth} isFetching={this.props.isFetching}
+        return <Header isAuth={this.props.isAuth} isFetching={this.props.isFetching} registeredUserId={this.props.registeredUserId}
                        registeredUserLogin={this.props.registeredUserLogin} logOutAuthUserData={this.props.logOutAuthUserData}/>;
     }
 }
 
 const mapStateToProps = (state: RootState) => ({
+    registeredUserId: state.auth.id,
     registeredUserLogin: state.auth.login,
     isAuth: state.auth.isAuth,
     isFetching: state.auth.isFetching,

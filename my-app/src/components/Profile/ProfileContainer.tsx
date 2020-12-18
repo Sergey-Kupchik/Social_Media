@@ -15,15 +15,27 @@ class ProfileContainer extends React.Component<ProfilePropsType & RouteComponent
 
         let currentUserID: string = this.props.match.params.userID
         if (!currentUserID) {
-            currentUserID = '3'
+            currentUserID = '12113'
         }
-        debugger
-        axios.get(`https://social-network.samuraijs.com/api/1.0/profile/` + currentUserID).then(response => {
+        axios.get(`https://social-network.samuraijs.com/api/1.0/profile/` + currentUserID,{
+            withCredentials: true,
+        }).then(response => {
             this.props.setNewProfile(response.data)
         })
     }
 
+// for link to my profilew
+    // componentDidUpdate(prevProps: any) {
+    //    let prev = prevProps
+    //     let nowProps = this.props
+    //     debugger
+    // }
+
+
+
+
     render() {
+
         return <Profile {...this.props}/>
 
     }
@@ -33,9 +45,11 @@ type ProfilePropsType = {
     profile: ProfileType | null
     setNewProfile: (profile: ProfileType) => void
 }
-const mapStateToProps = (state: RootState) => ({
-    profile: state.profilePage.profile
-})
+const mapStateToProps = (state: RootState) => {
+    return {
+        profile: state.profilePage.profile
+    }
+}
 
 const ProfileContainerWithURLData = withRouter(ProfileContainer)
 

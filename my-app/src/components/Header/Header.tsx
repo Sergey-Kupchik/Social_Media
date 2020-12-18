@@ -7,6 +7,7 @@ import {NavLink} from 'react-router-dom';
 import { SiteLogo } from './SiteLogoComp/SiteLogo';
 
 type HeaderPropsType = {
+    registeredUserId:  null | string,
     registeredUserLogin: null | string,
     isAuth: boolean,
     isFetching: boolean,
@@ -35,7 +36,7 @@ export const Header = (props:HeaderPropsType) => {
                 </div>
                 <div className={styles.right_content}>
                     <div className={styles.icon_avatar}>
-                        <div className={styles.icon_avatar_text}><NavLink to="/profile"><FaUserAlt size={'1.3rem'}
+                        <div className={styles.icon_avatar_text}><NavLink to={'/profile/' + props.registeredUserId} ><FaUserAlt size={'1.3rem'}
                                                                                                    color={'#20B2AA'}/>
                             <div className={styles.icon_messages_text}>{props.isAuth? props.registeredUserLogin: <>Profile</>}</div>
 
