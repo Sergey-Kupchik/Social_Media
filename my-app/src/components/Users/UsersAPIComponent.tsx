@@ -12,6 +12,7 @@ export type UsersAPIComponentPropsType = {
     pageSize: number
     currentPage: number
     isFetching: boolean
+    followingInProgress: Array<string>
     follow_user: (userID: number | string) => void
     unfollow_user: (userID: number | string) => void
     onSetNewCurrentPage: (pageNumber: number) => void
@@ -19,6 +20,7 @@ export type UsersAPIComponentPropsType = {
     set_users_total_count: (totalCount: number) => void
     set_users_currentPage: (currentPage: number) => void
     toggle_isFetching: (isFetching: boolean) => void
+    toggle_followingInProgress:(isFetching: boolean, userId: string)=>void
 }
 
 
@@ -33,7 +35,9 @@ export class UsersAPIComponent extends React.Component<UsersAPIComponentPropsTyp
 
 
     }
-
+    disableButton =(isFetching: boolean, userId: string)=>{
+        this.props.toggle_followingInProgress(isFetching, userId)
+    }
 
 // on click to page number and update current page with axios request
     onSetNewCurrentPage = (pageNumber: number) => {
@@ -46,13 +50,15 @@ export class UsersAPIComponent extends React.Component<UsersAPIComponentPropsTyp
         })
     }
 
+
+
     render() {
 
         return <>
             {this.props.isFetching && <Preloader/>}
             <Users users={this.props.users} currentPage={this.props.currentPage} follow_user={this.props.follow_user}
                    onSetNewCurrentPage={this.onSetNewCurrentPage} pageSize={this.props.pageSize}
-                   totalCount={this.props.totalCount} unfollow_user={this.props.unfollow_user}/>
+                   totalCount={this.props.totalCount} unfollow_user={this.props.unfollow_user} disableButton={this.disableButton} followingInProgress={this.props.followingInProgress}/>
         </>
 
     }

@@ -14,9 +14,11 @@ type UsersPropsType = {
     totalCount: number
     pageSize: number
     currentPage: number
+    followingInProgress: Array<string>
     follow_user: (userID: number | string) => void
     unfollow_user: (userID: number | string) => void
     onSetNewCurrentPage: (pageNumber: number) => void
+    disableButton: (isFetching: boolean, userId: string) => void
 }
 
 export const Users: React.FC<UsersPropsType> = (props) => {
@@ -55,21 +57,23 @@ export const Users: React.FC<UsersPropsType> = (props) => {
             </div>
             <div>
                 {u.followed ?
-                    <button onClick={() => {
-
+                    <button disabled={props.followingInProgress.some(id=>id===u.id)} onClick={() => {
+                        props.disableButton(true,u.id)
                         socialNetworkAPI.unfollowUser(u.id).then((data) => {
                             if (data.resultCode == 0) {
                                 props.follow_user(u.id)
+                                props.disableButton(false,u.id)
                             }
                         })
                     }}>Unfollow</button> :
 
-                    <button onClick={() => {
-
+                    <button disabled={props.followingInProgress.some(id=>id===u.id)} onClick={() => {
+                        props.disableButton(true,u.id)
                         socialNetworkAPI.foolowUser(u.id, {}).then((data) => {
                             if (data.resultCode == 0) {
                                 debugger
                                 props.unfollow_user(u.id)
+                                props.disableButton(false,u.id)
                             }
                         })
                     }}>Following</button>}

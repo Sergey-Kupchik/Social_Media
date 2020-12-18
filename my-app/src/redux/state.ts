@@ -9,6 +9,7 @@ import {
     set_users_total_count,
     toggle_isFetching,
     unfollow_user,
+    toggle_followingInProgress,
 } from './usersReducer';
 import {logOutAuthUserData, setAuthUserData, toggleIsFetchingInAuthReducer} from './authReducer';
 
@@ -37,6 +38,7 @@ export type ActionsTypes =
     | ReturnType<typeof setAuthUserData>
     | ReturnType<typeof logOutAuthUserData>
     | ReturnType<typeof toggleIsFetchingInAuthReducer>
+    | ReturnType<typeof toggle_followingInProgress>
 
 
 
