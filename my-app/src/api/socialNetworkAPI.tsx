@@ -32,11 +32,17 @@ type ServerUserType = {
 }
 
 
-type FoolowUnfoolowUserRequestType = {
-    data: {},
-    messages: Array<string>,
-    fieldsErrors: Array<string>,
+type RequestType<T> = {
+    data: T
+    messages: Array<string>
+    fieldsErrors: Array<string>
     resultCode: number
+}
+
+type AuthMeDataType ={
+    id: string
+    login: string
+    email: string
 }
 
 
@@ -44,10 +50,17 @@ export const socialNetworkAPI = {
     getUsers(pageSize = 10, currentPage = 1,) {
         return instance.get<GetUsersType>(`users?count=${pageSize}&page=${currentPage}`).then((res) => res.data)
     },
-    foolowUser(userId: string, data:any,) {
-        return instance.post<FoolowUnfoolowUserRequestType>(`follow/${userId}`, data).then((res) => res.data)
+    foolowUser(userId: string, data: any,) {
+        return instance.post<RequestType<{}>>(`follow/${userId}`, data).then((res) => res.data)
     },
-    unfollowUser(userId: string,)  {
-        return instance.delete<FoolowUnfoolowUserRequestType>(`follow/${userId}`).then((res) => res.data)
+    unfollowUser(userId: string,) {
+        return instance.delete<RequestType<{}>>(`follow/${userId}`).then((res) => res.data)
     },
+    authMe() {
+        return instance.get<RequestType<AuthMeDataType>>('auth/me').then(res=>res.data.data)
+
+    }
 }
+
+
+

@@ -9,10 +9,11 @@ import {
     toggleIsFetchingInAuthReducer
 } from '../../redux/authReducer';
 import axios from 'axios';
+import {socialNetworkAPI} from '../../api/socialNetworkAPI';
 
 
 type  HeaderContainerPropsType = {
-    registeredUserId:  null | string,
+    registeredUserId: null | string,
     registeredUserLogin: null | string,
     isAuth: boolean,
     isFetching: boolean,
@@ -24,17 +25,18 @@ type  HeaderContainerPropsType = {
 class HeaderContainer extends React.Component<HeaderContainerPropsType> {
     componentDidMount() {
         this.props.toggleIsFetchingInAuthReducer(true);
-        axios.get(`https://social-network.samuraijs.com/api/1.0/auth/me`, {withCredentials:true}).then(response => {
-            console.dir(response.data.data)
-            this.props.setAuthUserData(response.data.data)
-            this.props.toggleIsFetchingInAuthReducer(false);
+        socialNetworkAPI.authMe().then((data) => {
+            this.props.setAuthUserData(data)
+            this.props.toggleIsFetchingInAuthReducer(false)
         })
     }
 
 
     render() {
-        return <Header isAuth={this.props.isAuth} isFetching={this.props.isFetching} registeredUserId={this.props.registeredUserId}
-                       registeredUserLogin={this.props.registeredUserLogin} logOutAuthUserData={this.props.logOutAuthUserData}/>;
+        return <Header isAuth={this.props.isAuth} isFetching={this.props.isFetching}
+                       registeredUserId={this.props.registeredUserId}
+                       registeredUserLogin={this.props.registeredUserLogin}
+                       logOutAuthUserData={this.props.logOutAuthUserData}/>;
     }
 }
 

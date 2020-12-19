@@ -91,3 +91,4 @@ export const authReducer = (state = authInitialState, action: ActionsTypes): Aut
 }
 
 
+const setUserProfile =()=>()=>{}
