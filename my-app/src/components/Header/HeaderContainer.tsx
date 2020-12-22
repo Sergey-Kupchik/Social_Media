@@ -4,9 +4,7 @@ import {RootState} from '../../redux/storeRedux';
 import {connect} from 'react-redux';
 import {
     AuthUserData,
-    logOutAuthUserData,
-    setAuthUserData,
-    toggleIsFetchingInAuthReducer
+    logOutAuthUserData, setUserProfile,
 } from '../../redux/authReducer';
 import axios from 'axios';
 import {socialNetworkAPI} from '../../api/socialNetworkAPI';
@@ -17,21 +15,15 @@ type  HeaderContainerPropsType = {
     registeredUserLogin: null | string,
     isAuth: boolean,
     isFetching: boolean,
-    setAuthUserData: (data: AuthUserData) => void,
+
     logOutAuthUserData: () => void,
-    toggleIsFetchingInAuthReducer: (isFetching: boolean) => void,
+    setUserProfile: () => void,
 }
 
 class HeaderContainer extends React.Component<HeaderContainerPropsType> {
     componentDidMount() {
-        this.props.toggleIsFetchingInAuthReducer(true);
-        socialNetworkAPI.authMe().then((data) => {
-            this.props.setAuthUserData(data)
-            this.props.toggleIsFetchingInAuthReducer(false)
-        })
+        this.props.setUserProfile()
     }
-
-
     render() {
         return <Header isAuth={this.props.isAuth} isFetching={this.props.isFetching}
                        registeredUserId={this.props.registeredUserId}
@@ -47,8 +39,4 @@ const mapStateToProps = (state: RootState) => ({
     isFetching: state.auth.isFetching,
 })
 
-export default connect(mapStateToProps, {
-    setAuthUserData,
-    logOutAuthUserData,
-    toggleIsFetchingInAuthReducer
-})(HeaderContainer)
+export default connect(mapStateToProps, {logOutAuthUserData, setUserProfile,})(HeaderContainer)

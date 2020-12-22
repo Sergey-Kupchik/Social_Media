@@ -2,11 +2,13 @@ import {ActionsTypes} from './state';
 import {DialogsPagePropsType} from '../components/Dialogs/Dialogs';
 import {v1} from 'uuid';
 import {toggle_isFetching} from './usersReducer';
+import {socialNetworkAPI} from '../api/socialNetworkAPI';
+import {Dispatch} from 'redux';
 
 enum AUTH_REDUCER_ACTION_TYPE {
     SET_AUTH_REDUCER_USER_DATA,
     LOG_OUT_REDUCER_USER_DATA,
-   TOGGLE_IS_FETCHING_REDUCER_USER_DATA,
+    TOGGLE_IS_FETCHING_REDUCER_USER_DATA,
 }
 
 
@@ -40,8 +42,8 @@ export const logOutAuthUserData = () => ({
 } as const)
 
 // action creator for change IsFetching value in AuthReducer
-export const toggleIsFetchingInAuthReducer =(isFetching:boolean)=>({
-    type:AUTH_REDUCER_ACTION_TYPE.TOGGLE_IS_FETCHING_REDUCER_USER_DATA,
+export const toggleIsFetchingInAuthReducer = (isFetching: boolean) => ({
+    type: AUTH_REDUCER_ACTION_TYPE.TOGGLE_IS_FETCHING_REDUCER_USER_DATA,
     isFetching,
 } as const)
 
@@ -79,10 +81,10 @@ export const authReducer = (state = authInitialState, action: ActionsTypes): Aut
                 isAuth: false,
             }
         }
-        case AUTH_REDUCER_ACTION_TYPE.TOGGLE_IS_FETCHING_REDUCER_USER_DATA:{
+        case AUTH_REDUCER_ACTION_TYPE.TOGGLE_IS_FETCHING_REDUCER_USER_DATA: {
             return {
                 ...state,
-                isFetching:action.isFetching
+                isFetching: action.isFetching
             }
         }
 
@@ -91,4 +93,10 @@ export const authReducer = (state = authInitialState, action: ActionsTypes): Aut
 }
 
 
-const setUserProfile =()=>()=>{}
+export const setUserProfile = () => (dispatch: Dispatch) => {
+    dispatch(toggleIsFetchingInAuthReducer(true));
+    socialNetworkAPI.authMe().then((data) => {
+        dispatch(setAuthUserData(data))
+        dispatch(toggleIsFetchingInAuthReducer(false))
+    })
+}

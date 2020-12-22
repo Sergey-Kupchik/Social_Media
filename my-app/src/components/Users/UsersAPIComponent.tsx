@@ -1,5 +1,11 @@
 import React from 'react';
-import {UsersPagePropsType, UsersType} from '../../redux/usersReducer';
+import {
+    followUser,
+    set_users_currentPageSUCCESS,
+    setUpAllUsers, unfollowUser,
+    UsersPagePropsType,
+    UsersType
+} from '../../redux/usersReducer';
 import axios from 'axios';
 import {Users} from './Users';
 import {Preloader} from '../common/Preloader/Preloader';
@@ -13,52 +19,38 @@ export type UsersAPIComponentPropsType = {
     currentPage: number
     isFetching: boolean
     followingInProgress: Array<string>
-    follow_user: (userID: number | string) => void
-    unfollow_user: (userID: number | string) => void
     onSetNewCurrentPage: (pageNumber: number) => void
-    set_users: (users: Array<UsersType>) => void
-    set_users_total_count: (totalCount: number) => void
-    set_users_currentPage: (currentPage: number) => void
     toggle_isFetching: (isFetching: boolean) => void
-    toggle_followingInProgress:(isFetching: boolean, userId: string)=>void
+    setUpAllUsers:(pageSize: number, currentPage: number)=>void
+    setUpCurrentPage:(pageSize: number, currentPage: number,pageNumber: number)=>void
+    followUser:(userID: string) => void
+    unfollowUser:(userID: string) => void
+
+
+
 }
 
 
 export class UsersAPIComponent extends React.Component<UsersAPIComponentPropsType> {
     componentDidMount() {
-        this.props.toggle_isFetching(true);
-        socialNetworkAPI.getUsers(this.props.pageSize, this.props.currentPage).then((data) => {
-            this.props.set_users_total_count(data.totalCount)
-            this.props.set_users(data.items)
-            this.props.toggle_isFetching(false);
-        })
-
-
+        this.props.setUpAllUsers(this.props.pageSize, this.props.currentPage)
     }
-    disableButton =(isFetching: boolean, userId: string)=>{
-        this.props.toggle_followingInProgress(isFetching, userId)
-    }
+
 
 // on click to page number and update current page with axios request
     onSetNewCurrentPage = (pageNumber: number) => {
-        this.props.toggle_isFetching(true);
-        this.props.set_users_currentPage(pageNumber)
-        socialNetworkAPI.getUsers(this.props.pageSize, this.props.currentPage).then((data) => {
-            this.props.set_users_total_count(data.totalCount)
-            this.props.set_users(data.items)
-            this.props.toggle_isFetching(false);
-        })
+        this.props.setUpCurrentPage(this.props.pageSize, this.props.currentPage,pageNumber)
     }
 
 
 
     render() {
-
+debugger
         return <>
             {this.props.isFetching && <Preloader/>}
-            <Users users={this.props.users} currentPage={this.props.currentPage} follow_user={this.props.follow_user}
+            <Users users={this.props.users} currentPage={this.props.currentPage}
                    onSetNewCurrentPage={this.onSetNewCurrentPage} pageSize={this.props.pageSize}
-                   totalCount={this.props.totalCount} unfollow_user={this.props.unfollow_user} disableButton={this.disableButton} followingInProgress={this.props.followingInProgress}/>
+                   totalCount={this.props.totalCount} unfollowUser={this.props.unfollowUser} followUser={this.props.followUser} followingInProgress={this.props.followingInProgress} />
         </>
 
     }

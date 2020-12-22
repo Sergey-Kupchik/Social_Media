@@ -3,13 +3,13 @@ import {PostsStatePropsType} from '../components/Profile/Profile';
 import {AddPostAC, setNewProfile, ShowTextInTextareaAC} from './profileReducer';
 import {SendMessageOrderAC, ShowMessageInTextareaAC} from './dialogsReducer';
 import {
-    follow_user,
+    follow_userSUCCESS,
     set_users,
-    set_users_currentPage,
+    set_users_currentPageSUCCESS,
     set_users_total_count,
     toggle_isFetching,
-    unfollow_user,
     toggle_followingInProgress,
+    unfollow_userSUCCESS,
 } from './usersReducer';
 import {logOutAuthUserData, setAuthUserData, toggleIsFetchingInAuthReducer} from './authReducer';
 
@@ -28,11 +28,11 @@ export type ActionsTypes =
     | ReturnType<typeof ShowTextInTextareaAC>
     | ReturnType<typeof SendMessageOrderAC>
     | ReturnType<typeof ShowMessageInTextareaAC>
-    | ReturnType<typeof unfollow_user>
-    | ReturnType<typeof follow_user>
+    | ReturnType<typeof unfollow_userSUCCESS>
+    | ReturnType<typeof follow_userSUCCESS>
     | ReturnType<typeof set_users>
     | ReturnType<typeof set_users_total_count>
-    | ReturnType<typeof set_users_currentPage>
+    | ReturnType<typeof set_users_currentPageSUCCESS>
     | ReturnType<typeof toggle_isFetching>
     | ReturnType<typeof setNewProfile>
     | ReturnType<typeof setAuthUserData>

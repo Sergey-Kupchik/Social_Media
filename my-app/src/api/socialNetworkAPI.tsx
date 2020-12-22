@@ -50,7 +50,7 @@ export const socialNetworkAPI = {
     getUsers(pageSize = 10, currentPage = 1,) {
         return instance.get<GetUsersType>(`users?count=${pageSize}&page=${currentPage}`).then((res) => res.data)
     },
-    foolowUser(userId: string, data: any,) {
+    foolowUser(userId: string, data={},) {
         return instance.post<RequestType<{}>>(`follow/${userId}`, data).then((res) => res.data)
     },
     unfollowUser(userId: string,) {

@@ -2,10 +2,8 @@ import React from 'react';
 import ReactPaginate from 'react-paginate';
 import userPhoto from '../../assets/images/user.png';
 import styles from './Users.module.css';
-import {follow_user, unfollow_user, UsersType} from '../../redux/usersReducer';
-import {FaUserAlt} from 'react-icons/fa';
+import {UsersType} from '../../redux/usersReducer';
 import {NavLink} from 'react-router-dom';
-import axios from 'axios';
 import {socialNetworkAPI} from '../../api/socialNetworkAPI';
 
 
@@ -15,10 +13,9 @@ type UsersPropsType = {
     pageSize: number
     currentPage: number
     followingInProgress: Array<string>
-    follow_user: (userID: number | string) => void
-    unfollow_user: (userID: number | string) => void
     onSetNewCurrentPage: (pageNumber: number) => void
-    disableButton: (isFetching: boolean, userId: string) => void
+    followUser:(userID: string) => void
+    unfollowUser:(userID: string) => void
 }
 
 export const Users: React.FC<UsersPropsType> = (props) => {
@@ -58,24 +55,11 @@ export const Users: React.FC<UsersPropsType> = (props) => {
             <div>
                 {u.followed ?
                     <button disabled={props.followingInProgress.some(id=>id===u.id)} onClick={() => {
-                        props.disableButton(true,u.id)
-                        socialNetworkAPI.unfollowUser(u.id).then((data) => {
-                            if (data.resultCode == 0) {
-                                props.follow_user(u.id)
-                                props.disableButton(false,u.id)
-                            }
-                        })
+                        props.unfollowUser(u.id)
                     }}>Unfollow</button> :
 
                     <button disabled={props.followingInProgress.some(id=>id===u.id)} onClick={() => {
-                        props.disableButton(true,u.id)
-                        socialNetworkAPI.foolowUser(u.id, {}).then((data) => {
-                            if (data.resultCode == 0) {
-                                debugger
-                                props.unfollow_user(u.id)
-                                props.disableButton(false,u.id)
-                            }
-                        })
+                        props.followUser(u.id)
                     }}>Following</button>}
 
                     </div>
