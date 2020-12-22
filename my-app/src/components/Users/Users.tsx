@@ -16,6 +16,9 @@ type UsersPropsType = {
     onSetNewCurrentPage: (pageNumber: number) => void
     followUser:(userID: string) => void
     unfollowUser:(userID: string) => void
+
+
+
 }
 
 export const Users: React.FC<UsersPropsType> = (props) => {
@@ -29,6 +32,7 @@ export const Users: React.FC<UsersPropsType> = (props) => {
     let p = new Promise(function (resolve, reject) {
         setTimeout(() => resolve('done'), 1000)
     })
+
 
     return <>            <ReactPaginate pageCount={pagesQuantity}
                                         marginPagesDisplayed={1}

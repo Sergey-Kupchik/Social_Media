@@ -1,15 +1,8 @@
 import React from 'react';
-import {
-    followUser,
-    set_users_currentPageSUCCESS,
-    setUpAllUsers, unfollowUser,
-    UsersPagePropsType,
-    UsersType
-} from '../../redux/usersReducer';
-import axios from 'axios';
+import {UsersType} from '../../redux/usersReducer';
 import {Users} from './Users';
 import {Preloader} from '../common/Preloader/Preloader';
-import {socialNetworkAPI} from '../../api/socialNetworkAPI';
+import { Redirect } from 'react-router-dom';
 
 
 export type UsersAPIComponentPropsType = {
@@ -25,6 +18,9 @@ export type UsersAPIComponentPropsType = {
     setUpCurrentPage:(pageSize: number, currentPage: number,pageNumber: number)=>void
     followUser:(userID: string) => void
     unfollowUser:(userID: string) => void
+
+
+    isAuth: boolean
 
 
 
@@ -45,12 +41,13 @@ export class UsersAPIComponent extends React.Component<UsersAPIComponentPropsTyp
 
 
     render() {
-debugger
+        if (!this.props.isAuth) {
+            return <Redirect to="/lang" />}
         return <>
             {this.props.isFetching && <Preloader/>}
             <Users users={this.props.users} currentPage={this.props.currentPage}
                    onSetNewCurrentPage={this.onSetNewCurrentPage} pageSize={this.props.pageSize}
-                   totalCount={this.props.totalCount} unfollowUser={this.props.unfollowUser} followUser={this.props.followUser} followingInProgress={this.props.followingInProgress} />
+                   totalCount={this.props.totalCount} unfollowUser={this.props.unfollowUser} followUser={this.props.followUser} followingInProgress={this.props.followingInProgress}/>
         </>
 
     }
