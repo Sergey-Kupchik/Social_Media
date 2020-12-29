@@ -41,8 +41,6 @@ export class UsersAPIComponent extends React.Component<UsersAPIComponentPropsTyp
 
 
     render() {
-        if (!this.props.isAuth) {
-            return <Redirect to="/lang" />}
         return <>
             {this.props.isFetching && <Preloader/>}
             <Users users={this.props.users} currentPage={this.props.currentPage}

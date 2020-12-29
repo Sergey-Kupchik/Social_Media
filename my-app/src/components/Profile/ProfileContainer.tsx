@@ -5,6 +5,7 @@ import {RootState} from '../../redux/storeRedux';
 import {setNewProfile} from '../../redux/profileReducer';
 import axios from 'axios';
 import {withRouter, RouteComponentProps} from 'react-router-dom';
+import {withAuthRedirect} from '../HOCs/withAuth';
 
 
 type URLMatchParamsType = { userID: string }
@@ -51,7 +52,7 @@ const mapStateToProps = (state: RootState) => {
     }
 }
 
-const ProfileContainerWithURLData = withRouter(ProfileContainer)
+const ProfileContainerWithURLData = withAuthRedirect(withRouter(ProfileContainer))
 
 export default connect(mapStateToProps, {setNewProfile})(ProfileContainerWithURLData)
 
