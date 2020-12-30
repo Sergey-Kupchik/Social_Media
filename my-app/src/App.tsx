@@ -20,6 +20,7 @@ const App: React.FC<AppStatePropsType> = (props) => {
             <div className="content-container">
                 <Navbar/>
                 <div className="app-wrapper-content">
+
                     <Route path='/dialogs' render={() => <DialogsContainer/>}/>
 
 

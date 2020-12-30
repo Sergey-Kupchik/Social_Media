@@ -1,14 +1,12 @@
-import React, {ChangeEvent, KeyboardEvent} from "react";
+import React, {ChangeEvent, KeyboardEvent} from 'react';
 import styles from './MyPosts.module.css';
-import Post, {PostType} from "./Post/Post";
-import {AddPostAC, AddPostString, } from '../../../redux/profileReducer';
-
-
+import Post, {PostType} from './Post/Post';
+import {AddPostAC} from '../../../redux/profileReducer';
 
 
 type MyPostsPropsType = {
     showTextInTextarea: (e: ChangeEvent<HTMLTextAreaElement>)=>void
-    addNewPost:(action: {type: 'PROFILE-REDUCER-ADD-POST', newPostValue: string})=>void
+    addNewPost:(newPostValue: string)=>void
     textAreaState: string
     posts: Array<PostType>
 }
@@ -21,8 +19,8 @@ const MyPosts: React.FC<MyPostsPropsType> = (props) => {
     const onClick = () => {
         if (newPostElement.current && newPostElement.current.value.trim() !== "") {
             let newPost = newPostElement.current.value;
-            let action=AddPostAC(newPost)
-            props.addNewPost(action);
+
+            props.addNewPost(newPost);
         }
     }
 

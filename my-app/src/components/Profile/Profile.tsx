@@ -37,6 +37,7 @@ export type PostsStatePropsType = {
     posts: Array<PostType>
     newPostInTextArea:string
     profile: ProfileType | null
+    status: string
 }
 
 const Profile: React.FC<ProfilePropsType> = (props) => {

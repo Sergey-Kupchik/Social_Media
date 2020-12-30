@@ -4,7 +4,7 @@ import userPhoto from '../../assets/images/user.png';
 import styles from './Users.module.css';
 import {UsersType} from '../../redux/usersReducer';
 import {NavLink} from 'react-router-dom';
-import {socialNetworkAPI} from '../../api/socialNetworkAPI';
+import {UsersAPI} from '../../api/socialNetworkAPI';
 
 
 type UsersPropsType = {

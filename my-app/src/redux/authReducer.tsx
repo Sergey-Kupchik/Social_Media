@@ -1,8 +1,5 @@
 import {ActionsTypes} from './state';
-import {DialogsPagePropsType} from '../components/Dialogs/Dialogs';
-import {v1} from 'uuid';
-import {toggle_isFetching} from './usersReducer';
-import {socialNetworkAPI} from '../api/socialNetworkAPI';
+import {AuthAPI} from '../api/socialNetworkAPI';
 import {Dispatch} from 'redux';
 
 enum AUTH_REDUCER_ACTION_TYPE {
@@ -95,7 +92,7 @@ export const authReducer = (state = authInitialState, action: ActionsTypes): Aut
 
 export const setUserProfile = () => (dispatch: Dispatch) => {
     dispatch(toggleIsFetchingInAuthReducer(true));
-    socialNetworkAPI.authMe().then((data) => {
+    AuthAPI.authMe().then((data) => {
         dispatch(setAuthUserData(data))
         dispatch(toggleIsFetchingInAuthReducer(false))
     })

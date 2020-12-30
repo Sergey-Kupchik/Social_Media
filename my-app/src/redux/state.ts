@@ -1,14 +1,14 @@
 import {DialogsPagePropsType} from '../components/Dialogs/Dialogs';
 import {PostsStatePropsType} from '../components/Profile/Profile';
-import {AddPostAC, setNewProfile, ShowTextInTextareaAC} from './profileReducer';
+import {AddPostAC, setNewProfile, ShowPostTextInTextareaAC, ShowStatusTextInTextareaSuccess} from './profileReducer';
 import {SendMessageOrderAC, ShowMessageInTextareaAC} from './dialogsReducer';
 import {
     follow_userSUCCESS,
     set_users,
     set_users_currentPageSUCCESS,
     set_users_total_count,
-    toggle_isFetching,
     toggle_followingInProgress,
+    toggle_isFetching,
     unfollow_userSUCCESS,
 } from './usersReducer';
 import {logOutAuthUserData, setAuthUserData, toggleIsFetchingInAuthReducer} from './authReducer';
@@ -24,8 +24,11 @@ export type DispatchType = (action: ActionsTypes) => void
 
 
 export type ActionsTypes =
-    ReturnType<typeof AddPostAC>
-    | ReturnType<typeof ShowTextInTextareaAC>
+    | ReturnType<typeof AddPostAC>
+    | ReturnType<typeof ShowPostTextInTextareaAC>
+    | ReturnType<typeof setNewProfile>
+    | ReturnType<typeof ShowStatusTextInTextareaSuccess>
+
     | ReturnType<typeof SendMessageOrderAC>
     | ReturnType<typeof ShowMessageInTextareaAC>
     | ReturnType<typeof unfollow_userSUCCESS>
@@ -39,8 +42,6 @@ export type ActionsTypes =
     | ReturnType<typeof logOutAuthUserData>
     | ReturnType<typeof toggleIsFetchingInAuthReducer>
     | ReturnType<typeof toggle_followingInProgress>
-
-
 
 
 export type StoreType = {

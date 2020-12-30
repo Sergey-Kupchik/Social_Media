@@ -11,7 +11,7 @@ export type DialogsPagePropsType = {
 }
 
 
-type DialogsType2 = {
+export type DialogsType2 = {
     dialoguesList: DialogWithFriend[]
     messagesList: MessageType[]
     sendMessage: (action: { type: 'SEND-MESSAGE', message: string }) => void

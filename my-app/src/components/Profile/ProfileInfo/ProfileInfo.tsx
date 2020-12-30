@@ -3,6 +3,7 @@ import styles from './ProfileInfo.module.css';
 import {ProfilePropsType} from '../Profile';
 import {Preloader} from '../../common/Preloader/Preloader';
 import userPhoto from '../../../assets/images/user.png';
+import { ProfileStatus } from './ProfileStatus/ProfileStatus';
 
 
 const ProfileInfo: React.FC<ProfilePropsType> = (props) => {
@@ -17,7 +18,7 @@ const ProfileInfo: React.FC<ProfilePropsType> = (props) => {
             <img src={(props.profile?.photos.large == undefined && props.profile?.photos.large == null) ? userPhoto: props.profile.photos.large} alt="Photo of user" className={styles.userPhoto}/>
             <h2>{props.profile?.fullName} </h2>
             <h4>{props.profile?.aboutMe} </h4>
-
+            <ProfileStatus status={"First status"}/>
         </div>
     </div>
 }

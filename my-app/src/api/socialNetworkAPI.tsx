@@ -46,7 +46,7 @@ type AuthMeDataType ={
 }
 
 
-export const socialNetworkAPI = {
+export const UsersAPI = {
     getUsers(pageSize = 10, currentPage = 1,) {
         return instance.get<GetUsersType>(`users?count=${pageSize}&page=${currentPage}`).then((res) => res.data)
     },
@@ -56,6 +56,9 @@ export const socialNetworkAPI = {
     unfollowUser(userId: string,) {
         return instance.delete<RequestType<{}>>(`follow/${userId}`).then((res) => res.data)
     },
+}
+
+export const AuthAPI ={
     authMe() {
         return instance.get<RequestType<AuthMeDataType>>('auth/me').then(res=>res.data.data)
 

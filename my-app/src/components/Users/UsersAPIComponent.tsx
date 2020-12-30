@@ -19,11 +19,6 @@ export type UsersAPIComponentPropsType = {
     followUser:(userID: string) => void
     unfollowUser:(userID: string) => void
 
-
-    isAuth: boolean
-
-
-
 }
 
 

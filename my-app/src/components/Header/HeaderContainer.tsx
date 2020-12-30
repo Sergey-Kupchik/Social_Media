@@ -7,7 +7,7 @@ import {
     logOutAuthUserData, setUserProfile,
 } from '../../redux/authReducer';
 import axios from 'axios';
-import {socialNetworkAPI} from '../../api/socialNetworkAPI';
+import {UsersAPI} from '../../api/socialNetworkAPI';
 
 
 type  HeaderContainerPropsType = {
