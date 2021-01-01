@@ -1,5 +1,7 @@
 import {PostsStatePropsType, ProfileType} from '../components/Profile/Profile';
 import {v1} from 'uuid';
+import {Dispatch} from 'redux';
+import {ProfileAPI} from '../api/socialNetworkAPI';
 
 // Initial State
 
@@ -12,6 +14,7 @@ const profileInitialState: PostsStatePropsType = {
     ],
     newPostInTextArea: '',
     profile: null,
+    textAreaForUserStatus: '',
     status: '',
 
 }
@@ -43,7 +46,13 @@ export const profileReducer = (state = profileInitialState, action: ProfileReduc
         case ProfileReducer.ShowStatusTextInTextarea: {
             return {
                 ...state,
-                status: action.status,
+                textAreaForUserStatus: action.statusChanging,
+            }
+        }
+        case ProfileReducer.SetUserStatus: {
+            return {
+                ...state,
+                status: action.status
             }
         }
     }
@@ -52,6 +61,25 @@ export const profileReducer = (state = profileInitialState, action: ProfileReduc
 
 
 // Thunk Creator
+
+export const setUserStatus = (id: string) => (dispatch: Dispatch) => {
+    ProfileAPI.getUserStatus(id).then((status) => {
+        dispatch(ShowStatusTextInTextareaSuccess(status))
+        dispatch(SetUserStatusSuccess(status))
+
+    })
+
+}
+
+export const updateUserStatus = (status: string,) => (dispatch: Dispatch) => {
+    ProfileAPI.updateUserStatus(status).then((data) => {
+        if (data.resultCode===0){
+            dispatch(ShowStatusTextInTextareaSuccess(status))
+            dispatch(SetUserStatusSuccess(status))
+        }
+    })
+
+}
 
 // Action creators
 
@@ -70,8 +98,13 @@ export const setNewProfile = (profile: ProfileType) => ({
     profile,
 } as const);
 
-export const ShowStatusTextInTextareaSuccess = (status: string) => ({
+export const ShowStatusTextInTextareaSuccess = (statusChanging: string) => ({
     type: ProfileReducer.ShowStatusTextInTextarea,
+    statusChanging,
+} as const);
+
+export const SetUserStatusSuccess = (status: string) => ({
+    type: ProfileReducer.SetUserStatus,
     status,
 } as const);
 
@@ -82,6 +115,7 @@ export enum ProfileReducer {
     ShowTextInPostTextarea = 'PROFILE-REDUCER-SHOW-POST-IN-TEXTAREA',
     SetNewProfile = 'PROFILE-REDUCER-SET-NEW-PROFILE',
     ShowStatusTextInTextarea = 'PROFILE-REDUCER-SHOW-STATUS-IN-TEXTAREA',
+    SetUserStatus = 'PROFILE-REDUCER-SET-USER-STATUS',
 }
 
 export type ProfileReducerActionsTypes =
@@ -89,3 +123,4 @@ export type ProfileReducerActionsTypes =
     | ReturnType<typeof ShowPostTextInTextareaAC>
     | ReturnType<typeof setNewProfile>
     | ReturnType<typeof ShowStatusTextInTextareaSuccess>
+    | ReturnType<typeof SetUserStatusSuccess>

@@ -29,9 +29,7 @@ export const Users: React.FC<UsersPropsType> = (props) => {
     for (let i = 1; i <= pagesQuantity; i++) {
         pagesArray.push(i)
     }
-    let p = new Promise(function (resolve, reject) {
-        setTimeout(() => resolve('done'), 1000)
-    })
+
 
 
     return <>            <ReactPaginate pageCount={pagesQuantity}

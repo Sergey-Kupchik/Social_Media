@@ -13,6 +13,43 @@ const instance = axios.create({
     ...setting,
 })
 
+
+
+
+// API Objects
+
+export const UsersAPI = {
+    getUsers(pageSize = 10, currentPage = 1,) {
+        return instance.get<GetUsersType>(`users?count=${pageSize}&page=${currentPage}`).then((res) => res.data)
+    },
+    foolowUser(userId: string, data={},) {
+        return instance.post<RequestType<{}>>(`follow/${userId}`, data).then((res) => res.data)
+    },
+    unfollowUser(userId: string,) {
+        return instance.delete<RequestType<{}>>(`follow/${userId}`).then((res) => res.data)
+    },
+}
+
+export const AuthAPI ={
+    authMe() {
+        return instance.get<RequestType<AuthMeDataType>>('auth/me').then(res=>res.data.data)
+
+    }
+}
+
+export const ProfileAPI ={
+    getUserStatus(userId: string,){
+        return instance.get<string>(`/profile/status/${userId}`).then(res=>res.data)
+    },
+    updateUserStatus(status: string,){
+        return instance.put<RequestType<{}>>(`/profile/status/`, {status}).then(res=>res.data)
+    },
+}
+
+
+
+// Types
+
 type GetUsersType = {
     'items': Array<ServerUserType>
     'totalCount': number
@@ -44,26 +81,3 @@ type AuthMeDataType ={
     login: string
     email: string
 }
-
-
-export const UsersAPI = {
-    getUsers(pageSize = 10, currentPage = 1,) {
-        return instance.get<GetUsersType>(`users?count=${pageSize}&page=${currentPage}`).then((res) => res.data)
-    },
-    foolowUser(userId: string, data={},) {
-        return instance.post<RequestType<{}>>(`follow/${userId}`, data).then((res) => res.data)
-    },
-    unfollowUser(userId: string,) {
-        return instance.delete<RequestType<{}>>(`follow/${userId}`).then((res) => res.data)
-    },
-}
-
-export const AuthAPI ={
-    authMe() {
-        return instance.get<RequestType<AuthMeDataType>>('auth/me').then(res=>res.data.data)
-
-    }
-}
-
-
-

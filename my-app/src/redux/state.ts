@@ -1,6 +1,12 @@
 import {DialogsPagePropsType} from '../components/Dialogs/Dialogs';
 import {PostsStatePropsType} from '../components/Profile/Profile';
-import {AddPostAC, setNewProfile, ShowPostTextInTextareaAC, ShowStatusTextInTextareaSuccess} from './profileReducer';
+import {
+    AddPostAC,
+    setNewProfile,
+    SetUserStatusSuccess,
+    ShowPostTextInTextareaAC,
+    ShowStatusTextInTextareaSuccess
+} from './profileReducer';
 import {SendMessageOrderAC, ShowMessageInTextareaAC} from './dialogsReducer';
 import {
     follow_userSUCCESS,
@@ -28,6 +34,7 @@ export type ActionsTypes =
     | ReturnType<typeof ShowPostTextInTextareaAC>
     | ReturnType<typeof setNewProfile>
     | ReturnType<typeof ShowStatusTextInTextareaSuccess>
+    | ReturnType<typeof SetUserStatusSuccess>
 
     | ReturnType<typeof SendMessageOrderAC>
     | ReturnType<typeof ShowMessageInTextareaAC>
