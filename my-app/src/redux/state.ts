@@ -3,9 +3,9 @@ import {PostsStatePropsType} from '../components/Profile/Profile';
 import {
     AddPostAC,
     setNewProfile,
-    SetUserStatusSuccess,
+    setUserStatusSuccess,
     ShowPostTextInTextareaAC,
-    ShowStatusTextInTextareaSuccess
+    showStatusTextInTextareaSuccess
 } from './profileReducer';
 import {SendMessageOrderAC, ShowMessageInTextareaAC} from './dialogsReducer';
 import {
@@ -33,8 +33,8 @@ export type ActionsTypes =
     | ReturnType<typeof AddPostAC>
     | ReturnType<typeof ShowPostTextInTextareaAC>
     | ReturnType<typeof setNewProfile>
-    | ReturnType<typeof ShowStatusTextInTextareaSuccess>
-    | ReturnType<typeof SetUserStatusSuccess>
+    | ReturnType<typeof showStatusTextInTextareaSuccess>
+    | ReturnType<typeof setUserStatusSuccess>
 
     | ReturnType<typeof SendMessageOrderAC>
     | ReturnType<typeof ShowMessageInTextareaAC>

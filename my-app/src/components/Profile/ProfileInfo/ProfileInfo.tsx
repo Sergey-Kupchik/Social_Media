@@ -19,7 +19,7 @@ const ProfileInfo: React.FC<ProfilePropsType> = (props) => {
             <img src={(props.profile?.photos.large == undefined && props.profile?.photos.large == null) ? userPhoto: props.profile.photos.large} alt="Photo of user" className={styles.userPhoto}/>
             <h2>{props.profile?.fullName} </h2>
             <h4>{props.profile?.aboutMe} </h4>
-            <ProfileStatus status={props.status} textAreaForUserStatus={props.textAreaForUserStatus} userID={props.profile.userId}/>
+            <ProfileStatus status={props.status} textAreaForUserStatus={props.textAreaForUserStatus} userID={props.profile.userId} showStatusTextInTextareaSuccess={props.showStatusTextInTextareaSuccess} updateUserStatus={props.updateUserStatus}/>
         </div>
     </div>
 }

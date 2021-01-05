@@ -64,8 +64,8 @@ export const profileReducer = (state = profileInitialState, action: ProfileReduc
 
 export const setUserStatus = (id: string) => (dispatch: Dispatch) => {
     ProfileAPI.getUserStatus(id).then((status) => {
-        dispatch(ShowStatusTextInTextareaSuccess(status))
-        dispatch(SetUserStatusSuccess(status))
+        dispatch(showStatusTextInTextareaSuccess(status))
+        dispatch(setUserStatusSuccess(status))
 
     })
 
@@ -74,8 +74,8 @@ export const setUserStatus = (id: string) => (dispatch: Dispatch) => {
 export const updateUserStatus = (status: string,) => (dispatch: Dispatch) => {
     ProfileAPI.updateUserStatus(status).then((data) => {
         if (data.resultCode===0){
-            dispatch(ShowStatusTextInTextareaSuccess(status))
-            dispatch(SetUserStatusSuccess(status))
+            dispatch(showStatusTextInTextareaSuccess(status))
+            dispatch(setUserStatusSuccess(status))
         }
     })
 
@@ -98,12 +98,12 @@ export const setNewProfile = (profile: ProfileType) => ({
     profile,
 } as const);
 
-export const ShowStatusTextInTextareaSuccess = (statusChanging: string) => ({
+export const showStatusTextInTextareaSuccess = (statusChanging: string) => ({
     type: ProfileReducer.ShowStatusTextInTextarea,
     statusChanging,
 } as const);
 
-export const SetUserStatusSuccess = (status: string) => ({
+export const setUserStatusSuccess = (status: string) => ({
     type: ProfileReducer.SetUserStatus,
     status,
 } as const);
@@ -122,5 +122,5 @@ export type ProfileReducerActionsTypes =
     | ReturnType<typeof AddPostAC>
     | ReturnType<typeof ShowPostTextInTextareaAC>
     | ReturnType<typeof setNewProfile>
-    | ReturnType<typeof ShowStatusTextInTextareaSuccess>
-    | ReturnType<typeof SetUserStatusSuccess>
+    | ReturnType<typeof showStatusTextInTextareaSuccess>
+    | ReturnType<typeof setUserStatusSuccess>

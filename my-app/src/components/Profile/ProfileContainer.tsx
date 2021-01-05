@@ -2,7 +2,12 @@ import React, {ComponentType} from 'react';
 import Profile, {ProfileType} from './Profile';
 import {connect} from 'react-redux';
 import {RootState} from '../../redux/storeRedux';
-import {setNewProfile, setUserStatus, updateUserStatus} from '../../redux/profileReducer';
+import {
+    setNewProfile,
+    setUserStatus,
+    showStatusTextInTextareaSuccess,
+    updateUserStatus
+} from '../../redux/profileReducer';
 import axios from 'axios';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {withAuthRedirect} from '../HOCs/withAuth';
@@ -29,7 +34,7 @@ class ProfileContainer extends React.Component<ProfilePropsType & RouteComponent
 
     render() {
 
-        return <Profile {...this.props}/>
+        return <Profile {...this.props} />
 
     }
 }
@@ -40,6 +45,10 @@ type ProfilePropsType = {
     status: string
     setNewProfile: (profile: ProfileType) => void
     setUserStatus: (id: string) => void
+    showStatusTextInTextareaSuccess: (statusChanging: string) => void
+    updateUserStatus: (status: string,) =>void
+
+
 }
 const mapStateToProps = (state: RootState) => {
     return {
@@ -52,7 +61,6 @@ const mapStateToProps = (state: RootState) => {
 
 
 export default compose<ComponentType>(withAuthRedirect, withRouter, connect(mapStateToProps, {
-    setNewProfile,
-    setUserStatus,
-    updateUserStatus,
+    setNewProfile, setUserStatus,
+    updateUserStatus, showStatusTextInTextareaSuccess,
 }))(ProfileContainer)
