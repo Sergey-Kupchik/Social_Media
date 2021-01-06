@@ -1,23 +1,13 @@
 import {ActionsTypes} from './state';
 import {AuthAPI} from '../api/socialNetworkAPI';
 import {Dispatch} from 'redux';
+import {LoginFormDataType} from '../components/Login/Login';
 
 enum AUTH_REDUCER_ACTION_TYPE {
     SET_AUTH_REDUCER_USER_DATA,
     LOG_OUT_REDUCER_USER_DATA,
     TOGGLE_IS_FETCHING_REDUCER_USER_DATA,
 }
-
-
-// export const SendMessageOrderAC = (Newmessage: string) => ({
-//     type: SendMessageString,
-//     message: Newmessage
-// } as const);
-//
-// export const ShowMessageInTextareaAC = (newText: string) => ({
-//     type: ShowMessageInTextareaString,
-//     newText: newText
-// } as const);
 
 
 // type of user data from server
@@ -89,11 +79,24 @@ export const authReducer = (state = authInitialState, action: ActionsTypes): Aut
     return state;
 }
 
+// Thunk Creators
 
+// Check If current user authorized
 export const setUserProfile = () => (dispatch: Dispatch) => {
     dispatch(toggleIsFetchingInAuthReducer(true));
     AuthAPI.authMe().then((data) => {
         dispatch(setAuthUserData(data))
         dispatch(toggleIsFetchingInAuthReducer(false))
+    })
+}
+// Authorize current user on the service
+export const LogInUser =(data:LoginFormDataType)=>(dispatch: Dispatch)=> {
+    debugger
+    AuthAPI.LogIn(data).then((res)=>{
+        if (res.data.resultCode===0){
+            debugger
+            console.dir(res.data)
+            setUserProfile()
+        }
     })
 }

@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import {LoginFormDataType} from '../components/Login/Login';
 
 
 const setting = {
@@ -14,15 +15,13 @@ const instance = axios.create({
 })
 
 
-
-
 // API Objects
 
 export const UsersAPI = {
     getUsers(pageSize = 10, currentPage = 1,) {
         return instance.get<GetUsersType>(`users?count=${pageSize}&page=${currentPage}`).then((res) => res.data)
     },
-    foolowUser(userId: string, data={},) {
+    foolowUser(userId: string, data = {},) {
         return instance.post<RequestType<{}>>(`follow/${userId}`, data).then((res) => res.data)
     },
     unfollowUser(userId: string,) {
@@ -30,22 +29,31 @@ export const UsersAPI = {
     },
 }
 
-export const AuthAPI ={
+export const AuthAPI = {
+    //Is current user authorized
     authMe() {
-        return instance.get<RequestType<AuthMeDataType>>('auth/me').then(res=>res.data.data)
+        return instance.get<RequestType<AuthMeDataType>>('auth/me').then(res => res.data.data)
+    },
+    //Authorize on the service
+    LogIn(data: LoginFormDataType) {
+        return instance.post<RequestType<{ userId?: string }>>('auth/login', data)
+    },
+    //Unfollow requested user
+    LogOut() {
+        return instance.delete('auth/login')
+    },
 
-    }
+
 }
 
-export const ProfileAPI ={
-    getUserStatus(userId: string,){
-        return instance.get<string>(`/profile/status/${userId}`).then(res=>res.data)
+export const ProfileAPI = {
+    getUserStatus(userId: string,) {
+        return instance.get<string>(`/profile/status/${userId}`).then(res => res.data)
     },
-    updateUserStatus(status: string,){
-        return instance.put<RequestType<{}>>(`/profile/status/`, {status}).then(res=>res.data)
+    updateUserStatus(status: string,) {
+        return instance.put<RequestType<{}>>(`/profile/status/`, {status}).then(res => res.data)
     },
 }
-
 
 
 // Types
@@ -76,7 +84,7 @@ type RequestType<T> = {
     resultCode: number
 }
 
-type AuthMeDataType ={
+type AuthMeDataType = {
     id: string
     login: string
     email: string

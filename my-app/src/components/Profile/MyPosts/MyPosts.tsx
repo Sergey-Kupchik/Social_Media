@@ -2,6 +2,7 @@ import React, {ChangeEvent, KeyboardEvent} from 'react';
 import styles from './MyPosts.module.css';
 import Post, {PostType} from './Post/Post';
 import {AddPostAC} from '../../../redux/profileReducer';
+import {PostForm} from './PostForm';
 
 
 type MyPostsPropsType = {
@@ -34,18 +35,32 @@ const MyPosts: React.FC<MyPostsPropsType> = (props) => {
 
     return (
         <div>
-            New post
-            <div>
-                <div><textarea className={styles.text} ref={newPostElement} value={props.textAreaState}
-                               onChange={props.showTextInTextarea} onKeyPress={onKeyPress}></textarea></div>
-                <div>
-                    <button className={styles.button} onClick={onClick}>Add post</button>
-                </div>
-            </div>
+            <PostForm addNewPost={props.addNewPost}/>
+
             <div className={styles.posts}>
                 {props.posts.map(p => <Post id={p.id} message={p.message} likesCount={p.likesCount} key={p.id}/>)}
             </div>
         </div>
     )
 }
+//     return (
+//         <div>
+//             New post
+//             <div>
+//                 <div><textarea className={styles.text} ref={newPostElement} value={props.textAreaState}
+//                                onChange={props.showTextInTextarea} onKeyPress={onKeyPress}></textarea></div>
+//                 <div>
+//                     <button className={styles.button} onClick={onClick}>Add post</button>
+//                 </div>
+//             </div>
+//
+//             <div className={styles.posts}>
+//                 {props.posts.map(p => <Post id={p.id} message={p.message} likesCount={p.likesCount} key={p.id}/>)}
+//             </div>
+//         </div>
+//     )
+// }
+
+
+
 export default MyPosts;
