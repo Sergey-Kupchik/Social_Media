@@ -4,17 +4,18 @@ import logoRF from './logoRF.png';
 import logoRF_mobile from './logoRF_mobile.png';
 import {FaAlignJustify, FaAngleDoubleRight, FaEnvelope, FaConciergeBell, FaUserAlt} from 'react-icons/fa'
 import {NavLink} from 'react-router-dom';
-import { SiteLogo } from './SiteLogoComp/SiteLogo';
+import {SiteLogo} from './SiteLogoComp/SiteLogo';
+import {Dispatch} from 'redux';
 
 type HeaderPropsType = {
-    registeredUserId:  null | string,
+    registeredUserId: null | string,
     registeredUserLogin: null | string,
     isAuth: boolean,
     isFetching: boolean,
-    logOutAuthUserData: () => void,
+    logoutUser: () => (dispatch: Dispatch) => void,
 }
 
-export const Header = (props:HeaderPropsType) => {
+export const Header = (props: HeaderPropsType) => {
     let [hideMenu, setHideMenu] = useState<boolean>(false);
     const onMenuStyle = {
         display: hideMenu ? 'none' : 'block',
@@ -36,9 +37,11 @@ export const Header = (props:HeaderPropsType) => {
                 </div>
                 <div className={styles.right_content}>
                     <div className={styles.icon_avatar}>
-                        <div className={styles.icon_avatar_text}><NavLink to={'/profile/' + props.registeredUserId} ><FaUserAlt size={'1.3rem'}
-                                                                                                   color={'#20B2AA'}/>
-                            <div className={styles.icon_messages_text}>{props.isAuth? props.registeredUserLogin: <>Profile</>}</div>
+                        <div className={styles.icon_avatar_text}><NavLink
+                            to={'/profile/' + props.registeredUserId}><FaUserAlt size={'1.3rem'}
+                                                                                 color={'#20B2AA'}/>
+                            <div
+                                className={styles.icon_messages_text}>{props.isAuth ? props.registeredUserLogin : <>Profile</>}</div>
 
                         </NavLink></div>
                     </div>
@@ -54,9 +57,9 @@ export const Header = (props:HeaderPropsType) => {
                             </div>
                         </a>
                     </div>
-                    <div className={styles.sign_off} onClick={props.logOutAuthUserData}>
-                        <a href="#">Log Out</a>
-                    </div>
+                    {props.isAuth && <div className={styles.sign_off} onClick={props.logoutUser}>
+                        <a href="#">Logout</a>
+                    </div>}
                 </div>
             </div>
         </header>

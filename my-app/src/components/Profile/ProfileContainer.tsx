@@ -3,6 +3,7 @@ import Profile, {ProfileType} from './Profile';
 import {connect} from 'react-redux';
 import {RootState} from '../../redux/storeRedux';
 import {
+    AddPostAC, getUserProfile,
     setNewProfile,
     setUserStatus,
     showStatusTextInTextareaSuccess,
@@ -12,6 +13,7 @@ import axios from 'axios';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {withAuthRedirect} from '../HOCs/withAuth';
 import {compose} from 'redux';
+import {getIsAuth, getProfile, getRegisteredUserId, getTextAreaForStatus, getUserStatus} from '../util/reduxSelector';
 
 
 type URLMatchParamsType = { userID: string }
@@ -22,14 +24,16 @@ class ProfileContainer extends React.Component<ProfilePropsType & RouteComponent
 
         let currentUserID: string = this.props.match.params.userID
         if (!currentUserID) {
-            currentUserID = '12113'
+            currentUserID = this.props.authorizedUserID
         }
-        axios.get(`https://social-network.samuraijs.com/api/1.0/profile/` + currentUserID, {
-            withCredentials: true,
-        }).then(response => {
-            this.props.setNewProfile(response.data)
-            this.props.setUserStatus(currentUserID)
-        })
+
+        this.props.getUserProfile(currentUserID)
+        // axios.get(`https://social-network.samuraijs.com/api/1.0/profile/` + currentUserID, {
+        //     withCredentials: true,
+        // }).then(response => {
+        //     this.props.setNewProfile(response.data)
+        //     this.props.setUserStatus(currentUserID)
+        // })
     }
 
     render() {
@@ -40,27 +44,29 @@ class ProfileContainer extends React.Component<ProfilePropsType & RouteComponent
 }
 
 type ProfilePropsType = {
+    authorizedUserID: string
+    isAuth: boolean
     profile: ProfileType | null
     textAreaForUserStatus: string
     status: string
-    setNewProfile: (profile: ProfileType) => void
-    setUserStatus: (id: string) => void
+    getUserProfile: (id: string) => Function
     showStatusTextInTextareaSuccess: (statusChanging: string) => void
-    updateUserStatus: (status: string,) =>void
+    updateUserStatus: (status: string,) => void
 
 
 }
 const mapStateToProps = (state: RootState) => {
     return {
-        profile: state.profilePage.profile,
-        textAreaForUserStatus: state.profilePage.textAreaForUserStatus,
-        status: state.profilePage.status,
-
+        profile: getProfile(state),
+        textAreaForUserStatus: getTextAreaForStatus(state),
+        status: getUserStatus(state),
+        authorizedUserID: getRegisteredUserId(state),
+        isAuth: getIsAuth(state),
     }
 }
 
 
-export default compose<ComponentType>(withAuthRedirect, withRouter, connect(mapStateToProps, {
-    setNewProfile, setUserStatus,
-    updateUserStatus, showStatusTextInTextareaSuccess,
-}))(ProfileContainer)
+export default compose<ComponentType>(withAuthRedirect, withRouter,
+    connect(mapStateToProps, {
+        getUserProfile, updateUserStatus, showStatusTextInTextareaSuccess,
+    }))(ProfileContainer)

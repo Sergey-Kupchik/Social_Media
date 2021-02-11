@@ -2,7 +2,7 @@ import React, {ChangeEvent, KeyboardEvent} from 'react';
 import styles from './MyPosts.module.css';
 import Post, {PostType} from './Post/Post';
 import {AddPostAC} from '../../../redux/profileReducer';
-import {PostForm} from './PostForm';
+import {AddPostForm} from './AddPostForm';
 
 
 type MyPostsPropsType = {
@@ -35,7 +35,7 @@ const MyPosts: React.FC<MyPostsPropsType> = (props) => {
 
     return (
         <div>
-            <PostForm addNewPost={props.addNewPost}/>
+            <AddPostForm addNewPost={props.addNewPost}/>
 
             <div className={styles.posts}>
                 {props.posts.map(p => <Post id={p.id} message={p.message} likesCount={p.likesCount} key={p.id}/>)}

@@ -18,6 +18,7 @@ import {
     unfollow_userSUCCESS,
 } from './usersReducer';
 import {logOutAuthUserData, setAuthUserData, toggleIsFetchingInAuthReducer} from './authReducer';
+import {authorizeUserSuccess} from './appReducer';
 
 
 export type StateType = {
@@ -35,7 +36,6 @@ export type ActionsTypes =
     | ReturnType<typeof setNewProfile>
     | ReturnType<typeof showStatusTextInTextareaSuccess>
     | ReturnType<typeof setUserStatusSuccess>
-
     | ReturnType<typeof SendMessageOrderAC>
     | ReturnType<typeof ShowMessageInTextareaAC>
     | ReturnType<typeof unfollow_userSUCCESS>
@@ -49,6 +49,7 @@ export type ActionsTypes =
     | ReturnType<typeof logOutAuthUserData>
     | ReturnType<typeof toggleIsFetchingInAuthReducer>
     | ReturnType<typeof toggle_followingInProgress>
+    | ReturnType<typeof authorizeUserSuccess>
 
 
 export type StoreType = {

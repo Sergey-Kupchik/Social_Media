@@ -2,6 +2,10 @@ import {ActionsTypes} from './state';
 import {AuthAPI} from '../api/socialNetworkAPI';
 import {Dispatch} from 'redux';
 import {LoginFormDataType} from '../components/Login/Login';
+import {stopSubmit} from 'redux-form';
+import {authorizeUserSuccess} from './appReducer';
+import {ThunkDispatch} from 'redux-thunk';
+
 
 enum AUTH_REDUCER_ACTION_TYPE {
     SET_AUTH_REDUCER_USER_DATA,
@@ -39,6 +43,8 @@ interface AuthStateType extends AuthUserData {
     isAuth: boolean,
     isFetching: boolean,
 }
+
+export type LoginUserDispatchType = ThunkDispatch<any, any, any>
 
 // initial state for first start authReducer
 const authInitialState: AuthStateType = {
@@ -82,21 +88,58 @@ export const authReducer = (state = authInitialState, action: ActionsTypes): Aut
 // Thunk Creators
 
 // Check If current user authorized
-export const setUserProfile = () => (dispatch: Dispatch) => {
+export const setUserProfile = () => (dispatch: ThunkDispatch<AuthStateType, void, ActionsTypes>) => {
     dispatch(toggleIsFetchingInAuthReducer(true));
-    AuthAPI.authMe().then((data) => {
-        dispatch(setAuthUserData(data))
-        dispatch(toggleIsFetchingInAuthReducer(false))
-    })
+    (AuthAPI.authMe()
+        .then((res) => {
+            if (res.resultCode === 0) {
+                dispatch(setAuthUserData(res.data))
+                dispatch(toggleIsFetchingInAuthReducer(false))
+            } else {
+                dispatch(logoutUser())
+            }
+        }))
+    let a = (AuthAPI.authMe()
+        .then((res) => {
+            if (res.resultCode === 0) {
+                dispatch(setAuthUserData(res.data))
+                dispatch(toggleIsFetchingInAuthReducer(false))
+            } else {
+                dispatch(logoutUser())
+            }
+        }))
+    return a
 }
 // Authorize current user on the service
-export const LogInUser =(data:LoginFormDataType)=>(dispatch: Dispatch)=> {
-    debugger
-    AuthAPI.LogIn(data).then((res)=>{
-        if (res.data.resultCode===0){
-            debugger
-            console.dir(res.data)
-            setUserProfile()
+export const loginUser = (data: LoginFormDataType) => (dispatch: ThunkDispatch<AuthStateType, void, ActionsTypes>) => {
+    AuthAPI.login(data).then((res) => {
+        if (res.resultCode === 0) {
+            dispatch(setUserProfile())
+
+        } else {
+            dispatch(stopSubmit('login', {
+                email: res.messages,
+            }))
         }
+    }).catch((error) => {
+        alert(error)
     })
 }
+
+// delete cookie of current user
+export const logoutUser = () => (dispatch: ThunkDispatch<AuthStateType, void, ActionsTypes>) => {
+    AuthAPI.logout().then((res) => {
+            if (res.resultCode === 0) {
+                dispatch(logOutAuthUserData())
+                // dispatch(authorizeUserSuccess(false))
+            } else {
+                alert(`m from logoutUser authReducer ELSE ${res}`)
+            }
+        }
+    ).catch((error) => {
+
+        alert(`Im from logoutUser authReducer CATCH ${error}`)
+    })
+
+}
+

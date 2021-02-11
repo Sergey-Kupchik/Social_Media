@@ -2,12 +2,11 @@ import React from 'react';
 import {Header} from './Header';
 import {RootState} from '../../redux/storeRedux';
 import {connect} from 'react-redux';
-import {
-    AuthUserData,
-    logOutAuthUserData, setUserProfile,
-} from '../../redux/authReducer';
+import {AuthUserData, logoutUser, setUserProfile,} from '../../redux/authReducer';
 import axios from 'axios';
 import {UsersAPI} from '../../api/socialNetworkAPI';
+import {Dispatch} from 'redux';
+import {getRegisteredUserId, getRegisteredUserLogin, getIsAuth, getIsFetching} from '../util/reduxSelector';
 
 
 type  HeaderContainerPropsType = {
@@ -15,28 +14,27 @@ type  HeaderContainerPropsType = {
     registeredUserLogin: null | string,
     isAuth: boolean,
     isFetching: boolean,
-
-    logOutAuthUserData: () => void,
+    logoutUser: () => (dispatch: Dispatch) => void,
     setUserProfile: () => void,
 }
 
 class HeaderContainer extends React.Component<HeaderContainerPropsType> {
-    componentDidMount() {
-        this.props.setUserProfile()
-    }
+
     render() {
         return <Header isAuth={this.props.isAuth} isFetching={this.props.isFetching}
                        registeredUserId={this.props.registeredUserId}
                        registeredUserLogin={this.props.registeredUserLogin}
-                       logOutAuthUserData={this.props.logOutAuthUserData}/>;
+                       logoutUser={this.props.logoutUser}/>;
     }
 }
 
 const mapStateToProps = (state: RootState) => ({
-    registeredUserId: state.auth.id,
-    registeredUserLogin: state.auth.login,
-    isAuth: state.auth.isAuth,
-    isFetching: state.auth.isFetching,
+    registeredUserId: getRegisteredUserId(state),
+    registeredUserLogin: getRegisteredUserLogin(state),
+    isAuth: getIsAuth(state),
+    isFetching: getIsFetching(state),
 })
 
-export default connect(mapStateToProps, {logOutAuthUserData, setUserProfile,})(HeaderContainer)
+export default connect(mapStateToProps, {logoutUser,})
+    //@ts-ignore
+    (HeaderContainer)

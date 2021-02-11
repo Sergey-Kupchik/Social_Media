@@ -18,11 +18,11 @@ const PostTextarea : React.FC<InjectedFormProps<PostFormDataType>> = (props) => 
 }
 
 const PostReduxForm = reduxForm<PostFormDataType>({
-    form: 'post'
+    form: 'AddPostForm'
 })(PostTextarea)
 
 
-export const PostForm = (props:PostFormPropsType) => {
+export const AddPostForm = (props:PostFormPropsType) => {
     const onSubmit = (formData: PostFormDataType) => {
         props.addNewPost(formData.newPost)
     }

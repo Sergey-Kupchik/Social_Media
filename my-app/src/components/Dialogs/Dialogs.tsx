@@ -3,6 +3,7 @@ import styles from './Dialogs.module.css';
 import Message, {MessageType} from './Message/Message';
 import Dialog, {DialogWithFriend} from './Dialog/Dialog';
 import {SendMessageOrderAC} from '../../redux/dialogsReducer';
+import {SendMessageForm} from './SendMessageForm';
 
 export type DialogsPagePropsType = {
     dialogs: Array<DialogWithFriend>
@@ -14,7 +15,7 @@ export type DialogsPagePropsType = {
 export type DialogsType2 = {
     dialoguesList: DialogWithFriend[]
     messagesList: MessageType[]
-    sendMessage: (action: { type: 'SEND-MESSAGE', message: string }) => void
+    sendMessage: (message: string) => void
     onChange: (e: ChangeEvent<HTMLTextAreaElement>) => void
     messageStartAreaValue: string
 }
@@ -30,8 +31,7 @@ export const Dialogs: React.FC<DialogsType2> = (props) => {
     const onClick = () => {
         if (messageElementRef.current && messageElementRef.current.value.trim() !== '') {
             let NewMessage = messageElementRef.current.value;
-            let action = SendMessageOrderAC(NewMessage)
-            props.sendMessage(action);
+            props.sendMessage(NewMessage);
         }
     }
     const onKeyPress = (e: KeyboardEvent<HTMLTextAreaElement>) => {
@@ -45,15 +45,7 @@ export const Dialogs: React.FC<DialogsType2> = (props) => {
 
             <div className={styles.messages}>
                 {messagesList}
-                <textarea ref={messageElementRef}
-                          className={styles.text}
-                          onKeyPress={onKeyPress}
-                          value={props.messageStartAreaValue}
-                          onChange={props.onChange}
-                ></textarea>
-                <div>
-                    <button onClick={onClick} className={styles.button}>Send</button>
-                </div>
+                <SendMessageForm sendMessage={props.sendMessage}/>
             </div>
 
             <div className={styles.dialogsItem}>

@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import {LoginFormDataType} from '../components/Login/Login';
+import {ProfileType} from '../components/Profile/Profile';
 
 
 const setting = {
@@ -32,21 +33,22 @@ export const UsersAPI = {
 export const AuthAPI = {
     //Is current user authorized
     authMe() {
-        return instance.get<RequestType<AuthMeDataType>>('auth/me').then(res => res.data.data)
+        return instance.get<RequestType<AuthMeDataType>>('auth/me').then(res => res.data)
     },
     //Authorize on the service
-    LogIn(data: LoginFormDataType) {
-        return instance.post<RequestType<{ userId?: string }>>('auth/login', data)
+    login(data: LoginFormDataType) {
+        return instance.post<RequestType<{ userId?: string }>>('auth/login', data).then(res => res.data)
     },
     //Unfollow requested user
-    LogOut() {
-        return instance.delete('auth/login')
+    logout() {
+        return instance.delete<RequestType<{}>>('auth/login').then(res => res.data)
     },
-
-
 }
 
 export const ProfileAPI = {
+    getUserProfile(userId: string,) {
+        return  instance.get<ProfileType>(`/profile/${userId}`).then(res => res.data)
+    },
     getUserStatus(userId: string,) {
         return instance.get<string>(`/profile/status/${userId}`).then(res => res.data)
     },

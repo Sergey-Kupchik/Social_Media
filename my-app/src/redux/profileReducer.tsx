@@ -73,13 +73,24 @@ export const setUserStatus = (id: string) => (dispatch: Dispatch) => {
 
 export const updateUserStatus = (status: string,) => (dispatch: Dispatch) => {
     ProfileAPI.updateUserStatus(status).then((data) => {
-        if (data.resultCode===0){
+        if (data.resultCode === 0) {
             dispatch(showStatusTextInTextareaSuccess(status))
             dispatch(setUserStatusSuccess(status))
         }
     })
 
 }
+
+
+// get the profile information of user
+export const getUserProfile = (id: string) => (dispatch: Dispatch<ProfileReducerActionsTypes | any>) => {
+    ProfileAPI.getUserProfile(id).then((res) => {
+            dispatch(setNewProfile(res))
+            dispatch(setUserStatus(res.userId))
+        }
+    )
+}
+
 
 // Action creators
 
@@ -124,3 +135,4 @@ export type ProfileReducerActionsTypes =
     | ReturnType<typeof setNewProfile>
     | ReturnType<typeof showStatusTextInTextareaSuccess>
     | ReturnType<typeof setUserStatusSuccess>
+
