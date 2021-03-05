@@ -1,11 +1,12 @@
-import {PostsStatePropsType, ProfileType} from '../components/Profile/Profile';
+import {ProfileType} from '../components/Profile/Profile';
 import {v1} from 'uuid';
 import {Dispatch} from 'redux';
 import {ProfileAPI} from '../api/socialNetworkAPI';
+import {PostType} from '../components/Profile/MyPosts/Post/Post';
 
 // Initial State
 
-const profileInitialState: PostsStatePropsType = {
+const profileInitialState:ProfileStateType = {
     posts: [
         {id: v1(), message: 'Hola Ladies', likesCount: 0},
         {id: v1(), message: 'How are you?', likesCount: 12},
@@ -18,11 +19,11 @@ const profileInitialState: PostsStatePropsType = {
     status: '',
 
 }
-
+//[] as Array<string>,
 
 // Reducer
 
-export const profileReducer = (state = profileInitialState, action: ProfileReducerActionsTypes): PostsStatePropsType => {
+export const profileReducer = (state = profileInitialState, action: ProfileReducerActionsTypes): ProfileStateType => {
     switch (action.type) {
         case ProfileReducer.AddPOST: {
             return {
@@ -136,3 +137,10 @@ export type ProfileReducerActionsTypes =
     | ReturnType<typeof showStatusTextInTextareaSuccess>
     | ReturnType<typeof setUserStatusSuccess>
 
+type ProfileStateType = {
+    posts: Array<PostType>
+    newPostInTextArea: string
+    profile: ProfileType | null
+    textAreaForUserStatus: string
+    status: string
+}

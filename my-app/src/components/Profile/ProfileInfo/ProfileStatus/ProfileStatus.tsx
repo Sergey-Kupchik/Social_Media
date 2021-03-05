@@ -9,6 +9,7 @@ type ProfileStatusPropsType = {
     userID: string
     showStatusTextInTextareaSuccess: (statusChanging: string) => void
     updateUserStatus: (status: string,) =>void
+    authorizedUserID: string
 }
 
 export class ProfileStatus extends React.Component<ProfileStatusPropsType> {

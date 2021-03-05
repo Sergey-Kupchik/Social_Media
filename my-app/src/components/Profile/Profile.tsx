@@ -10,6 +10,7 @@ export type ProfilePropsType = {
     textAreaForUserStatus: string
     showStatusTextInTextareaSuccess: (statusChanging: string) => void
     updateUserStatus: (status: string,) =>void
+    authorizedUserID: string
 
 }
 
@@ -43,13 +44,13 @@ export type PostsStatePropsType = {
     profile: ProfileType | null
     textAreaForUserStatus:string
     status: string
-
+    authorizedUserID: string
 }
 
 const Profile: React.FC<ProfilePropsType> = (props) => {
     return (
         <div>
-            <ProfileInfo profile={props.profile} status={props.status} textAreaForUserStatus={props.textAreaForUserStatus}  showStatusTextInTextareaSuccess={props.showStatusTextInTextareaSuccess} updateUserStatus={props.updateUserStatus}/>
+            <ProfileInfo profile={props.profile} status={props.status} textAreaForUserStatus={props.textAreaForUserStatus}  showStatusTextInTextareaSuccess={props.showStatusTextInTextareaSuccess} updateUserStatus={props.updateUserStatus} authorizedUserID={props.authorizedUserID}/>
             <MyPostsContainer/>
         </div>
     )
