@@ -1,0 +1,26 @@
+{
+  "files": {
+    "main.css": "/Social_Media/static/css/main.89c4b1f9.chunk.css",
+    "main.js": "/Social_Media/static/js/main.358c668e.chunk.js",
+    "main.js.map": "/Social_Media/static/js/main.358c668e.chunk.js.map",
+    "runtime-main.js": "/Social_Media/static/js/runtime-main.adb8e20d.js",
+    "runtime-main.js.map": "/Social_Media/static/js/runtime-main.adb8e20d.js.map",
+    "static/js/2.9d487788.chunk.js": "/Social_Media/static/js/2.9d487788.chunk.js",
+    "static/js/2.9d487788.chunk.js.map": "/Social_Media/static/js/2.9d487788.chunk.js.map",
+    "index.html": "/Social_Media/index.html",
+    "precache-manifest.61d039e746fa8ab8dd630a3e7b30705b.js": "/Social_Media/precache-manifest.61d039e746fa8ab8dd630a3e7b30705b.js",
+    "service-worker.js": "/Social_Media/service-worker.js",
+    "static/css/main.89c4b1f9.chunk.css.map": "/Social_Media/static/css/main.89c4b1f9.chunk.css.map",
+    "static/js/2.9d487788.chunk.js.LICENSE.txt": "/Social_Media/static/js/2.9d487788.chunk.js.LICENSE.txt",
+    "static/media/logoRF.png": "/Social_Media/static/media/logoRF.fc12e143.png",
+    "static/media/logoRF_mobile.png": "/Social_Media/static/media/logoRF_mobile.66bab914.png",
+    "static/media/preloader.svg": "/Social_Media/static/media/preloader.c5af9753.svg",
+    "static/media/user.png": "/Social_Media/static/media/user.908d8322.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.adb8e20d.js",
+    "static/js/2.9d487788.chunk.js",
+    "static/css/main.89c4b1f9.chunk.css",
+    "static/js/main.358c668e.chunk.js"
+  ]
+}
