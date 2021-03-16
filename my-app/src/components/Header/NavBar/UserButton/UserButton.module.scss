@@ -1,0 +1,39 @@
+
+.dropdown_toggle{
+  background-color: transparent;
+  border:none;
+  &:focus{
+    outline: none;
+  }
+  .media {
+    .item_img {
+      position: relative;
+
+      .userPhoto {
+        width: 40px;
+        border-radius: 50%;
+        vertical-align: middle;
+        cursor: pointer;
+      }
+
+      .acc_verified {
+        right: -3px;
+        top: -16px;
+        position: absolute;
+
+        img {
+          width: 18px;
+        }
+      }
+    }
+    .media_body {
+      .item_itle {
+        margin-bottom: 0;
+        color: white;
+        font-weight: 400;
+        font-size: 16px;
+        margin-left: 8px;
+      }
+    }
+  }
+}

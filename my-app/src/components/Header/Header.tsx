@@ -1,13 +1,11 @@
-import React, {useState} from 'react';
-import styles from './Header.module.css';
-import logoRF from './logoRF.png';
-import logoRF_mobile from './logoRF_mobile.png';
-import {FaAlignJustify, FaAngleDoubleRight, FaEnvelope, FaConciergeBell, FaUserAlt} from 'react-icons/fa'
-import {NavLink} from 'react-router-dom';
-import {SiteLogo} from './SiteLogoComp/SiteLogo';
+import React, {useCallback, useState} from 'react';
+import styles from './Header.module.scss';
+import {HeaderLogo} from './HeaderLogo/HeaderLogo';
 import {Dispatch} from 'redux';
+import {HamburgerArrowReverse} from 'react-animated-burgers/lib';
+import {NavBar} from './NavBar/NavBar';
 
-type HeaderPropsType = {
+export type HeaderPropsType = {
     registeredUserId: null | string,
     registeredUserLogin: null | string,
     isAuth: boolean,
@@ -15,53 +13,27 @@ type HeaderPropsType = {
     logoutUser: () => (dispatch: Dispatch) => void,
 }
 
-export const Header = (props: HeaderPropsType) => {
-    let [hideMenu, setHideMenu] = useState<boolean>(false);
-    const onMenuStyle = {
-        display: hideMenu ? 'none' : 'block',
-    };
-    const offMenuStyle = {
-        display: hideMenu ? 'block' : 'none',
-    };
+
+export const Header = React.memo(function Header(props: HeaderPropsType) {
+    let [isActive, setIsActive] = useState<boolean>(false);
+    const toggleButton = useCallback(
+        () => setIsActive(isActive => !isActive),
+        [],
+    )
     return (
         <header className={styles.header}>
-            <SiteLogo/>
-            <div className={styles.bar}>
-                <div className={styles.left_content}>
-                    <FaAlignJustify size={'1.3rem'} color={'#20B2AA'} style={onMenuStyle} onClick={() => {
-                        setHideMenu(true)
-                    }}/>
-                    <FaAngleDoubleRight size={'1.3rem'} color={'#20B2AA'} style={offMenuStyle} onClick={() => {
-                        setHideMenu(false)
-                    }}/>
-                </div>
-                <div className={styles.right_content}>
-                    <div className={styles.icon_avatar}>
-                        <div className={styles.icon_avatar_text}><NavLink
-                            to={'/profile/' + props.registeredUserId}><FaUserAlt size={'1.3rem'}
-                                                                                 color={'#20B2AA'}/>
-                            <div
-                                className={styles.icon_messages_text}>{props.isAuth ? props.registeredUserLogin : <>Profile</>}</div>
-
-                        </NavLink></div>
-                    </div>
-                    <div className={styles.icon_messages}>
-                        <NavLink to="/dialogs"> <FaEnvelope size={'1.3rem'} color={'#20B2AA'}/>
-                            <div className={styles.icon_messages_text}>Messages</div>
-                        </NavLink>
-                    </div>
-                    <div className={styles.icon_alerts}>
-                        <a href="#">
-                            <FaConciergeBell size={'1.3rem'} color={'#20B2AA'}/>
-                            <div className={styles.icon_alerts_text}>Alerts
-                            </div>
-                        </a>
-                    </div>
-                    {props.isAuth && <div className={styles.sign_off} onClick={props.logoutUser}>
-                        <a href="#">Logout</a>
-                    </div>}
-                </div>
+            <div className={styles.right_left}>
+                <HamburgerArrowReverse
+                    barColor="white"
+                    buttonColor="#5854ef"
+                    {...{ isActive, toggleButton }}
+                    className={styles.burger_menu}/>
+                <HeaderLogo/>
             </div>
+            <NavBar {...props}/>
         </header>
     )
-}
+})
+
+
+

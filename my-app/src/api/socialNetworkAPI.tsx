@@ -6,7 +6,7 @@ import {ProfileType} from '../components/Profile/Profile';
 
 const setting = {
     withCredentials: true,
-    headers: {'API-KEY': 'ee542fb7-1a9c-4a81-99e7-a73b8549f173'},
+    headers: {'API-KEY': '5ce2c2dd-2872-4cf9-9287-1566cd6e0602'},
 }
 
 

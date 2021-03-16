@@ -12,6 +12,7 @@ type ProfileStatusPropsType = {
 
 
 export const ProfileStatusWithHOC: React.FunctionComponent<ProfileStatusPropsType> = (props) => {
+
     const [editMode, setEditMode] = useState(false)
     const setIsMode = (editMode: boolean) => {
         if (props.userID == props.authorizedUserID) {
@@ -26,8 +27,8 @@ export const ProfileStatusWithHOC: React.FunctionComponent<ProfileStatusPropsTyp
     }
     return <>
         {!editMode &&
-        <div>
-            <span onClick={() => setIsMode(true)}>{props.status}</span>
+        <div >
+            <span onClick={() => setIsMode(true)}>{props.status.length==0?"Set status" : props.status}</span>
         </div>
         }
         {editMode &&

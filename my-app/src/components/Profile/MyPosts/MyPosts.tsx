@@ -20,13 +20,9 @@ const MyPosts: React.FC<MyPostsPropsType> = (props) => {
     const onClick = () => {
         if (newPostElement.current && newPostElement.current.value.trim() !== "") {
             let newPost = newPostElement.current.value;
-
             props.addNewPost(newPost);
         }
     }
-
-
-
     const onKeyPress=(e:KeyboardEvent<HTMLTextAreaElement>)=>{
         if (e.key==="Enter"){
             onClick();

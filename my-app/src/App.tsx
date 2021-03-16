@@ -1,6 +1,7 @@
 import React, {ComponentType} from 'react';
-import './App.css';
-import Navbar from './components/Navbar/Navbar';
+// import './App.css';
+import styles from './App2.module.scss';
+import Sidebar from './components/Navbar/Sidebar';
 import {Route, withRouter} from 'react-router-dom';
 import Music from './components/Music/Music';
 import News from './components/News/News';
@@ -12,9 +13,6 @@ import HeaderContainer from './components/Header/HeaderContainer';
 import {LoginContainer} from './components/Login/Login';
 import {compose} from 'redux';
 import {connect} from 'react-redux';
-import {setUserProfile} from './redux/authReducer';
-import {withAuthRedirect} from './components/HOCs/withAuth';
-import {getUserProfile, showStatusTextInTextareaSuccess, updateUserStatus} from './redux/profileReducer';
 import {RootState} from './redux/storeRedux';
 import {authorizeUser} from './redux/appReducer';
 import {Preloader} from './components/common/Preloader/Preloader';
@@ -30,35 +28,37 @@ class App extends React.Component<AppStatePropsType> {
     }
 
     render() {
-    if (!this.props.authorize){
-        return <Preloader/>
-    }
+        // if (!this.props.authorize){
+        //     return <Preloader/>
+        // }
         return (
-            <div className="app-wrapper">
+            <div className={styles.wrapper}>
                 <HeaderContainer/>
-                <div className="content-container">
-                    <Navbar/>
-                    <div className="app-wrapper-content">
-
-                        <Route path='/dialogs' render={() => <DialogsContainer/>}/>
-
-
-                        <Route path='/profile/:userID?' render={() => <ProfileContainer/>}/>
-
-                        <Route path='/music' component={Music}/>
-                        <Route path='/news' component={News}/>
-                        <Route path='/settings' component={Settings}/>
-                        <Route path='/users' component={UsersContainer}/>
-                        <Route path='/lang' component={LoginContainer}/>
+                <div className={styles.container}>
+                    <Sidebar/>
+                    <div className={styles.app_wrapper_content}>
+                        <div className={styles.app_content}>
+                            <Route path='/dialogs' render={() => <DialogsContainer/>}/>
+                            <Route path='/profile/:userID?' render={() => <ProfileContainer/>}/>
+                            <Route path='/music' component={Music}/>
+                            <Route path='/news' component={News}/>
+                            <Route path='/settings' component={Settings}/>
+                            <Route path='/users' component={UsersContainer}/>
+                            <Route path='/lang' component={LoginContainer}/>
+                        </div>
                     </div>
                 </div>
+                <div className={styles.footer}></div>
             </div>
+
+
         );
     }
 }
+
 // map state to props
-const mstp =(state:RootState)=>({
-    authorize:state.app.authorize
+const mstp = (state: RootState) => ({
+    authorize: state.app.authorize
 })
 export default compose<ComponentType>(
     withRouter,

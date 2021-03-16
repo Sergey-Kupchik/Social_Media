@@ -1,0 +1,53 @@
+@import "./../common/variables";
+@import "./../common/mixin";
+
+.nav {
+  background-color: $backgroundColorSecondary;
+  display: flex;
+  width: 270px;
+  flex-direction: column;
+  @include boxShadowDelay();
+  @media only screen and (max-width: 575px) {
+    display: none;
+  }
+
+  .item {
+    display: flex;
+    justify-content: flex-start;
+
+    &:hover {
+      @include boxShadowDelay();
+    }
+
+    &:hover a {
+      color: $iconColorSecondary;
+    }
+
+    a {
+      color: $iconColorPrimary;
+      text-decoration: none;
+
+      &:active {
+        font-weight: bold;
+        color: $iconColorSecondary;
+      }
+
+      svg {
+        height: 2.5rem;
+        width: 2.5rem;
+        color: $iconColorTertiary;
+      }
+    }
+  }
+}
+
+
+.item_value {
+  margin-left: 0.5rem;
+}
+
+.navLink {
+  display: flex;
+  width: 100%;
+  padding: 1rem;
+}

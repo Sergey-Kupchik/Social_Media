@@ -1,0 +1,16 @@
+.wrapper{
+  height: 100%;
+  padding:0 15px ;
+  display: none;
+  @media (min-width: 576px) {
+    display: block;
+  }
+  .headerLogo{
+    height: inherit;
+    display: flex;
+    align-items: center;
+      img{
+        width: 120px;
+    }
+  }
+}
