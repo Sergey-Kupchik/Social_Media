@@ -17,7 +17,7 @@ import {
     toggle_isFetching,
     unfollow_userSUCCESS,
 } from './usersReducer';
-import {logOutAuthUserData, setAuthUserData, toggleIsFetchingInAuthReducer} from './authReducer';
+import {logOutAuthUserData, setAuthUserData, getAuthUserPhoto, toggleIsFetchingInAuthReducer} from './authReducer';
 import {authorizeUserSuccess} from './appReducer';
 
 
@@ -50,6 +50,7 @@ export type ActionsTypes =
     | ReturnType<typeof toggleIsFetchingInAuthReducer>
     | ReturnType<typeof toggle_followingInProgress>
     | ReturnType<typeof authorizeUserSuccess>
+    | ReturnType<typeof getAuthUserPhoto>
 
 
 export type StoreType = {

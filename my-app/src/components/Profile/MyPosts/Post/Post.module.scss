@@ -1,0 +1,131 @@
+//
+//.item {
+//    color: brown;
+//}
+//.item img {
+//    width: 50px;
+//    height: 50px;
+//    border-radius: 30px;
+//}
+@import "./../my-app/src/components/common/variables";
+@import "./../my-app/src/components/common/mixin";
+
+.wrapper {
+  margin-bottom: 15px;
+  background-color: $backgroundColorSecondary;
+  border-radius: 8px;
+  @include borderRadius();
+  @include boxShadowDelay();
+
+  .header {
+    justify-content: space-between;
+    display: flex;
+    align-items: center;
+    -webkit-box-pack: justify;
+    padding: 30px 30px 18px;
+    line-height: 25px;
+
+    a {
+      cursor: pointer;
+      span {
+        span {
+          color:$textColorSecondary!important;
+          font-weight: 700;
+          img {
+            width: 60px !important;
+          }
+          span {
+            img {
+              display: none;
+            }
+          }
+        }
+      }
+    }
+
+    .entry_meta {
+      list-style: outside none none;
+      margin: 0;
+      padding: 0;
+      color: $iconColorPrimary;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      align-items: center;
+
+      svg {
+        padding-right: 2px;
+
+        &:hover {
+          color: $iconColorSecondary;
+
+        }
+      }
+
+      li {
+        display: inline-block;
+        font-size: 12px;
+        position: relative;
+        line-height: 25px;
+      }
+
+      .meta_time {
+        padding-left: 10px;
+      }
+    }
+  }
+
+  .content_container {
+    padding: 15px 30px;
+
+    .content {
+      font-size: 14px;
+      margin: 0 0 15px 0;
+      color: $iconColorPrimary;
+      margin-bottom: 14px;
+    }
+
+    .content_img {
+      img {
+        width: 100%;
+        height: auto;
+        border-radius: 3px;
+      }
+    }
+
+  }
+  .footer{
+    display: flex;
+    justify-content: space-between;
+    font-size: 16px;
+    align-items: center;
+    color:$iconColorPrimary;
+    font-weight: 600;
+    padding: 3px 30px;
+    border-top: 1px solid #e2e2e2;
+    .footer_main{
+      display: flex;
+      align-items: center;
+      border: none;
+      color: $iconColorPrimary;
+      font-weight: 600;
+      font-size: 16px;
+      background-color: transparent;
+      cursor: pointer;
+      transition: all 0.3s ease-in-out;
+      &:focus,&:hover{
+        outline: none;
+        color: $iconColorSecondary;
+      }
+      svg{
+        width: 23px;
+        height: 23px;
+        margin-right: 14px;
+        margin-bottom: 10px;
+      }
+    }
+    span{
+      padding: 15px 0;
+    };
+  }
+}

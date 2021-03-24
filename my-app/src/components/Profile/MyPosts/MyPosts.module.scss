@@ -1,0 +1,97 @@
+@import "./../../common/variables";
+@import "./../../common/mixin";
+
+.posts {
+  color: brown;
+
+}
+
+.button {
+  box-shadow: inset 0px 1px 0px 0px #a4e271;
+  background: linear-gradient(to bottom, #89c403 5%, #77a809 100%);
+  background-color: #89c403;
+  border-radius: 8px;
+  border: 1px solid #74b807;
+  display: inline-block;
+  cursor: pointer;
+  color: #ffffff;
+  font-size: 10px;
+  font-weight: bold;
+  padding: 6px 24px;
+  text-decoration: none;
+  text-shadow: 0px 1px 0px #528009;
+}
+
+.button:hover {
+  background: linear-gradient(to bottom, #77a809 5%, #89c403 100%);
+  background-color: #77a809;
+}
+
+.button:active {
+  position: relative;
+  top: 1px;
+}
+
+
+.text {
+  padding: 5px;
+  font-size: 16px;
+  border-width: 1px;
+  border-color: #CCCCCC;
+  background-color: #FFFFFF;
+  color: #000000;
+  border-style: solid;
+  border-radius: 0px;
+  box-shadow: 0px 0px 5px rgba(66, 66, 66, .75);
+  text-shadow: 0px 0px 5px rgba(66, 66, 66, .75);
+}
+
+.text:focus {
+  outline: none;
+}
+
+
+.add_post_wrapper {
+  margin: 15px 0;
+  background: $backgroundColorSecondary;
+  border-radius: 8px;
+  @include boxShadowDelay();
+
+  .add_post_title {
+    border-bottom: 1px solid #e2e2e2;
+    font-weight: 400;
+    color: $iconColorPrimary;
+    position: relative;
+    padding: 10px;
+    font-size: 20px;
+  }
+
+  form {
+    .add_post_main {
+      border-bottom: 1px solid #e2e2e2;
+      padding: 10px;
+      display: flex;
+
+      textarea {
+        width: auto;
+        resize: none;
+        flex: 1 1 100%;
+        border: none;
+        background-color: #f5f7fa;
+        border-radius: 8px;
+        box-shadow: none;
+        color: $iconColorPrimary;
+        padding-top: 20px;
+  }
+}
+.btn_wrap{
+  padding: 10px;
+  display: flex;
+  justify-content: flex-end;
+  .btn{
+    @include btnBasic(20%);
+  }
+}
+
+}
+}

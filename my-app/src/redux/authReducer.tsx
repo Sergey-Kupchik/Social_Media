@@ -1,5 +1,5 @@
 import {ActionsTypes} from './state';
-import {AuthAPI} from '../api/socialNetworkAPI';
+import {AuthAPI, ProfileAPI} from '../api/socialNetworkAPI';
 import {Dispatch} from 'redux';
 import {LoginFormDataType} from '../components/Login/Login';
 import {stopSubmit} from 'redux-form';
@@ -8,9 +8,10 @@ import {ThunkDispatch} from 'redux-thunk';
 
 
 enum AUTH_REDUCER_ACTION_TYPE {
-    SET_AUTH_REDUCER_USER_DATA,
-    LOG_OUT_REDUCER_USER_DATA,
-    TOGGLE_IS_FETCHING_REDUCER_USER_DATA,
+    SET_AUTH_REDUCER_USER_DATA="AUTH_REDUCER_ACTION_TYPE_SET_AUTH_REDUCER_USER_DATA",
+    LOG_OUT_REDUCER_USER_DATA="AUTH_REDUCER_ACTION_TYPE_LOG_OUT_REDUCER_USER_DATA",
+    TOGGLE_IS_FETCHING_REDUCER_USER_DATA="AUTH_REDUCER_ACTION_TYPE_TOGGLE_IS_FETCHING_REDUCER_USER_DATA",
+    SET_USER_PHOTO="AUTH_REDUCER_ACTION_TYPE_SET_USER_PHOTO",
 }
 
 
@@ -27,6 +28,13 @@ export const setAuthUserData = (data: AuthUserData) => ({
     data,
 } as const)
 
+// action creator for get user photo
+export const getAuthUserPhoto = (userPhoto: string|null) => ({
+    type: AUTH_REDUCER_ACTION_TYPE.SET_USER_PHOTO,
+    userPhoto,
+} as const)
+
+
 // action creator for log out from auth
 export const logOutAuthUserData = () => ({
     type: AUTH_REDUCER_ACTION_TYPE.LOG_OUT_REDUCER_USER_DATA,
@@ -42,17 +50,18 @@ export const toggleIsFetchingInAuthReducer = (isFetching: boolean) => ({
 interface AuthStateType extends AuthUserData {
     isAuth: boolean,
     isFetching: boolean,
-}
+    userPhoto: null|string}
 
 export type LoginUserDispatchType = ThunkDispatch<any, any, any>
 
 // initial state for first start authReducer
-const authInitialState: AuthStateType = {
+const authInitialState = {
     id: null,
     login: null,
     email: null,
     isAuth: false,
     isFetching: false,
+    userPhoto: null,
 }
 
 
@@ -71,6 +80,7 @@ export const authReducer = (state = authInitialState, action: ActionsTypes): Aut
                 email: null,
                 id: null,
                 login: null,
+                userPhoto:null,
                 isAuth: false,
             }
         }
@@ -78,6 +88,12 @@ export const authReducer = (state = authInitialState, action: ActionsTypes): Aut
             return {
                 ...state,
                 isFetching: action.isFetching
+            }
+        }
+        case AUTH_REDUCER_ACTION_TYPE.SET_USER_PHOTO:{
+            return {
+                ...state,
+                userPhoto: action.userPhoto
             }
         }
 
@@ -99,7 +115,7 @@ export const setUserProfile = () => (dispatch: ThunkDispatch<AuthStateType, void
                 dispatch(logoutUser())
             }
         }))
-    let a = (AuthAPI.authMe()
+    let promise = (AuthAPI.authMe()
         .then((res) => {
             if (res.resultCode === 0) {
                 dispatch(setAuthUserData(res.data))
@@ -108,7 +124,7 @@ export const setUserProfile = () => (dispatch: ThunkDispatch<AuthStateType, void
                 dispatch(logoutUser())
             }
         }))
-    return a
+    return promise
 }
 // Authorize current user on the service
 export const loginUser = (data: LoginFormDataType) => (dispatch: ThunkDispatch<AuthStateType, void, ActionsTypes>) => {
@@ -125,6 +141,12 @@ export const loginUser = (data: LoginFormDataType) => (dispatch: ThunkDispatch<A
         alert(error)
     })
 }
+
+// Get photo of authorized user for avatar
+ export const downloadUserPhoto =(id:string )=>(dispatch: ThunkDispatch<AuthStateType, void, ActionsTypes>)=>{
+     ProfileAPI.getUserProfile(id).then(p=>getAuthUserPhoto(p.photos.small))}
+
+
 
 // delete cookie of current user
 export const logoutUser = () => (dispatch: ThunkDispatch<AuthStateType, void, ActionsTypes>) => {

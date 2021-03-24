@@ -1,7 +1,10 @@
 import React from "react";
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
-import {PostType} from "./MyPosts/Post/Post";
-import {MyPostsContainer} from './MyPosts/MyPostsConteiner';
+
+import {Preloader} from '../common/Preloader/Preloader';
+import styles from './Profile.module.scss';
+import MyPostsContainer from './MyPosts/MyPostsConteiner';
+import {PostType} from '../../redux/profileReducer';
 
 
 export type ProfilePropsType = {
@@ -28,7 +31,7 @@ export type ProfileType = {
     }
     lookingForAJob: boolean,
     lookingForAJobDescription: string | null,
-    fullName: string | null,
+    fullName: string ,
     userId: string
     photos: {
         small: string | null,
@@ -48,8 +51,11 @@ export type PostsStatePropsType = {
 }
 
 const Profile: React.FC<ProfilePropsType> = (props) => {
-    return (
-        <div>
+
+    if (!props.profile) {
+        return <div className={styles.container}><Preloader/></div>
+    } else return (
+        <div className={styles.wrapper}>
             <ProfileInfo profile={props.profile} status={props.status} textAreaForUserStatus={props.textAreaForUserStatus}  showStatusTextInTextareaSuccess={props.showStatusTextInTextareaSuccess} updateUserStatus={props.updateUserStatus} authorizedUserID={props.authorizedUserID}/>
             <MyPostsContainer/>
         </div>

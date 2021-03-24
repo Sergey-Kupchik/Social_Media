@@ -12,13 +12,22 @@ export const getDialoguesList = (state: RootState): DialogWithFriend[] => state.
 export const getMessagesList = (state: RootState): MessageType[] => state.dialogsPage.messages
 
 // For header component
+// @ts-ignore
+export const getRegisteredUserId = (state: RootState): string=> state.auth.id
+// @ts-ignore
 
-export const getRegisteredUserId = (state: RootState): string|null => state.auth.id
-export const getRegisteredUserLogin = (state: RootState): string|null => state.auth.login
+export const getRegisteredUserLogin = (state: RootState): string => state.auth.login
+// @ts-ignore
+export const getRegisteredUserPhoto = (state: RootState): string|null => state.auth.userPhoto
+
 export const getIsAuth = (state: RootState): boolean=>{   // checking that the user is authorized in the app
+    // @ts-ignore
+
     return state.auth.isAuth
 }
 export const getIsFetching = (state: RootState): boolean=>{   // checking IsFetching property (required to display data)
+                                                              // @ts-ignore
+
     return state.auth.isFetching
 }
 

@@ -3,6 +3,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap');
 @import "./src/components/common/variables";
 @import "./src/components/common/mixin";
+
 html {
 
   height: 100%;
@@ -37,17 +38,29 @@ body {
     position: absolute;
     top: 60px;
 
-    .app_wrapper_content{
+    .app_wrapper_content {
       display: flex;
       width: inherit;
       height: inherit;
       justify-content: center;
       align-items: center;
-      .app_content{
+
+      .app_content {
         width: 87%;
-        height: 90%;
+        min-height: 90%;
         border-radius: 8px;
         @include boxShadowDelay();
+        margin: 2.5rem 0;
+        display: flex;
+        justify-content: center;
+
+        .error_content {
+          height: inherit;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+
       }
     }
 

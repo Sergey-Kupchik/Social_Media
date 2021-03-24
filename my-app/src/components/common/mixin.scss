@@ -3,3 +3,23 @@
 @mixin boxShadowDelay() {
   box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
 }
+@mixin btnBasic($width) {
+  font-size: 14px;
+  font-weight: 700;
+  background-color: $navBarPrimary;
+  border-radius: 4px;
+  padding: 8px 32px;
+  text-decoration: none;
+  outline: 0 none;
+  cursor: pointer;
+  color: $backgroundColorSecondary;
+  transition: all 0.3s ease-in-out;
+  border-color: transparent;
+  &:focus,&:hover{
+    outline: none;
+    background-color: $iconColorSecondary;
+  }
+}
+@mixin borderRadius() {
+  border-radius: 8px;
+}

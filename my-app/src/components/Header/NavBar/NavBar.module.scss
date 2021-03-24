@@ -13,9 +13,18 @@
     color: $iconColorTertiary;
     height: 20px;
     padding: 0 15px;
-
+    transition: all 0.3s ease-in-out;
     &:hover {
       color: white;
     }
   }
+}
+element.style {
+  display: flex;
+  list-style: none;
+  outline: none;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 8px
 }

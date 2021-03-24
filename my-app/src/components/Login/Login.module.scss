@@ -1,0 +1,145 @@
+//
+//.dropdown_toggle{
+//  background-color: transparent;
+//  border:none;
+//  &:focus{
+//    outline: none;
+//  }
+//  .media {
+//    .item_img {
+//      position: relative;
+//
+//      .userPhoto {
+//        width: 40px;
+//        border-radius: 50%;
+//        vertical-align: middle;
+//        cursor: pointer;
+//      }
+//
+//      .acc_verified {
+//        right: -3px;
+//        top: -16px;
+//        position: absolute;
+//
+//        img {
+//          width: 18px;
+//        }
+//      }
+//    }
+//    .media_body {
+//      .item_itle {
+//        margin-bottom: 0;
+//        color: white;
+//        font-weight: 400;
+//        font-size: 16px;
+//        margin-left: 8px;
+//      }
+//    }
+//  }
+//}
+@import "./../common/variables";
+@import "./../common/mixin";
+
+
+.wrapper {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  height: inherit;
+  flex-direction: row;
+  @media screen and (max-width: 760px) {
+    flex-direction: column;
+  }
+
+  .nav {
+    padding-right: 2rem;
+    @media screen and (max-width: 760px) {
+      text-align: center;
+      padding: 0;
+    }
+
+    .headerLogo {
+      img {
+        background: $navBarPrimary;
+        padding: 8px;
+        border-radius: 10px;
+        width: auto;
+      }
+    }
+
+    h2 {
+      color: $textColorSecondary;
+      font-size: 22px;
+    }
+  }
+
+  .loginForm {
+    width: 396px;
+    background-color: $backgroundColorSecondary;
+    @include boxShadowDelay();
+    min-height: 60%;
+    border-radius: 8px;
+
+    @media screen and (max-width: 760px) {
+      width: 100%;
+    }
+
+
+
+    .btn, .btnFree {
+      background-color: $navBarPrimary;
+      border: none;
+      border-radius: 6px;
+      font-size: 20px;
+      line-height: 40px;
+      padding: 0 16px;
+      cursor: pointer;
+      text-decoration: none;
+      width: 50%;
+      color: $backgroundColorSecondary;
+
+      &:hover {
+        background-color: #42b72a;
+      }
+    }
+
+    .btnFree {
+      background-color: #42b72a;
+      width: 90%;
+      @media screen and (max-width: 760px) {
+        width: 80%;
+      }
+
+      &:hover {
+        background-color: #36a420;
+        border-color: #36a420;
+      }
+    }
+  }
+}
+.wrapper_form{
+  input {
+    background: $backgroundColorSecondary repeat-x;
+    border: 1px solid red;
+    font-size: 16px;
+    height: 40px;
+    line-height: 16px;
+    vertical-align: middle;
+    border-radius: 6px;
+    width: 90%;
+    &:focus,  &:active{
+      border-color: #1877f2;
+      box-shadow: 0 0 0 2px #e7f3ff;
+      caret-color: #1877f2;
+    }
+  }
+}
+
+//$navBarPrimary: #615dfa;
+//$navBarSecondary: #5854ef;
+//$backgroundColorPrimary: #fafafb;
+//$backgroundColorSecondary: #fff;
+//
+//
+//
+//$textColorPrimary: #9e9faf;

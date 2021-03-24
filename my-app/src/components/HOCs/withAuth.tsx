@@ -7,6 +7,7 @@ import {Redirect} from 'react-router-dom';
 type MapStateToPropsType = ReturnType<typeof mapStateToProps>
 
 const mapStateToProps = (state: RootState) => ({
+    // @ts-ignore
     isAuth: state.auth.isAuth,
 })
 

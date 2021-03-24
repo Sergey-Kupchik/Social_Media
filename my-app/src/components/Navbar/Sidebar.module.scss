@@ -26,7 +26,7 @@
     a {
       color: $iconColorPrimary;
       text-decoration: none;
-
+      transition: all 0.3s ease-in-out;
       &:active {
         font-weight: bold;
         color: $iconColorSecondary;

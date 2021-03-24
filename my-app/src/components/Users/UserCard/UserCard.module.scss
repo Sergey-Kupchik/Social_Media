@@ -1,0 +1,72 @@
+@import "./../../common/variables";
+@import "./../../common/mixin";
+
+
+.widget_author {
+  background-color: $backgroundColorSecondary;
+  @include boxShadowDelay();
+  border-radius: 8px;
+  width: 250px;
+  height: 300px;
+  margin-bottom: 2.5rem;
+  @media screen and (min-width: 992px) {
+    flex: 0 0 27%;
+    width: 27%;
+
+  }
+
+
+  .widget_heading {
+    background-repeat: no-repeat;
+    background-attachment: local;
+    background-size: contain;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+
+    .btns {
+      .btn_primary {
+        @include btnBasic(100%);
+        background-color: $navBarPrimary;
+      }
+
+      .btn_secondary {
+        @include btnBasic(100%);
+        background-color: $iconColorSecondary;
+
+      }
+    }
+
+    img {
+      margin-top: 1rem;
+      width: 125px;
+      height: auto;
+      border-radius: 50%;
+      padding: 1px;
+      background-color:$navBarPrimary;
+    }
+  }
+  .widget_main {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    .widget_main_name{
+      font-size: 16px;
+      line-height: 20px;
+      font-weight: 700;
+      color:$textColorSecondary;
+      padding: 5px;
+    }
+    .widget_main_status{
+      font-size: 14px;
+      color: $textColorPrimary;
+      margin-bottom: 24px;
+      line-height: 28px;
+    }
+  }
+}

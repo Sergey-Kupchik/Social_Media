@@ -8,6 +8,7 @@ import {NavBar} from './NavBar/NavBar';
 export type HeaderPropsType = {
     registeredUserId: null | string,
     registeredUserLogin: null | string,
+    userPhoto: null | string,
     isAuth: boolean,
     isFetching: boolean,
     logoutUser: () => (dispatch: Dispatch) => void,
