@@ -18,7 +18,7 @@ enum APP_ACTION_TYPE {
 type authorizeUserSuccessType = ReturnType<typeof authorizeUserSuccess>
 
 // type of app state
-type AppStateType = typeof initialState;
+export type AppStateType = typeof initialState;
 
 // type of all actions
 type AppActionsTypes =

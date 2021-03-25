@@ -47,7 +47,7 @@ export const toggleIsFetchingInAuthReducer = (isFetching: boolean) => ({
 } as const)
 
 // type of auth state
-interface AuthStateType extends AuthUserData {
+export interface AuthStateType extends AuthUserData {
     isAuth: boolean,
     isFetching: boolean,
     userPhoto: null|string}
@@ -55,7 +55,7 @@ interface AuthStateType extends AuthUserData {
 export type LoginUserDispatchType = ThunkDispatch<any, any, any>
 
 // initial state for first start authReducer
-const authInitialState = {
+const authInitialState:AuthStateType = {
     id: null,
     login: null,
     email: null,

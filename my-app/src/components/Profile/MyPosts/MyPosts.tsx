@@ -13,7 +13,12 @@ type MyPostsPropsType = {
 }
 
 
-const MyPosts: React.FC<MyPostsPropsType> = (props) => {
+function Ma() {
+
+}
+
+const MyPosts =React.memo(function MyPosts(props:MyPostsPropsType) {
+
     let newPostElement = React.createRef<HTMLTextAreaElement>();
     const onClick = () => {
         if (newPostElement.current && newPostElement.current.value.trim() !== "") {
@@ -35,6 +40,6 @@ const MyPosts: React.FC<MyPostsPropsType> = (props) => {
             </div>
         </div>
     )
-}
+})
 
 export default MyPosts;

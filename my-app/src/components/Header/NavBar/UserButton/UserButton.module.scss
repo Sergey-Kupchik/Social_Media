@@ -11,8 +11,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-wrap: wrap;
-
     .item_img {
       position: relative;
       display: flex;
@@ -29,7 +27,7 @@
 
       .acc_verified {
         right: -3px;
-        top: -16px;
+        top: -8px;
         position: absolute;
 
         img {

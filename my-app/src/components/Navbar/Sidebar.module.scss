@@ -7,6 +7,9 @@
   width: 270px;
   flex-direction: column;
   @include boxShadowDelay();
+  @media screen and (max-width: 992px) {
+    width: 70px;
+  }
   @media only screen and (max-width: 575px) {
     display: none;
   }
@@ -44,6 +47,9 @@
 
 .item_value {
   margin-left: 0.5rem;
+  @media screen and (max-width: 992px) {
+    display: none;
+  }
 }
 
 .navLink {

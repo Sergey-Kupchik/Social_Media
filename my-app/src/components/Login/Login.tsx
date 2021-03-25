@@ -27,7 +27,7 @@ let LoginForm: React.FC<InjectedFormProps<LoginFormDataType>> = (props) => {
     const {handleSubmit, pristine, reset, submitting} = props
     return (
         <form onSubmit={handleSubmit} className={styles.wrapper_form}>
-            <div>
+            <div className={`${styles.item}  ${styles.item_text}`}>
                 <Field placeholder={'Email'}
                        name={'email'}
                        component={RenderField}
@@ -35,15 +35,15 @@ let LoginForm: React.FC<InjectedFormProps<LoginFormDataType>> = (props) => {
                        type={'email'}
                        className={styles.field}/>
             </div>
-            <div>
+            <div  className={`${styles.item}  ${styles.item_text}`}>
                 <Field placeholder={'Password'}
                        name={'password'}
                        component={'input'}
                        type={'password'}
                        className={styles.field}
                        validate={[required, maxLength30, minLength5]}/>
-            </div>
-            <div>Remember me
+            </div >
+            <div  className={styles.item}>Remember me
                 <Field name={'rememberMe'}
                        component={'input'}
                        type={'checkbox'}/>
@@ -80,13 +80,11 @@ const Login = (props: LoginPropsType) => {
             <div className={styles.loginForm}>
                 <LoginReduxForm onSubmit={onSubmit}/>
                 <a href={'https://social-network.samuraijs.com/'}
-                   target={'_blank'}>To log in get registered
+                   target={'_blank'} className={styles.loginForm_link}>To log in get registered
                 </a>
                 <button type="submit" className={styles.btnFree}>Test account</button>
             </div>
-
         </div>)
-    // }
 }
 
 export type LoginFormDataType = {

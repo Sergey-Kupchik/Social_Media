@@ -25,6 +25,16 @@ const dialoguesInitialState: DialogsPagePropsType = {
         {id: v1(), name: 'Mariana'},
         {id: v1(), name: 'Jimmy'},
         {id: v1(), name: 'Andy'},
+        {id: v1(), name: 'Delfin'},
+        {id: v1(), name: 'Silas'},
+        {id: v1(), name: 'Mariana'},
+        {id: v1(), name: 'Jimmy'},
+        {id: v1(), name: 'Andy'},
+        {id: v1(), name: 'Delfin'},
+        {id: v1(), name: 'Silas'},
+        {id: v1(), name: 'Mariana'},
+        {id: v1(), name: 'Jimmy'},
+        {id: v1(), name: 'Andy'},
         {id: v1(), name: 'Delfin'}
     ],
     messages: [
@@ -44,7 +54,7 @@ export const dilogsReducer = (state = dialoguesInitialState, action: ActionsType
         case SendMessageString: {
             return {
                 ...state,
-                messages: [...state.messages,{id: v1(), message: action.message}],
+                messages: [...state.messages, {id: v1(), message: action.message}],
                 newMessageInTextArea: ''
             };
         }

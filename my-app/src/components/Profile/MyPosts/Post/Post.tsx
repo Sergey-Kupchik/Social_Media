@@ -17,15 +17,12 @@ export type PostPropsType = {
 
 export const Post = React.memo(function Post(props: PostPropsType) {
     let[disabledLikeBtn, setDisabledLikeBtn]=useState<boolean>(false)
-    debugger
     const onLikePost = ()=>{
         if(disabledLikeBtn){
             return
         }
       else  props.likePost(props.id);
-        debugger
         setDisabledLikeBtn(true)
-
     };
 
     return <div className={styles.wrapper}>
