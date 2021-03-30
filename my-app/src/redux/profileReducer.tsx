@@ -7,8 +7,124 @@ import post2 from '../assets/images/post_2.jpg';
 import post3 from '../assets/images/post_3.jpg';
 import post4 from '../assets/images/post_4.jpg';
 
-// Initial State
+// Types
 
+// Types of type for action creators
+export enum actions {
+    addPost = 'cirkle/profileReducer/ADD-POST',
+    showText = 'cirkle/profileReducer/SHOW-POST-IN-TEXTAREA',
+    setNewProfile = 'cirkle/profileReducer/SET-NEW-PROFILE',
+    showStatus = 'cirkle/profileReducer/SHOW-STATUS-IN-TEXTAREA',
+    setUserStatus = 'cirkle/profileReducer/SET-USER-STATUS',
+    setUserPhotoToPost = 'cirkle/profileReducer/SET-USER-PHOTO-TO-POST',
+    setUserNameToPost = 'cirkle/profileReducer/SET-USER-NAME-TO-POST',
+    likePost = 'cirkle/profileReducer/LIKE-TO-POST',
+}
+
+// Type of all actions
+export type ProfileReducerActionsTypes =
+    | ReturnType<typeof AddPostAC>
+    | ReturnType<typeof ShowPostTextInTextareaAC>
+    | ReturnType<typeof setNewProfile>
+    | ReturnType<typeof showStatusTextInTextareaSuccess>
+    | ReturnType<typeof setUserStatusSuccess>
+    | ReturnType<typeof setUserPhotoToPost>
+    | ReturnType<typeof setUserNameToPost>
+    | ReturnType<typeof likePost>
+
+// Type of post
+export type PostType = {
+    id: string
+    message: string
+    likesCount: number
+    img?:string
+    time:string
+    userId:string
+    userPhoto:string|null
+    userName:string
+}
+// Type of initial State
+type ProfileStateType = {
+    posts: Array<PostType>
+    newPostInTextArea: string
+    profile: ProfileType | null
+    textAreaForUserStatus: string
+    status: string
+}
+
+
+//Action Creators
+//add new post action creator
+export const AddPostAC = (userId:string, userName:string,userPhoto:string|null,newPost: string,) => ({
+    type: actions.addPost,
+    payload:{
+        newPostValue: newPost,
+        userPhoto,
+        userId,
+        userName,
+    }
+} as const);
+
+//add like post action creator
+export const likePost = (id: string) => ({
+    type: actions.likePost,
+    payload:{
+        id
+    }
+} as const);
+
+//show post
+export const ShowPostTextInTextareaAC = (newText: string) => ({
+    type: actions.showText,
+    payload:{
+       newText
+    }
+} as const);
+
+
+//set up like profile of user
+export const setNewProfile = (profile: ProfileType) => ({
+    type: actions.setNewProfile,
+    payload:{
+        profile,
+    }
+} as const);
+
+//show status
+export const showStatusTextInTextareaSuccess = (statusChanging: string) => ({
+    type: actions.showStatus,
+    payload:{
+        statusChanging,
+    }
+} as const);
+
+//set up like status of user
+export const setUserStatusSuccess = (status: string) => ({
+    type: actions.setUserStatus,
+    payload:{
+        status,
+    }
+} as const);
+
+//set up like photo of user to post
+const setUserPhotoToPost = (userPhoto: string | null, userId: string) => ({
+    type: actions.setUserPhotoToPost,
+    payload:{
+        userPhoto,
+        userId,
+    }
+} as const);
+
+//set up like name of user to post
+const setUserNameToPost = (userName: string, userId: string) => ({
+    type: actions.setUserNameToPost,
+    payload:{
+        userName,
+        userId,
+    }
+} as const);
+
+// Initial State
 const profileInitialState: ProfileStateType = {
     posts: [
         {
@@ -58,11 +174,13 @@ const profileInitialState: ProfileStateType = {
     status: '',
 
 }
-// Reducer
 
+
+
+// Reducer
 export const profileReducer = (state = profileInitialState, action: ProfileReducerActionsTypes): ProfileStateType => {
     switch (action.type) {
-        case ProfileReducer.AddPOST: {
+        case actions.addPost: {
             return {
                 ...state,
                 posts: [{
@@ -77,53 +195,53 @@ export const profileReducer = (state = profileInitialState, action: ProfileReduc
                 newPostInTextArea: ''
             }
         }
-        case ProfileReducer.ShowTextInPostTextarea: {
+        case actions.showText: {
             return {
                 ...state,
-                newPostInTextArea: action.text
+                newPostInTextArea: action.payload.newText
             };
         }
-        case ProfileReducer.SetNewProfile: {
+        case actions.setNewProfile: {
             return {
                 ...state,
-                profile: action.profile
+                profile: action.payload.profile
             }
         }
-        case ProfileReducer.ShowStatusTextInTextarea: {
+        case actions.showStatus: {
             return {
                 ...state,
-                textAreaForUserStatus: action.statusChanging,
+                textAreaForUserStatus: action.payload.statusChanging,
             }
         }
-        case ProfileReducer.SetUserStatus: {
+        case actions.setUserStatus: {
             return {
                 ...state,
-                status: action.status
+                status: action.payload.status
             }
         }
-        case ProfileReducer.SetUserPhotoToPost: {
+        case actions.setUserPhotoToPost: {
             return {
                 ...state,
                 posts: state.posts.map(p => {
-                    if (p.userId === action.userId) {
-                        p.userPhoto = action.userPhoto
+                    if (p.userId === action.payload.userId) {
+                        p.userPhoto = action.payload.userPhoto
                     }
                     return p
                 })
             }
         }
-        case ProfileReducer.SetUserNameToPost: {
+        case actions.setUserNameToPost: {
             return {
                 ...state,
                 posts: state.posts.map(p => {
-                    if (p.userId === action.userId) {
-                        p.userName = action.userName
+                    if (p.userId === action.payload.userId) {
+                        p.userName = action.payload.userName
                     }
                     return p
                 })
             }
         }
-        case ProfileReducer.LikePost:{
+        case actions.likePost:{
             return {
                 ...state,
                 posts: state.posts.map(p => {
@@ -142,146 +260,41 @@ export const profileReducer = (state = profileInitialState, action: ProfileReduc
 
 
 // Thunk Creator
-export const setUserStatus = (id: string) => (dispatch: Dispatch) => {
-    ProfileAPI.getUserStatus(id).then((status) => {
+export const setUserStatus = (id: string) =>async (dispatch: Dispatch) => {
+    let status = await ProfileAPI.getUserStatus(id)
         dispatch(showStatusTextInTextareaSuccess(status))
         dispatch(setUserStatusSuccess(status))
-
-    })
-
 }
 
 
 // Get photo of user to post
-export const getUserPhoto = (id: string) => (dispatch: Dispatch) => {
-    ProfileAPI.getUserProfile(id).then((profile) => {
+export const getUserPhoto = (id: string) => async(dispatch: Dispatch) => {
+    let profile =  await ProfileAPI.getUserProfile(id)
         dispatch(setUserPhotoToPost(profile.photos.small, id))
-    })
 }
 // Get name of user to post
-export const getUserName = (id: string) => (dispatch: Dispatch) => {
-    ProfileAPI.getUserProfile(id).then((profile) => {
+export const getUserName = (id: string) => async (dispatch: Dispatch) => {
+    let profile =  await ProfileAPI.getUserProfile(id)
         dispatch(setUserNameToPost(profile.fullName, id))
-    })
 }
 
 
-export const updateUserStatus = (status: string,) => (dispatch: Dispatch) => {
-    ProfileAPI.updateUserStatus(status).then((data) => {
+export const updateUserStatus = (status: string,) => async (dispatch: Dispatch) => {
+    let data =  await ProfileAPI.updateUserStatus(status)
         if (data.resultCode === 0) {
             dispatch(showStatusTextInTextareaSuccess(status))
             dispatch(setUserStatusSuccess(status))
         }
-    })
-
 }
-
 
 // get the profile information of user
-export const getUserProfile = (id: string) => (dispatch: Dispatch<ProfileReducerActionsTypes | any>) => {
-    ProfileAPI.getUserProfile(id).then((res) => {
+export const getUserProfile = (id: string) =>async(dispatch: Dispatch<ProfileReducerActionsTypes | any>) => {
+    let res = await ProfileAPI.getUserProfile(id)
             dispatch(setNewProfile(res))
             dispatch(setUserStatus(res.userId))
-
-        }
-    )
 }
 
 
 
 
-// Action creators
 
-export const AddPostAC = (userId:string, userName:string,userPhoto:string|null,newPost: string,) => ({
-    type: ProfileReducer.AddPOST,
-    payload:{
-        newPostValue: newPost,
-        userPhoto,
-        userId,
-        userName,
-    }
-} as const);
-
-export const likePost = (id: string) => ({
-    type: ProfileReducer.LikePost,
-    payload:{
-        id
-    }
-} as const);
-
-
-export const ShowPostTextInTextareaAC = (NewText: string) => ({
-    type: ProfileReducer.ShowTextInPostTextarea,
-    text: NewText
-} as const);
-
-export const setNewProfile = (profile: ProfileType) => ({
-    type: ProfileReducer.SetNewProfile,
-    profile,
-} as const);
-
-export const showStatusTextInTextareaSuccess = (statusChanging: string) => ({
-    type: ProfileReducer.ShowStatusTextInTextarea,
-    statusChanging,
-} as const);
-
-export const setUserStatusSuccess = (status: string) => ({
-    type: ProfileReducer.SetUserStatus,
-    status,
-} as const);
-
-const setUserPhotoToPost = (userPhoto: string | null, userId: string) => ({
-    type: ProfileReducer.SetUserPhotoToPost,
-    userPhoto,
-    userId,
-} as const);
-
-
-const setUserNameToPost = (userName: string, userId: string) => ({
-    type: ProfileReducer.SetUserNameToPost,
-    userName,
-    userId,
-} as const);
-
-
-// Types
-export enum ProfileReducer {
-    AddPOST = 'PROFILE-REDUCER-ADD-POST',
-    ShowTextInPostTextarea = 'PROFILE-REDUCER-SHOW-POST-IN-TEXTAREA',
-    SetNewProfile = 'PROFILE-REDUCER-SET-NEW-PROFILE',
-    ShowStatusTextInTextarea = 'PROFILE-REDUCER-SHOW-STATUS-IN-TEXTAREA',
-    SetUserStatus = 'PROFILE-REDUCER-SET-USER-STATUS',
-    SetUserPhotoToPost = 'PROFILE-REDUCER-SET-USER-PHOTO-TO-POST',
-    SetUserNameToPost = 'PROFILE-REDUCER-SET-USER-NAME-TO-POST',
-    LikePost = 'PROFILE-REDUCER-ADD-LIKE-TO-POST',
-
-}
-
-export type ProfileReducerActionsTypes =
-    | ReturnType<typeof AddPostAC>
-    | ReturnType<typeof ShowPostTextInTextareaAC>
-    | ReturnType<typeof setNewProfile>
-    | ReturnType<typeof showStatusTextInTextareaSuccess>
-    | ReturnType<typeof setUserStatusSuccess>
-    | ReturnType<typeof setUserPhotoToPost>
-    | ReturnType<typeof setUserNameToPost>
-    | ReturnType<typeof likePost>
-
-export type PostType = {
-    id: string
-    message: string
-    likesCount: number
-    img?:string
-    time:string
-    userId:string
-    userPhoto:string|null
-    userName:string
-}
-
-type ProfileStateType = {
-    posts: Array<PostType>
-    newPostInTextArea: string
-    profile: ProfileType | null
-    textAreaForUserStatus: string
-    status: string
-}

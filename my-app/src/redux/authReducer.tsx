@@ -6,56 +6,60 @@ import {stopSubmit} from 'redux-form';
 import {authorizeUserSuccess} from './appReducer';
 import {ThunkDispatch} from 'redux-thunk';
 
+// Types
 
-enum AUTH_REDUCER_ACTION_TYPE {
-    SET_AUTH_REDUCER_USER_DATA="AUTH_REDUCER_ACTION_TYPE_SET_AUTH_REDUCER_USER_DATA",
-    LOG_OUT_REDUCER_USER_DATA="AUTH_REDUCER_ACTION_TYPE_LOG_OUT_REDUCER_USER_DATA",
-    TOGGLE_IS_FETCHING_REDUCER_USER_DATA="AUTH_REDUCER_ACTION_TYPE_TOGGLE_IS_FETCHING_REDUCER_USER_DATA",
-    SET_USER_PHOTO="AUTH_REDUCER_ACTION_TYPE_SET_USER_PHOTO",
+// Types of type for action creators
+enum actions {
+    setUserData = 'cirkle/authReducer/SET_USER_DATA',
+    logoutUser = 'cirkle/authReducer/LOG_OUT_USER',
+    toggleIsFetching = 'cirkle/authReducer/TOGGLE_IS_FETCHING',
+    setUserPhoto = 'cirkle/authReducer/SET_USER_PHOTO',
 }
 
+// Type of auth state
+export interface AuthStateType extends AuthUserData {
+    isAuth: boolean,
+    isFetching: boolean,
+    userPhoto: null | string
+}
 
-// type of user data from server
+// Type of user data from server
 export type AuthUserData = {
     id: null | string,
     login: null | string,
     email: null | string,
 }
+// Action creators
 
-// action creator for set up to auth
+// Action creator for set up to auth
 export const setAuthUserData = (data: AuthUserData) => ({
-    type: AUTH_REDUCER_ACTION_TYPE.SET_AUTH_REDUCER_USER_DATA,
-    data,
+    type: actions.setUserData,
+    payload: {data,}
 } as const)
 
 // action creator for get user photo
-export const getAuthUserPhoto = (userPhoto: string|null) => ({
-    type: AUTH_REDUCER_ACTION_TYPE.SET_USER_PHOTO,
-    userPhoto,
+export const getAuthUserPhoto = (userPhoto: string | null) => ({
+    type: actions.setUserPhoto,
+    payload: {userPhoto,},
 } as const)
 
 
 // action creator for log out from auth
 export const logOutAuthUserData = () => ({
-    type: AUTH_REDUCER_ACTION_TYPE.LOG_OUT_REDUCER_USER_DATA,
+    type: actions.logoutUser,
 } as const)
 
 // action creator for change IsFetching value in AuthReducer
 export const toggleIsFetchingInAuthReducer = (isFetching: boolean) => ({
-    type: AUTH_REDUCER_ACTION_TYPE.TOGGLE_IS_FETCHING_REDUCER_USER_DATA,
-    isFetching,
+    type: actions.toggleIsFetching,
+    payload: {isFetching,},
 } as const)
 
-// type of auth state
-export interface AuthStateType extends AuthUserData {
-    isAuth: boolean,
-    isFetching: boolean,
-    userPhoto: null|string}
 
-export type LoginUserDispatchType = ThunkDispatch<any, any, any>
+
 
 // initial state for first start authReducer
-const authInitialState:AuthStateType = {
+const authInitialState: AuthStateType = {
     id: null,
     login: null,
     email: null,
@@ -64,36 +68,36 @@ const authInitialState:AuthStateType = {
     userPhoto: null,
 }
 
-
+// Reducer
 export const authReducer = (state = authInitialState, action: ActionsTypes): AuthStateType => {
     switch (action.type) {
-        case AUTH_REDUCER_ACTION_TYPE.SET_AUTH_REDUCER_USER_DATA: {
+        case actions.setUserData: {
             return {
                 ...state,
-                ...action.data,
+                ...action.payload.data,
                 isAuth: true,
             };
         }
-        case AUTH_REDUCER_ACTION_TYPE.LOG_OUT_REDUCER_USER_DATA: {
+        case actions.logoutUser: {
             return {
                 ...state,
                 email: null,
                 id: null,
                 login: null,
-                userPhoto:null,
+                userPhoto: null,
                 isAuth: false,
             }
         }
-        case AUTH_REDUCER_ACTION_TYPE.TOGGLE_IS_FETCHING_REDUCER_USER_DATA: {
+        case actions.toggleIsFetching: {
             return {
                 ...state,
-                isFetching: action.isFetching
+                isFetching: action.payload.isFetching
             }
         }
-        case AUTH_REDUCER_ACTION_TYPE.SET_USER_PHOTO:{
+        case actions.setUserPhoto: {
             return {
                 ...state,
-                userPhoto: action.userPhoto
+                userPhoto: action.payload.userPhoto
             }
         }
 
@@ -101,91 +105,61 @@ export const authReducer = (state = authInitialState, action: ActionsTypes): Aut
     return state;
 }
 
+// Helpers
+ const  LoginUserTestFlow = async(data: LoginFormDataType, dispatch: ThunkDispatch<AuthStateType, void, ActionsTypes>)=>{
+     let res = await AuthAPI.login(data)
+     if (res.resultCode === 0) {
+         dispatch(setUserProfile())
+     } else {
+         dispatch(stopSubmit('login', {
+             email: 'Username or password is incorrect',
+             password: 'Username or password is incorrect',
+         }))
+     }
+}
+
 // Thunk Creators
 
 // Check If current user authorized
-export const setUserProfile = () => (dispatch: ThunkDispatch<AuthStateType, void, ActionsTypes>) => {
+export const setUserProfile = () => async (dispatch: ThunkDispatch<AuthStateType, void, ActionsTypes>) => {
     dispatch(toggleIsFetchingInAuthReducer(true));
-    (AuthAPI.authMe()
-        .then((res) => {
-            if (res.resultCode === 0) {
-                dispatch(setAuthUserData(res.data))
-                dispatch(toggleIsFetchingInAuthReducer(false))
-            } else {
-                dispatch(logoutUser())
-            }
-        }))
-    let promise = (AuthAPI.authMe()
-        .then((res) => {
-            if (res.resultCode === 0) {
-                dispatch(setAuthUserData(res.data))
-                dispatch(toggleIsFetchingInAuthReducer(false))
-            } else {
-                dispatch(logoutUser())
-            }
-        }))
-    return promise
+    let res = await AuthAPI.authMe()
+    if (res.resultCode === 0) {
+        dispatch(setAuthUserData(res.data))
+        dispatch(toggleIsFetchingInAuthReducer(false))
+    } else {
+        dispatch(logoutUser())
+    }
 }
 // Authorize current user on the service
-export const loginUser = (data: LoginFormDataType) => (dispatch: ThunkDispatch<AuthStateType, void, ActionsTypes>) => {
-    AuthAPI.login(data).then((res) => {
-        if (res.resultCode === 0) {
-            dispatch(setUserProfile())
-
-        } else {
-            dispatch(stopSubmit('login', {
-                email: "Wrong username or password",
-                password: "Wrong username or password",
-            }))
-        }
-    }).catch((error) => {
-        alert(error)
-    })
+export const loginUser = (data: LoginFormDataType) => async (dispatch: ThunkDispatch<AuthStateType, void, ActionsTypes>) => {
+    await LoginUserTestFlow(data,dispatch)
 }
 
 // Authorize current user on the service
-export const loginTestUser = () => (dispatch: ThunkDispatch<AuthStateType, void, ActionsTypes>) => {
+export const loginTestUser = () => async (dispatch: ThunkDispatch<AuthStateType, void, ActionsTypes>) => {
     let testData = {
-        email: "katsent@mail.ru",
-        password: "Minsk558451",
+        email: 'katsent@mail.ru',
+        password: 'Minsk558451',
         rememberMe: false,
     }
-    AuthAPI.login(testData).then((res) => {
-        if (res.resultCode === 0) {
-            dispatch(setUserProfile())
-        } else {
-            dispatch(stopSubmit('login', {
-                email: "Wrong username or password",
-                password: "Wrong username or password",
-            }))
-        }
-    }).catch((error) => {
-        alert(error)
-    })
+    await LoginUserTestFlow(testData,dispatch)
 }
-
 
 
 // Get photo of authorized user for avatar
- export const downloadUserPhoto =(id:string )=>(dispatch: ThunkDispatch<AuthStateType, void, ActionsTypes>)=>{
-     ProfileAPI.getUserProfile(id).then(p=>getAuthUserPhoto(p.photos.small))}
-
+export const downloadUserPhoto = (id: string) =>async (dispatch: ThunkDispatch<AuthStateType, void, ActionsTypes>) => {
+    let res = await ProfileAPI.getUserProfile(id)
+    getAuthUserPhoto(res.photos.small)
+}
 
 
 // delete cookie of current user
-export const logoutUser = () => (dispatch: ThunkDispatch<AuthStateType, void, ActionsTypes>) => {
-    AuthAPI.logout().then((res) => {
-            if (res.resultCode === 0) {
-                dispatch(logOutAuthUserData())
-                // dispatch(authorizeUserSuccess(false))
-            } else {
-                alert(`m from logoutUser authReducer ELSE ${res}`)
-            }
-        }
-    ).catch((error) => {
-
-        alert(`Im from logoutUser authReducer CATCH ${error}`)
-    })
-
+export const logoutUser = () => async (dispatch: ThunkDispatch<AuthStateType, void, ActionsTypes>) => {
+    let res = await AuthAPI.logout()
+    if (res.resultCode === 0) {
+        dispatch(logOutAuthUserData())
+    } else {
+    }
 }
 

@@ -2,7 +2,7 @@ import React, {ChangeEvent, KeyboardEvent} from 'react';
 import styles from './Dialogs.module.scss';
 import Message, {Message2, MessageType} from './Message/Message';
 import Dialog, {DialogWithFriend} from './Dialog/Dialog';
-import {SendMessageOrderAC} from '../../redux/dialogsReducer';
+import {SendMessage} from '../../redux/dialogsReducer';
 import {SendMessageForm} from './SendMessageForm';
 import {UserButton} from '../Header/NavBar/UserButton/UserButton';
 

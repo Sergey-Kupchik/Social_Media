@@ -2,22 +2,34 @@ import {ActionsTypes} from './state';
 import {DialogsPagePropsType} from '../components/Dialogs/Dialogs';
 import {v1} from 'uuid';
 
+// Types
 
-const SendMessageString = 'SEND-MESSAGE';
+// Types of type for action creators
+enum actions {
+    sendMessage = 'cirkle/dilogsReducer/SEND_MESSAGE',
+    showMessage='cirkle/dilogsReducer/SHOW-MESSAGE-IN-TEXTAREA',
+}
 
-const ShowMessageInTextareaString = 'SHOW-MESSAGE-IN-TEXTAREA';
 
-export const SendMessageOrderAC = (Newmessage: string) => ({
-    type: SendMessageString,
-    message: Newmessage
+//Action Creator
+
+// Action creator for sending message
+export const SendMessage = (newMessage: string) => ({
+    type: actions.sendMessage,
+    payload: {
+        newMessage,
+    }
 } as const);
 
-export const ShowMessageInTextareaAC = (newText: string) => ({
-    type: ShowMessageInTextareaString,
-    newText: newText
+// Action creator for showing message
+export const ShowMessageInTextarea = (newText: string) => ({
+    type: actions.showMessage,
+    payload: {
+        newText,
+    }
 } as const);
 
-
+// Initial state for first start dialoguesReducer
 const dialoguesInitialState: DialogsPagePropsType = {
     dialogs: [
         {id: v1(), name: 'Mike'},
@@ -51,21 +63,19 @@ const dialoguesInitialState: DialogsPagePropsType = {
 
 export const dilogsReducer = (state = dialoguesInitialState, action: ActionsTypes): DialogsPagePropsType => {
     switch (action.type) {
-        case SendMessageString: {
+        case actions.sendMessage: {
             return {
                 ...state,
-                messages: [...state.messages, {id: v1(), message: action.message}],
+                messages: [...state.messages, {id: v1(), message: action.payload.newMessage}],
                 newMessageInTextArea: ''
             };
         }
-        case ShowMessageInTextareaString: {
-
+        case actions.showMessage: {
             return {
                 ...state,
-                newMessageInTextArea: action.newText
+                newMessageInTextArea: action.payload.newText
             };
         }
-
     }
     return state;
 }

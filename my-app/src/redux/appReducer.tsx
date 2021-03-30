@@ -1,39 +1,35 @@
-import {ActionsTypes} from './state';
-import {AuthAPI} from '../api/socialNetworkAPI';
-import {Dispatch} from 'redux';
-import {LoginFormDataType} from '../components/Login/Login';
-import {stopSubmit} from 'redux-form';
-import {AddPostAC} from './profileReducer';
 import {setUserProfile} from './authReducer';
 import {ThunkDispatch} from 'redux-thunk';
 
-// TYPES
+// Types
 
-// types of type for action creators
-enum APP_ACTION_TYPE {
-    AUTHORIZE = 'APP_REDUCER_ACTION_TYPE_AUTHORIZE_USER_ON_THE_NETWORK'
+// Types of type for action creators
+enum actions {
+    authorize = 'cirkle/appReducer/UTHORIZE_USER_IN_THE_NETWORK'
 }
 
-// type of authorizeUserSuccess action creator
+// Type of authorizeUserSuccess action creator
 type authorizeUserSuccessType = ReturnType<typeof authorizeUserSuccess>
 
-// type of app state
+// Type of app state
 export type AppStateType = typeof initialState;
 
-// type of all actions
+// Type of all actions
 type AppActionsTypes =
     | ReturnType<typeof authorizeUserSuccess>
 
 
-//ACTION CREATOR
+//Action Creators
 
-// action creator for set up to auth
+// Action creator for set up to auth
 export const authorizeUserSuccess = (authorize: boolean) => ({
-    type: APP_ACTION_TYPE.AUTHORIZE,
-    authorize,
+    type: actions.authorize,
+    payload: {
+        authorize,
+    }
 } as const)
 
-// initial state for first start appReducer
+// Initial state for first start appReducer
 const initialState = {
     authorize: false,
 }
@@ -41,10 +37,10 @@ const initialState = {
 // Reducer
 export const appReducer = (state = initialState, action: AppActionsTypes): AppStateType => {
     switch (action.type) {
-        case APP_ACTION_TYPE.AUTHORIZE: {
+        case actions.authorize: {
             return {
                 ...state,
-                authorize: action.authorize,
+                authorize: action.payload.authorize,
             };
         }
     }
@@ -54,10 +50,9 @@ export const appReducer = (state = initialState, action: AppActionsTypes): AppSt
 // Thunk Creators
 
 // Check If current user authorized
-export const authorizeUser = () => (dispatch: ThunkDispatch<AppStateType, void, AppActionsTypes>) => {
-    dispatch(setUserProfile()).then((rest: any) => {
-        dispatch(authorizeUserSuccess(true))
-    })
+export const authorizeUser = () => async (dispatch: ThunkDispatch<AppStateType, void, AppActionsTypes>) => {
+    let rest = await dispatch(setUserProfile())
+    dispatch(authorizeUserSuccess(true))
 }
 
 

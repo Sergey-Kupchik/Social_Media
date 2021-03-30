@@ -1,4 +1,3 @@
-import {authReducer, AuthStateType, AuthUserData, setAuthUserData} from './authReducer';
 import {appReducer, AppStateType, authorizeUserSuccess} from './appReducer';
 
 let startState = {} as AppStateType

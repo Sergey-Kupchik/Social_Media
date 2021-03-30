@@ -7,7 +7,7 @@ import {
     ShowPostTextInTextareaAC,
     showStatusTextInTextareaSuccess
 } from './profileReducer';
-import {SendMessageOrderAC, ShowMessageInTextareaAC} from './dialogsReducer';
+import {SendMessage, ShowMessageInTextarea} from './dialogsReducer';
 import {
     follow_userSUCCESS,
     set_users,
@@ -36,8 +36,8 @@ export type ActionsTypes =
     | ReturnType<typeof setNewProfile>
     | ReturnType<typeof showStatusTextInTextareaSuccess>
     | ReturnType<typeof setUserStatusSuccess>
-    | ReturnType<typeof SendMessageOrderAC>
-    | ReturnType<typeof ShowMessageInTextareaAC>
+    | ReturnType<typeof SendMessage>
+    | ReturnType<typeof ShowMessageInTextarea>
     | ReturnType<typeof unfollow_userSUCCESS>
     | ReturnType<typeof follow_userSUCCESS>
     | ReturnType<typeof set_users>

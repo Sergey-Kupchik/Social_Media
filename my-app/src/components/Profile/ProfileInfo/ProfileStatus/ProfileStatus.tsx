@@ -23,18 +23,15 @@ export class ProfileStatus extends React.Component<ProfileStatusPropsType> {
         editMode: false,
     }
     setIsMode = (editMode: boolean) => {
-        if (this.props.userID == '12113') {
+        if (this.props.userID == this.props.authorizedUserID) {
             this.setState({editMode})
         }
     }
-
     render() {
-
-
-        return <>
+      return <>
             {!this.state.editMode &&
             <div>
-                <span onClick={() => this.setIsMode(true)}>{this.props.status}</span>
+                <span onClick={() => this.setIsMode(true)}>{this.props.status?this.props.status:"no status"}</span>
             </div>
             }
             {this.state.editMode &&
