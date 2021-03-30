@@ -1,37 +1,44 @@
 import React from 'react'
-import {Checkbox, FormControl, FormControlLabel, FormGroup, FormLabel, TextField, Button, Grid} from '@material-ui/core'
+import { Field, reduxForm } from 'redux-form'
 
-export const Login2 = () => {
-    return <Grid container justify="center">
-        <Grid item xs={4}>
-            <FormControl>
-                <FormLabel>
-                    <p>To log in get registered
-                        <a href={'https://social-network.samuraijs.com/'}
-                           target={'_blank'}>here
-                        </a>
-                    </p>
-                    <p>or use common test account credentials:</p>
-                    <p>Email: free@samuraijs.com</p>
-                    <p>Password: free</p>
-                </FormLabel>
-                <FormGroup>
-                    <TextField
-                        label="Email"
-                        margin="normal"
-                    />
-                    <TextField
-                        type="password"
-                        label="Password"
-                        margin="normal"
-                    />
-                    <FormControlLabel
-                        label={'Remember me'}
-                        control={<Checkbox />}
-                    />
-                    <Button type={'submit'} variant={'contained'} color={'primary'}>Login</Button>
-                </FormGroup>
-            </FormControl>
-        </Grid>
-    </Grid>
+// const { DOM: { input } } = React
+
+type UserNameType = {
+    touched:boolean,
+    error:string
 }
+
+const SubmitValidationForm = (props:any) => {
+    const { error, handleSubmit, pristine, reset, submitting } = props
+    return (
+        <form onSubmit={handleSubmit}>
+            <div>
+                <label>Username</label>
+                <Field name="username" component={(username:UserNameType )=>
+                    <div>
+                        <input type="text" {...username} placeholder="Username"/>
+                        {username.touched && username.error && <span>{username.error}</span>}
+                    </div>
+                }/>
+            </div>
+            <div>
+                <label>Password</label>
+                <Field name="password" component={(password:UserNameType) =>
+                    <div>
+                        <input type="password" {...password} placeholder="Password"/>
+                        {password.touched && password.error && <span>{password.error}</span>}
+                    </div>
+                }/>
+            </div>
+            {error && <strong>{error}</strong>}
+            <div>
+                <button type="submit" disabled={submitting}>Log In</button>
+                <button type="button" disabled={pristine || submitting} onClick={reset}>Clear Values</button>
+            </div>
+        </form>
+    )
+}
+
+export default reduxForm({
+    form: 'submitValidation'  // a unique identifier for this form
+})(SubmitValidationForm)

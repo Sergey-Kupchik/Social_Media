@@ -1,0 +1,35 @@
+.formControl {
+
+}
+
+.error {
+
+    div{
+        background: #f35d5d;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+        border-radius: 8px;
+        transition: all 0.3s ease-in-out;
+
+        span{
+            font-size: 15px;
+            PADDING: 8PX;
+        };
+    }
+
+}
+
+.error.span {
+    color: red;
+}
+.error2 {
+background: #f35d5d;
+display: flex;
+ justify-content: center;
+flex-direction: column;
+ align-items: center;
+border-radius: 8px;
+
+}

@@ -134,13 +134,37 @@ export const loginUser = (data: LoginFormDataType) => (dispatch: ThunkDispatch<A
 
         } else {
             dispatch(stopSubmit('login', {
-                email: res.messages,
+                email: "Wrong username or password",
+                password: "Wrong username or password",
             }))
         }
     }).catch((error) => {
         alert(error)
     })
 }
+
+// Authorize current user on the service
+export const loginTestUser = () => (dispatch: ThunkDispatch<AuthStateType, void, ActionsTypes>) => {
+    let testData = {
+        email: "katsent@mail.ru",
+        password: "Minsk558451",
+        rememberMe: false,
+    }
+    AuthAPI.login(testData).then((res) => {
+        if (res.resultCode === 0) {
+            dispatch(setUserProfile())
+        } else {
+            dispatch(stopSubmit('login', {
+                email: "Wrong username or password",
+                password: "Wrong username or password",
+            }))
+        }
+    }).catch((error) => {
+        alert(error)
+    })
+}
+
+
 
 // Get photo of authorized user for avatar
  export const downloadUserPhoto =(id:string )=>(dispatch: ThunkDispatch<AuthStateType, void, ActionsTypes>)=>{

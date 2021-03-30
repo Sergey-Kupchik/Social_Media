@@ -16,6 +16,7 @@ import {connect} from 'react-redux';
 import {RootState} from './redux/storeRedux';
 import {authorizeUser} from './redux/appReducer';
 import {Preloader} from './components/common/Preloader/Preloader';
+import SubmitValidationForm from './components/Login/Login2';
 
 
 type AppStatePropsType = {
@@ -48,6 +49,7 @@ class App extends React.Component<AppStatePropsType> {
                                 <Route path='/news' component={News}/>
                                 <Route path='/settings' component={Settings}/>
                                 <Route path='/users' component={UsersContainer}/>
+
                                 <Route path='/lang' component={LoginContainer}/>
                                 <Route path={'/404'} render={() => <div className={styles.error_content}><h1>404: PAGE NOT FOUND</h1></div>}/>
                                 <Redirect from={'*'} to={'/404'}/>

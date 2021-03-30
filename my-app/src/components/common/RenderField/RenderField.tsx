@@ -6,7 +6,7 @@
 
 
 import React from 'react';
-import styles from './RenderField.module.css';
+import styles from './RenderField.module.scss';
 
 type RenderFieldPropsType = any
 
@@ -17,7 +17,10 @@ export const RenderField: React.FC<RenderFieldPropsType> = (props) => {
         <label>{label}</label>
         <div>
             <input {...input} placeholder={placeholder} type={type}/>
-            {(error && <span>{error}</span>)}
+            {/*{(error && <span>{error}</span>)}*/}
+            {touched && ((error && <span>{error}</span>) || (warning && <span>{warning}</span>))}
         </div>
     </div>
 }
+
+

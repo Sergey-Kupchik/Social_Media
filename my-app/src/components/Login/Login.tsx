@@ -1,24 +1,11 @@
 import React from 'react';
 import {Field, InjectedFormProps, reduxForm} from 'redux-form';
-import {emailValidator, maxLength30, minLength5, required} from '../util/validators';
+import {emailValidator, maxLength30, minLength10, required} from '../util/validators';
 import {RenderField} from '../common/RenderField/RenderField';
 import {connect} from 'react-redux';
 import styles from './Login.module.scss';
-import {
-    followUser,
-    setUpAllUsers,
-    setUpCurrentPage,
-    toggle_followingInProgress,
-    toggle_isFetching, unfollowUser
-} from '../../redux/usersReducer';
-import {Checkbox, FormControl, FormControlLabel, FormGroup, FormLabel, TextField, Button, Grid} from '@material-ui/core'
-
-import {UsersAPIComponent} from '../Users/UsersAPIComponent';
-import {loginUser} from '../../redux/authReducer';
+import {loginUser,loginTestUser} from '../../redux/authReducer';
 import {RootState} from '../../redux/storeRedux';
-import {Redirect} from 'react-router-dom';
-import {log} from 'util';
-import {HeaderLogo} from '../Header/HeaderLogo/HeaderLogo';
 import logoRF from '../common/img/logo.png';
 
 
@@ -31,17 +18,17 @@ let LoginForm: React.FC<InjectedFormProps<LoginFormDataType>> = (props) => {
                 <Field placeholder={'Email'}
                        name={'email'}
                        component={RenderField}
-                       validate={emailValidator}
+                       validate={[required, emailValidator]}
                        type={'email'}
                        className={styles.field}/>
             </div>
             <div  className={`${styles.item}  ${styles.item_text}`}>
                 <Field placeholder={'Password'}
                        name={'password'}
-                       component={'input'}
+                       component={RenderField}
                        type={'password'}
                        className={styles.field}
-                       validate={[required, maxLength30, minLength5]}/>
+                       validate={[required, maxLength30, minLength10]}/>
             </div >
             <div  className={styles.item}>Remember me
                 <Field name={'rememberMe'}
@@ -61,11 +48,6 @@ const Login = (props: LoginPropsType) => {
     const onSubmit = (formData: LoginFormDataType) => {
         props.loginUser(formData)
     }
-    const test = () => true
-    // if (props.authorize) {
-    //     return <Redirect to="/profile/12113"/>
-    //
-    // } else {
 
 
     return (
@@ -82,7 +64,7 @@ const Login = (props: LoginPropsType) => {
                 <a href={'https://social-network.samuraijs.com/'}
                    target={'_blank'} className={styles.loginForm_link}>To log in get registered
                 </a>
-                <button type="submit" className={styles.btnFree}>Test account</button>
+                <button type="submit" className={styles.btnFree} onClick={props.loginTestUser}>Test account</button>
             </div>
         </div>)
 }
@@ -95,6 +77,7 @@ export type LoginFormDataType = {
 }
 type DispatchPropsType = {
     loginUser: (data: LoginFormDataType) => Function
+    loginTestUser: () => Function
 }
 
 
@@ -103,6 +86,7 @@ type mapStateToPropsType = ReturnType<typeof mapStateToProps>
 
 type LoginPropsType = {
     loginUser: (data: LoginFormDataType) => Function
+    loginTestUser: () => Function
     authorize: boolean
 }
 
@@ -113,4 +97,4 @@ const mapStateToProps = (state: RootState) => ({
 })
 
 
-export const LoginContainer = connect<mapStateToPropsType, DispatchPropsType, {}, RootState>(mapStateToProps, {loginUser})(Login)
+export const LoginContainer = connect<mapStateToPropsType, DispatchPropsType, {}, RootState>(mapStateToProps, {loginUser,loginTestUser})(Login)
