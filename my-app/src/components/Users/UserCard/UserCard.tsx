@@ -42,11 +42,11 @@ export const UserCard = React.memo(function UserCard(props: UserCardPropsType) {
                     {props.user.followed ?
                         <button className={styles.btn_primary} disabled={props.followingInProgress.some(id => id === props.user.id)} onClick={() => {
                             props.unfollowUser(props.user.id)
-                        }}>Unfollow</button> :
+                        }}>Following</button> :
 
                         <button className={styles.btn_secondary} disabled={props.followingInProgress.some(id => id === props.user.id)} onClick={() => {
                             props.followUser(props.user.id)
-                        }}>Following</button>}
+                        }}>Follow</button>}
 
                 </div>
             </div>

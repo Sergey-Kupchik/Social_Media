@@ -1,14 +1,14 @@
 import React from 'react';
 import styles from './Sidebar.module.scss';
 import {NavLink} from 'react-router-dom';
-import {FaUserCircle, FaFacebookMessenger, FaRegNewspaper, FaHeadphones, FaBarcode, FaUsers} from 'react-icons/fa';
+import {FaBarcode, FaFacebookMessenger, FaHeadphones, FaRegNewspaper, FaUserCircle, FaUsers} from 'react-icons/fa';
 
 
-const Sidebar =React.memo(function Sidebar () {
+export const Sidebar =React.memo(function Sidebar (props) {
     return (
         <div className={styles.nav}>
             <div className={styles.item}>
-                <NavLink to="/profile" activeClassName={styles.active} className={styles.navLink}>
+                <NavLink to={`/profile/`} activeClassName={styles.active} className={styles.navLink}>
                     <FaUserCircle />
                     <span className={styles.item_value}>Profile</span>
                 </NavLink>
@@ -48,6 +48,3 @@ const Sidebar =React.memo(function Sidebar () {
         </div>
     )
 })
-export default Sidebar;
-
-

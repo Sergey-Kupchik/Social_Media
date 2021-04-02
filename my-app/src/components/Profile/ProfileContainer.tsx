@@ -2,14 +2,7 @@ import React, {ComponentType} from 'react';
 import Profile, {ProfileType} from './Profile';
 import {connect} from 'react-redux';
 import {RootState} from '../../redux/storeRedux';
-import {
-    AddPostAC, getUserName, getUserPhoto, getUserProfile,
-    setNewProfile,
-    setUserStatus,
-    showStatusTextInTextareaSuccess,
-    updateUserStatus
-} from '../../redux/profileReducer';
-import axios from 'axios';
+import {getUserProfile, showStatusTextInTextareaSuccess, updateUserStatus, changePhoto} from '../../redux/profileReducer';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {withAuthRedirect} from '../HOCs/withAuth';
 import {compose} from 'redux';
@@ -19,18 +12,27 @@ import {getIsAuth, getProfile, getRegisteredUserId, getTextAreaForStatus, getUse
 type URLMatchParamsType = { userID: string }
 
 class ProfileContainer extends React.Component<ProfilePropsType & RouteComponentProps<URLMatchParamsType>> {
-    componentDidMount() {
+    refreshProfile () {
         let currentUserID: string = this.props.match.params.userID
         if (!currentUserID) {
             currentUserID = this.props.authorizedUserID
         }
         this.props.getUserProfile(currentUserID)
-
     }
 
-    render() {
+    componentDidMount() {
+this.refreshProfile()
+    }
+componentDidUpdate(prevProps: Readonly<ProfilePropsType & RouteComponentProps<URLMatchParamsType>>, prevState: Readonly<{}>, snapshot?: any) {
+   if (this.props.match.params.userID !=prevProps.match.params.userID) {
+       this.refreshProfile()
+   }
 
-        return <Profile {...this.props} />
+}
+
+    render() {
+        const {status,profile,authorizedUserID,textAreaForUserStatus,showStatusTextInTextareaSuccess,updateUserStatus,changePhoto} = this.props;
+        return <Profile status={status}  authorizedUserID={authorizedUserID} profile={profile} showStatusTextInTextareaSuccess={showStatusTextInTextareaSuccess} textAreaForUserStatus={textAreaForUserStatus} updateUserStatus={updateUserStatus}  changePhoto={changePhoto} isOwner={!this.props.match.params.userID }/>
 
     }
 }
@@ -44,6 +46,7 @@ type ProfilePropsType = {
     getUserProfile: (id: string) => Function
     showStatusTextInTextareaSuccess: (statusChanging: string) => void
     updateUserStatus: (status: string,) => void
+    changePhoto: (photo: File) =>void
 }
 const mapStateToProps = (state: RootState) => {
     return {
@@ -58,5 +61,5 @@ const mapStateToProps = (state: RootState) => {
 
 export default compose<ComponentType>(withAuthRedirect, withRouter,
     connect(mapStateToProps, {
-        getUserProfile, updateUserStatus, showStatusTextInTextareaSuccess,
+        getUserProfile, updateUserStatus, showStatusTextInTextareaSuccess, changePhoto,
     }))(ProfileContainer)

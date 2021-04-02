@@ -1,11 +1,9 @@
 import React from 'react';
 import ReactPaginate from 'react-paginate';
-import userPhoto from '../../assets/images/user.png';
 import styles from './Users.module.scss';
 import {UsersType} from '../../redux/usersReducer';
-import {NavLink} from 'react-router-dom';
-import {UsersAPI} from '../../api/socialNetworkAPI';
 import {UserCard} from './UserCard/UserCard';
+import {Paginator} from '../common/Paginator/Paginator';
 
 
 type UsersPropsType = {
@@ -21,33 +19,14 @@ type UsersPropsType = {
 
 }
 
-export const Users: React.FC<UsersPropsType> = (props) => {
+// const MyPosts =React.memo(function MyPosts(props:MyPostsPropsType)
 
-
-    let pagesQuantity = Math.ceil(props.totalCount / props.pageSize);
-    let pagesArray = [];
-    for (let i = 1; i <= pagesQuantity; i++) {
-        pagesArray.push(i)
-    }
-
-
+export const Users = React.memo(function MyPosts(props: UsersPropsType) {
     return <div className={styles.wrapper}>
-        <ReactPaginate pageCount={pagesQuantity}
-                       marginPagesDisplayed={1}
-                       pageRangeDisplayed={8}
-                       initialPage={props.currentPage}
-                       onPageChange={(p) => {
-                           props.onSetNewCurrentPage(p.selected)
-                       }}
-                       breakClassName={styles.breakMe}
-                       containerClassName={styles.pagination}
-                       activeClassName={styles.active}
-
-        />
-
+        <Paginator {...props}/>
         <div className={styles.container}>{props.users.map((u, i) =>
-                <UserCard user={u} key={i} followingInProgress={props.followingInProgress} followUser={props.followUser}
-                          unfollowUser={props.unfollowUser}/>)}
+            <UserCard user={u} key={i} followingInProgress={props.followingInProgress} followUser={props.followUser}
+                      unfollowUser={props.unfollowUser}/>)}
         </div>
     </div>
-}
+})

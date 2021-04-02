@@ -7,6 +7,7 @@ import styles from './Login.module.scss';
 import {loginUser,loginTestUser} from '../../redux/authReducer';
 import {RootState} from '../../redux/storeRedux';
 import logoRF from '../common/img/logo.png';
+import {getAuthorizedUser} from '../util/reduxSelector';
 
 
 let LoginForm: React.FC<InjectedFormProps<LoginFormDataType>> = (props) => {
@@ -93,7 +94,7 @@ type LoginPropsType = {
 
 // mapStateToProps
 const mapStateToProps = (state: RootState) => ({
-    authorize: state.app.authorize
+    authorize: getAuthorizedUser(state)
 })
 
 

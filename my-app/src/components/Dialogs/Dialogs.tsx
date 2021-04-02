@@ -20,12 +20,13 @@ export type DialogsType2 = {
     sendMessage: (message: string) => void
     onChange: (e: ChangeEvent<HTMLTextAreaElement>) => void
     messageStartAreaValue: string
+    registeredUserId:string|null
 }
 
 
 export const Dialogs: React.FC<DialogsType2> = (props) => {
 
-    let dialoguesList = props.dialoguesList.map(d => <UserButton isAuth={true} registeredUserLogin={d.name} registeredUserId={d.id}  userPhoto={"https://iqonic.design/themes/socialv/html/images/user/1.jpg"} key={d.id}/>);
+    let dialoguesList = props.dialoguesList.map(d => <UserButton  registeredUserId={"15637"} isAuth={true} userLogin={d.name} userId={d.id}  userPhoto={"https://iqonic.design/themes/socialv/html/images/user/1.jpg"} key={d.id}/>);
     // let messagesList = props.messagesList.map(m => <Message id={m.id} message={m.message} key={m.id}/>);
     let messagesList = props.messagesList.map(m => <Message2 id={m.id} message={m.message} key={m.id} data={'nov'}
                                                              userPhoto={null} position={''}/>);
@@ -44,19 +45,6 @@ export const Dialogs: React.FC<DialogsType2> = (props) => {
         }
     }
 
-    // return (
-    //     <div className={styles.dialogs}>
-    //
-    //         <div className={styles.messages}>
-    //             {messagesList}
-    //             <SendMessageForm sendMessage={props.sendMessage}/>
-    //         </div>
-    //
-    //         {/*<div className={styles.dialogsItem}>*/}
-    //         {/*    {dialoguesList}*/}
-    //         {/*</div>*/}
-    //     </div>)
-// }
 
     const divStyle = {
         backgroundImage: 'url(' + backgroundImg+ ')',
@@ -64,7 +52,7 @@ export const Dialogs: React.FC<DialogsType2> = (props) => {
     return (
         <div className={styles.wrapper}>
             <div className={styles.header}>
-                <UserButton isAuth={true} userPhoto={"https://iqonic.design/themes/socialv/html/images/user/1.jpg"} registeredUserId={"https://iqonic.design/themes/socialv/html/images/user/1.jpg"} registeredUserLogin={"@iguefsd"}/>
+                <UserButton isAuth={true} userPhoto={"https://iqonic.design/themes/socialv/html/images/user/1.jpg"} userId={"https://iqonic.design/themes/socialv/html/images/user/1.jpg"} userLogin={"@iguefsd"} registeredUserId={props.registeredUserId}/>
             </div>
             <div className={styles.main}>
                 <div className={styles.sideBar}>

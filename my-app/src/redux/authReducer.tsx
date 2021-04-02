@@ -38,10 +38,13 @@ export const setAuthUserData = (data: AuthUserData) => ({
 } as const)
 
 // action creator for get user photo
-export const getAuthUserPhoto = (userPhoto: string | null) => ({
-    type: actions.setUserPhoto,
-    payload: {userPhoto,},
-} as const)
+export const getAuthUserPhoto = (userPhoto: string | null) => {
+    debugger
+    return{type: actions.setUserPhoto,
+        payload: {userPhoto,},
+    }as const
+
+}
 
 
 // action creator for log out from auth
@@ -95,6 +98,7 @@ export const authReducer = (state = authInitialState, action: ActionsTypes): Aut
             }
         }
         case actions.setUserPhoto: {
+            debugger
             return {
                 ...state,
                 userPhoto: action.payload.userPhoto
@@ -126,6 +130,7 @@ export const setUserProfile = () => async (dispatch: ThunkDispatch<AuthStateType
     let res = await AuthAPI.authMe()
     if (res.resultCode === 0) {
         dispatch(setAuthUserData(res.data))
+        downloadUserPhoto(res.data.id)
         dispatch(toggleIsFetchingInAuthReducer(false))
     } else {
         dispatch(logoutUser())
@@ -149,8 +154,10 @@ export const loginTestUser = () => async (dispatch: ThunkDispatch<AuthStateType,
 
 // Get photo of authorized user for avatar
 export const downloadUserPhoto = (id: string) =>async (dispatch: ThunkDispatch<AuthStateType, void, ActionsTypes>) => {
+    dispatch(toggleIsFetchingInAuthReducer(true));
     let res = await ProfileAPI.getUserProfile(id)
-    getAuthUserPhoto(res.photos.small)
+        dispatch(getAuthUserPhoto(res.photos.small))
+        dispatch(toggleIsFetchingInAuthReducer(false));
 }
 
 

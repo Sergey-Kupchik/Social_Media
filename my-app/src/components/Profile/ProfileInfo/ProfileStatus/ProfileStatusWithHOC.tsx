@@ -28,7 +28,7 @@ export const ProfileStatusWithHOC: React.FunctionComponent<ProfileStatusPropsTyp
     return <>
         {!editMode &&
         <div >
-            <span onClick={() => setIsMode(true)}>{(props.status==null)?"No status":props.status}</span>
+            <span onClick={() => setIsMode(true)}>{(props.status==""||props.status==null)?"No status":props.status}</span>
         </div>
         }
         {editMode &&

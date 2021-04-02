@@ -12,27 +12,21 @@ export const getDialoguesList = (state: RootState): DialogWithFriend[] => state.
 export const getMessagesList = (state: RootState): MessageType[] => state.dialogsPage.messages
 
 // For header component
-// @ts-ignore
-export const getRegisteredUserId = (state: RootState): string=> state.auth.id
-// @ts-ignore
 
-export const getRegisteredUserLogin = (state: RootState): string => state.auth.login
-// @ts-ignore
-export const getRegisteredUserPhoto = (state: RootState): string|null => state.auth.userPhoto
+export const getRegisteredUserId = (state: RootState): string|null=>state.auth.id
+export const getRegisteredUserLogin = (state: RootState): string|null => state.auth.login
 
-export const getIsAuth = (state: RootState): boolean=>{   // checking that the user is authorized in the app
-    // @ts-ignore
+export const getRegisteredUserPhoto = (state: RootState): string|null=> state.auth.userPhoto
 
-    return state.auth.isAuth
-}
-export const getIsFetching = (state: RootState): boolean=>{   // checking IsFetching property (required to display data)
-                                                              // @ts-ignore
 
-    return state.auth.isFetching
-}
+
+// checking that the user is authorized in the app
+export const getIsAuth = (state: RootState): boolean=>state.auth.isAuth
+
+// checking IsFetching property (required to display data)
+export const getIsFetching = (state: RootState): boolean=>state.auth.isFetching
 
 // For profile component
-
 export const getProfile = (state: RootState): ProfileType | null => state.profilePage.profile
 export const getTextAreaForStatus = (state: RootState): string => state.profilePage.textAreaForUserStatus
 export const getUserStatus = (state: RootState): string => state.profilePage.status
@@ -40,16 +34,22 @@ export const getUserStatus = (state: RootState): string => state.profilePage.sta
 
 // For users component
 export const getUsers = (state: RootState): Array<UsersType> =>state.usersPage.users
-export const getTotalUsersCount = (state: RootState): number =>{ // // checking how many the users are authorized in system
+
+export const getTotalUsersCount = (state: RootState): number =>{
     return state.usersPage.totalCount
 }
-export const getPageSize = (state: RootState): number =>{ // // checking how many the users will be on one page
+// checking how many the users will be on one page
+export const getPageSize = (state: RootState): number =>{
     return state.usersPage.pageSize
 }
-export const getCurrentPage = (state: RootState): number =>{ // set the current page number in the user list
+// set the current page number in the user li
+export const getCurrentPage = (state: RootState): number =>{
     return state.usersPage.currentPage
 }
 
 export const getIsFetchingUsers = (state: RootState): boolean=> state.usersPage.isFetching
-
 export const getFriendsList = (state: RootState): Array<string>=> state.usersPage.followingInProgress
+
+
+// check if the user is authorized in the application
+export const getAuthorizedUser = (state: RootState): boolean=> state.app.authorize

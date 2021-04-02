@@ -1,4 +1,4 @@
-import {ProfileType} from '../components/Profile/Profile';
+import {PhotosType, ProfileType} from '../components/Profile/Profile';
 import {v1} from 'uuid';
 import {Dispatch} from 'redux';
 import {ProfileAPI} from '../api/socialNetworkAPI';
@@ -6,6 +6,7 @@ import post1 from '../assets/images/post_1.jpg';
 import post2 from '../assets/images/post_2.jpg';
 import post3 from '../assets/images/post_3.jpg';
 import post4 from '../assets/images/post_4.jpg';
+import {getAuthUserPhoto} from './authReducer';
 
 // Types
 
@@ -19,6 +20,7 @@ export enum actions {
     setUserPhotoToPost = 'cirkle/profileReducer/SET-USER-PHOTO-TO-POST',
     setUserNameToPost = 'cirkle/profileReducer/SET-USER-NAME-TO-POST',
     likePost = 'cirkle/profileReducer/LIKE-TO-POST',
+    changePhoto = 'cirkle/profileReducer/CHANGE-PHOTO',
 }
 
 // Type of all actions
@@ -31,17 +33,18 @@ export type ProfileReducerActionsTypes =
     | ReturnType<typeof setUserPhotoToPost>
     | ReturnType<typeof setUserNameToPost>
     | ReturnType<typeof likePost>
+    | ReturnType<typeof changePhotoSuccess>
 
 // Type of post
 export type PostType = {
     id: string
     message: string
     likesCount: number
-    img?:string
-    time:string
-    userId:string
-    userPhoto:string|null
-    userName:string
+    img?: string
+    time: string
+    userId: string
+    userPhoto: string | null
+    userName: string
 }
 // Type of initial State
 type ProfileStateType = {
@@ -55,9 +58,9 @@ type ProfileStateType = {
 
 //Action Creators
 //add new post action creator
-export const AddPostAC = (userId:string, userName:string,userPhoto:string|null,newPost: string,) => ({
+export const AddPostAC = (userId: string, userName: string, userPhoto: string | null, newPost: string,) => ({
     type: actions.addPost,
-    payload:{
+    payload: {
         newPostValue: newPost,
         userPhoto,
         userId,
@@ -68,7 +71,7 @@ export const AddPostAC = (userId:string, userName:string,userPhoto:string|null,n
 //add like post action creator
 export const likePost = (id: string) => ({
     type: actions.likePost,
-    payload:{
+    payload: {
         id
     }
 } as const);
@@ -76,8 +79,8 @@ export const likePost = (id: string) => ({
 //show post
 export const ShowPostTextInTextareaAC = (newText: string) => ({
     type: actions.showText,
-    payload:{
-       newText
+    payload: {
+        newText
     }
 } as const);
 
@@ -85,7 +88,7 @@ export const ShowPostTextInTextareaAC = (newText: string) => ({
 //set up like profile of user
 export const setNewProfile = (profile: ProfileType) => ({
     type: actions.setNewProfile,
-    payload:{
+    payload: {
         profile,
     }
 } as const);
@@ -93,15 +96,23 @@ export const setNewProfile = (profile: ProfileType) => ({
 //show status
 export const showStatusTextInTextareaSuccess = (statusChanging: string) => ({
     type: actions.showStatus,
-    payload:{
+    payload: {
         statusChanging,
+    }
+} as const);
+
+//change photo of user
+export const changePhotoSuccess = (photo: PhotosType) => ({
+    type: actions.changePhoto,
+    payload: {
+        photo,
     }
 } as const);
 
 //set up like status of user
 export const setUserStatusSuccess = (status: string) => ({
     type: actions.setUserStatus,
-    payload:{
+    payload: {
         status,
     }
 } as const);
@@ -109,7 +120,7 @@ export const setUserStatusSuccess = (status: string) => ({
 //set up like photo of user to post
 const setUserPhotoToPost = (userPhoto: string | null, userId: string) => ({
     type: actions.setUserPhotoToPost,
-    payload:{
+    payload: {
         userPhoto,
         userId,
     }
@@ -118,7 +129,7 @@ const setUserPhotoToPost = (userPhoto: string | null, userId: string) => ({
 //set up like name of user to post
 const setUserNameToPost = (userName: string, userId: string) => ({
     type: actions.setUserNameToPost,
-    payload:{
+    payload: {
         userName,
         userId,
     }
@@ -135,7 +146,7 @@ const profileInitialState: ProfileStateType = {
             time: '1 hour ago',
             userPhoto: null,
             userId: '1034',
-            userName:"",
+            userName: '',
         },
         {
             id: v1(),
@@ -145,7 +156,7 @@ const profileInitialState: ProfileStateType = {
             time: '6 hour ago',
             userPhoto: null,
             userId: '1051',
-            userName:"",
+            userName: '',
         },
         {
             id: v1(),
@@ -155,7 +166,7 @@ const profileInitialState: ProfileStateType = {
             time: '1 day ago',
             userPhoto: null,
             userId: '1055',
-            userName:"",
+            userName: '',
         },
         {
             id: v1(),
@@ -165,7 +176,7 @@ const profileInitialState: ProfileStateType = {
             time: '3 day ago',
             userId: '1056',
             userPhoto: null,
-            userName:"",
+            userName: '',
         }
     ],
     newPostInTextArea: '',
@@ -174,7 +185,6 @@ const profileInitialState: ProfileStateType = {
     status: '',
 
 }
-
 
 
 // Reducer
@@ -190,7 +200,7 @@ export const profileReducer = (state = profileInitialState, action: ProfileReduc
                     time: 'Just Now',
                     userId: action.payload.userId,
                     userPhoto: action.payload.userPhoto,
-                    userName:action.payload.userName
+                    userName: action.payload.userName
                 }, ...state.posts],
                 newPostInTextArea: ''
             }
@@ -241,12 +251,22 @@ export const profileReducer = (state = profileInitialState, action: ProfileReduc
                 })
             }
         }
-        case actions.likePost:{
+        case actions.changePhoto:
+            return {
+                ...state,
+                //@ts-ignore
+                profile: {
+                    ...state.profile,
+                    photos: action.payload.photo
+                }
+            }
+
+        case actions.likePost: {
             return {
                 ...state,
                 posts: state.posts.map(p => {
                     if (p.id === action.payload.id) {
-                        p.likesCount=p.likesCount+1
+                        p.likesCount = p.likesCount + 1
                     }
                     return p
                 })
@@ -256,42 +276,47 @@ export const profileReducer = (state = profileInitialState, action: ProfileReduc
     return state
 }
 
-
-
-
 // Thunk Creator
-export const setUserStatus = (id: string) =>async (dispatch: Dispatch) => {
+export const setUserStatus = (id: string) => async (dispatch: Dispatch) => {
     let status = await ProfileAPI.getUserStatus(id)
-        dispatch(showStatusTextInTextareaSuccess(status))
-        dispatch(setUserStatusSuccess(status))
+    dispatch(showStatusTextInTextareaSuccess(status))
+    dispatch(setUserStatusSuccess(status))
 }
 
 
 // Get photo of user to post
-export const getUserPhoto = (id: string) => async(dispatch: Dispatch) => {
-    let profile =  await ProfileAPI.getUserProfile(id)
-        dispatch(setUserPhotoToPost(profile.photos.small, id))
+export const getUserPhoto = (id: string) => async (dispatch: Dispatch) => {
+    let profile = await ProfileAPI.getUserProfile(id)
+    dispatch(setUserPhotoToPost(profile.photos.small, id))
 }
 // Get name of user to post
 export const getUserName = (id: string) => async (dispatch: Dispatch) => {
-    let profile =  await ProfileAPI.getUserProfile(id)
-        dispatch(setUserNameToPost(profile.fullName, id))
+    let profile = await ProfileAPI.getUserProfile(id)
+    dispatch(setUserNameToPost(profile.fullName, id))
 }
 
 
 export const updateUserStatus = (status: string,) => async (dispatch: Dispatch) => {
-    let data =  await ProfileAPI.updateUserStatus(status)
-        if (data.resultCode === 0) {
-            dispatch(showStatusTextInTextareaSuccess(status))
-            dispatch(setUserStatusSuccess(status))
-        }
+    let data = await ProfileAPI.updateUserStatus(status)
+    if (data.resultCode === 0) {
+        dispatch(showStatusTextInTextareaSuccess(status))
+        dispatch(setUserStatusSuccess(status))
+    }
 }
 
 // get the profile information of user
-export const getUserProfile = (id: string) =>async(dispatch: Dispatch<ProfileReducerActionsTypes | any>) => {
+export const getUserProfile = (id: string) => async (dispatch: Dispatch<ProfileReducerActionsTypes | any>) => {
     let res = await ProfileAPI.getUserProfile(id)
-            dispatch(setNewProfile(res))
-            dispatch(setUserStatus(res.userId))
+    dispatch(setNewProfile(res))
+    dispatch(setUserStatus(res.userId))
+}
+
+export const changePhoto = (photo: File) => async (dispatch: Dispatch<ProfileReducerActionsTypes | any>) => {
+    let res = await ProfileAPI.changePhoto(photo)
+    if (res.resultCode === 0) {
+        dispatch(changePhotoSuccess(res.data))
+        dispatch(getAuthUserPhoto(res.data.small))
+    }
 }
 
 

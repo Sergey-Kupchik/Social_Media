@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import {LoginFormDataType} from '../components/Login/Login';
-import {ProfileType} from '../components/Profile/Profile';
+import {PhotosType, ProfileType} from '../components/Profile/Profile';
 
 
 const setting = {
@@ -54,6 +54,15 @@ export const ProfileAPI = {
     },
     updateUserStatus(status: string,) {
         return instance.put<RequestType<{}>>(`/profile/status/`, {status}).then(res => res.data)
+    },
+    changePhoto(image: File,) {
+        const formData = new FormData();
+        formData.append("image", image);
+        return instance.put<RequestType<PhotosType>>(`/profile/photo`, formData,{
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        }).then(res => res.data)
     },
 }
 

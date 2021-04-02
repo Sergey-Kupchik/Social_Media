@@ -8,9 +8,10 @@ import {FiLogOut} from 'react-icons/fi';
 
 
 export const NavBar = React.memo(function NavBar(props: HeaderPropsType) {
+    debugger
     return <ul className={styles.wrapper}>
         <li className={styles.icon_avatar}>
-            <UserButton isAuth={props.isAuth} userPhoto={props.userPhoto} registeredUserId={props.registeredUserId} registeredUserLogin={props.registeredUserLogin}/>
+            <UserButton isAuth={props.isAuth} userPhoto={props.userPhoto} registeredUserId={props.registeredUserId} userId={props.registeredUserId} userLogin={props.registeredUserLogin}/>
         </li>
         <li className={styles.icon_messages}>
             <NavLink to="/dialogs">

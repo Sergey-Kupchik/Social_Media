@@ -27,7 +27,7 @@ export const Post = React.memo(function Post(props: PostPropsType) {
 
     return <div className={styles.wrapper}>
         <div className={styles.header}>
-            <UserButton isAuth={true} registeredUserId={props.userId} registeredUserLogin={props.userName} userPhoto={props.userPhoto}/>
+            <UserButton isAuth={true} userId={props.userId} userLogin={props.userName} userPhoto={props.userPhoto} registeredUserId={"15637"}/>
             <ul className={styles.entry_meta}>
                 <GiWorld/>
                 <li className={styles.meta_privacy}>Public</li>

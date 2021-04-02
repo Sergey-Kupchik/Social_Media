@@ -13,8 +13,9 @@ export type ProfilePropsType = {
     textAreaForUserStatus: string
     showStatusTextInTextareaSuccess: (statusChanging: string) => void
     updateUserStatus: (status: string,) =>void
+    changePhoto: (photo: File) =>void
     authorizedUserID: string
-
+    isOwner:boolean
 }
 
 export type ProfileType = {
@@ -31,23 +32,23 @@ export type ProfileType = {
     }
     lookingForAJob: boolean,
     lookingForAJobDescription: string | null,
-    fullName: string ,
+    fullName: string
     userId: string
-    photos: {
-        small: string | null,
-        large: string | null,
-    },
+    photos: PhotosType
+}
+
+export type  PhotosType = {
+    small: string | null
+    large: string | null
 }
 
 
-
 export type PostsStatePropsType = {
-    posts: Array<PostType>
-    newPostInTextArea:string
     profile: ProfileType | null
     textAreaForUserStatus:string
     status: string
     authorizedUserID: string
+
 }
 
 const Profile: React.FC<ProfilePropsType> = (props) => {
@@ -56,7 +57,7 @@ const Profile: React.FC<ProfilePropsType> = (props) => {
         return <div className={styles.container}><Preloader/></div>
     } else return (
         <div className={styles.wrapper}>
-            <ProfileInfo profile={props.profile} status={props.status} textAreaForUserStatus={props.textAreaForUserStatus}  showStatusTextInTextareaSuccess={props.showStatusTextInTextareaSuccess} updateUserStatus={props.updateUserStatus} authorizedUserID={props.authorizedUserID}/>
+            <ProfileInfo {...props}/>
             <MyPostsContainer/>
         </div>
     )
