@@ -5,6 +5,7 @@ import {Preloader} from '../common/Preloader/Preloader';
 import styles from './Profile.module.scss';
 import MyPostsContainer from './MyPosts/MyPostsConteiner';
 import {PostType} from '../../redux/profileReducer';
+import {ProfileFormDataType} from './ProfileInfo/ProfileForm/ProfileForm';
 
 
 export type ProfilePropsType = {
@@ -13,6 +14,7 @@ export type ProfilePropsType = {
     textAreaForUserStatus: string
     showStatusTextInTextareaSuccess: (statusChanging: string) => void
     updateUserStatus: (status: string,) =>void
+    updateProfile: (profile: ProfileFormDataType) => void
     changePhoto: (photo: File) =>void
     authorizedUserID: string
     isOwner:boolean

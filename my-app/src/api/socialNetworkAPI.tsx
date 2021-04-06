@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import {LoginFormDataType} from '../components/Login/Login';
 import {PhotosType, ProfileType} from '../components/Profile/Profile';
+import {ProfileFormDataType} from '../components/Profile/ProfileInfo/ProfileForm/ProfileForm';
 
 
 const setting = {
@@ -49,6 +50,9 @@ export const ProfileAPI = {
     getUserProfile(userId: string,) {
         return  instance.get<ProfileType>(`/profile/${userId}`).then(res => res.data)
     },
+    updateUserProfile(profile: ProfileFormDataType) {
+        return  instance.put<RequestType<{profile:any}>>(`/profile`,profile).then(res => res.data)
+    },
     getUserStatus(userId: string,) {
         return instance.get<string>(`/profile/status/${userId}`).then(res => res.data)
     },
@@ -58,7 +62,7 @@ export const ProfileAPI = {
     changePhoto(image: File,) {
         const formData = new FormData();
         formData.append("image", image);
-        return instance.put<RequestType<PhotosType>>(`/profile/photo`, formData,{
+        return instance.put<RequestType<{photos:PhotosType}>>(`/profile/photo`, formData,{
             headers: {
                 'Content-Type': 'multipart/form-data'
             }

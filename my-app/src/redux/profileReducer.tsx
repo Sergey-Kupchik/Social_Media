@@ -6,7 +6,12 @@ import post1 from '../assets/images/post_1.jpg';
 import post2 from '../assets/images/post_2.jpg';
 import post3 from '../assets/images/post_3.jpg';
 import post4 from '../assets/images/post_4.jpg';
-import {getAuthUserPhoto} from './authReducer';
+import {getAuthUserPhoto, setUserProfile} from './authReducer';
+import {ProfileFormDataType} from '../components/Profile/ProfileInfo/ProfileForm/ProfileForm';
+import {createSlice} from '@reduxjs/toolkit';
+import {RootState} from './storeRedux';
+import {ThunkDispatch} from 'redux-thunk';
+import {AppStateType} from './appReducer';
 
 // Types
 
@@ -21,6 +26,7 @@ export enum actions {
     setUserNameToPost = 'cirkle/profileReducer/SET-USER-NAME-TO-POST',
     likePost = 'cirkle/profileReducer/LIKE-TO-POST',
     changePhoto = 'cirkle/profileReducer/CHANGE-PHOTO',
+    updateProfile = 'cirkle/profileReducer/UPDATE-PROFILE',
 }
 
 // Type of all actions
@@ -34,6 +40,7 @@ export type ProfileReducerActionsTypes =
     | ReturnType<typeof setUserNameToPost>
     | ReturnType<typeof likePost>
     | ReturnType<typeof changePhotoSuccess>
+    | ReturnType<typeof updateProfileSuccess>
 
 // Type of post
 export type PostType = {
@@ -75,6 +82,15 @@ export const likePost = (id: string) => ({
         id
     }
 } as const);
+
+//update profile of registered user action creator
+export const updateProfileSuccess = (profile: ProfileType) => ({
+    type: actions.updateProfile,
+    payload: {
+        profile
+    }
+} as const);
+
 
 //show post
 export const ShowPostTextInTextareaAC = (newText: string) => ({
@@ -188,7 +204,7 @@ const profileInitialState: ProfileStateType = {
 
 
 // Reducer
-export const profileReducer = (state = profileInitialState, action: ProfileReducerActionsTypes): ProfileStateType => {
+export const profileReducer = (state: ProfileStateType = profileInitialState, action: ProfileReducerActionsTypes): ProfileStateType => {
     switch (action.type) {
         case actions.addPost: {
             return {
@@ -251,7 +267,18 @@ export const profileReducer = (state = profileInitialState, action: ProfileReduc
                 })
             }
         }
+        case actions.updateProfile:
+
+            return {
+                ...state,
+                profile: {
+                    ...state.profile,
+                    ...action.payload.profile,
+                }
+            }
+
         case actions.changePhoto:
+
             return {
                 ...state,
                 //@ts-ignore
@@ -260,6 +287,7 @@ export const profileReducer = (state = profileInitialState, action: ProfileReduc
                     photos: action.payload.photo
                 }
             }
+
 
         case actions.likePost: {
             return {
@@ -305,21 +333,43 @@ export const updateUserStatus = (status: string,) => async (dispatch: Dispatch) 
 }
 
 // get the profile information of user
-export const getUserProfile = (id: string) => async (dispatch: Dispatch<ProfileReducerActionsTypes | any>) => {
+export const getUserProfile = (id: string) => async (dispatch:
+ThunkDispatch<AppStateType, void, ProfileReducerActionsTypes>) => {
     let res = await ProfileAPI.getUserProfile(id)
     dispatch(setNewProfile(res))
     dispatch(setUserStatus(res.userId))
 }
 
-export const changePhoto = (photo: File) => async (dispatch: Dispatch<ProfileReducerActionsTypes | any>) => {
+export const changePhoto = (photo: File) => async (dispatch:
+ThunkDispatch<AppStateType, void, ProfileReducerActionsTypes|ReturnType<typeof getAuthUserPhoto> >
+) => {
     let res = await ProfileAPI.changePhoto(photo)
     if (res.resultCode === 0) {
-        dispatch(changePhotoSuccess(res.data))
-        dispatch(getAuthUserPhoto(res.data.small))
+        dispatch(changePhotoSuccess(res.data.photos))
+        dispatch(getAuthUserPhoto(res.data.photos.small))
     }
 }
 
 
+//Thunk Creator for updating profile of registered user
+export const updateProfile = (profile: ProfileFormDataType,) => async (dispatch: ThunkDispatch<AppStateType, void, ProfileReducerActionsTypes>, getState:()=>RootState) => {
+    const userId =getState().auth.id
+    let data = {...profile,
+        userId
+    }
+    let res = await ProfileAPI.updateUserProfile(data)
+debugger
+    if (res.resultCode === 0) {
 
-
+        debugger
+        if(userId!==null) {
+            dispatch(getUserProfile(userId))
+            //@ts-ignore
+            dispatch(setUserProfile())
+        }
+    }
+    else {
+        debugger
+    }
+}
 

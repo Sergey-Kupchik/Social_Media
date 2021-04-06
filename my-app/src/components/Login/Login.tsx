@@ -10,7 +10,7 @@ import logoRF from '../common/img/logo.png';
 import {getAuthorizedUser} from '../util/reduxSelector';
 
 
-let LoginForm: React.FC<InjectedFormProps<LoginFormDataType>> = (props) => {
+const LoginForm: React.FC<InjectedFormProps<LoginFormDataType>> = (props) => {
 
     const {handleSubmit, pristine, reset, submitting} = props
     return (
@@ -44,13 +44,10 @@ let LoginForm: React.FC<InjectedFormProps<LoginFormDataType>> = (props) => {
 
 const LoginReduxForm = reduxForm<LoginFormDataType>({form: 'login'})(LoginForm)
 
-
 const Login = (props: LoginPropsType) => {
     const onSubmit = (formData: LoginFormDataType) => {
         props.loginUser(formData)
     }
-
-
     return (
         <div className={styles.wrapper}>
             <div className={styles.nav}>
