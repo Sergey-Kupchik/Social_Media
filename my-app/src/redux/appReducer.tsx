@@ -5,18 +5,24 @@ import {ThunkDispatch} from 'redux-thunk';
 
 // Types of type for action creators
 enum actions {
-    authorize = 'cirkle/appReducer/UTHORIZE_USER_IN_THE_NETWORK'
+    authorize = 'cirkle/appReducer/UTHORIZE_USER_IN_THE_NETWORK',
+    error = 'cirkle/appReducer/SET-ERROR'
 }
 
 // Type of authorizeUserSuccess action creator
 type authorizeUserSuccessType = ReturnType<typeof authorizeUserSuccess>
 
+
 // Type of app state
-export type AppStateType = typeof initialState;
+export type AppStateType = {
+    authorize: boolean// to check if the user is authorized
+    error: string | null // for global server error - we'll add an error here
+}
 
 // Type of all actions
 type AppActionsTypes =
     | ReturnType<typeof authorizeUserSuccess>
+    | ReturnType<typeof setAppErrorSuccess>
 
 
 //Action Creators
@@ -29,18 +35,25 @@ export const authorizeUserSuccess = (authorize: boolean) => ({
     }
 } as const)
 
+export const setAppErrorSuccess = (error: string | null) => ({
+    type: actions.error,
+    payload: {error,}
+} as const)
+
 // Initial state for first start appReducer
-const initialState = {
+const initialState: AppStateType = {
     authorize: false,
+    error: null,
 }
 
 // Reducer
 export const appReducer = (state = initialState, action: AppActionsTypes): AppStateType => {
     switch (action.type) {
-        case actions.authorize: {
+        case actions.authorize:
+        case actions.error: {
             return {
                 ...state,
-                authorize: action.payload.authorize,
+                ...action.payload,
             };
         }
     }

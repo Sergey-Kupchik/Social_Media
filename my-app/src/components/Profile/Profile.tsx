@@ -1,20 +1,16 @@
-import React from "react";
-import ProfileInfo from "./ProfileInfo/ProfileInfo";
-
+import React from 'react';
+import ProfileInfo from './ProfileInfo/ProfileInfo';
 import {Preloader} from '../common/Preloader/Preloader';
 import styles from './Profile.module.scss';
 import MyPostsContainer from './MyPosts/MyPostsConteiner';
-import {PostType} from '../../redux/profileReducer';
 import {ProfileFormDataType} from './ProfileInfo/ProfileForm/ProfileForm';
 
 
 export type ProfilePropsType = {
     profile: ProfileType | null
     status: string
-    textAreaForUserStatus: string
-    showStatusTextInTextareaSuccess: (statusChanging: string) => void
     updateUserStatus: (status: string,) =>void
-    updateProfile: (profile: ProfileFormDataType) => void
+    updateProfile: (profile: ProfileFormDataType) => Promise<string>| void
     changePhoto: (photo: File) =>void
     authorizedUserID: string
     isOwner:boolean
@@ -47,7 +43,6 @@ export type  PhotosType = {
 
 export type PostsStatePropsType = {
     profile: ProfileType | null
-    textAreaForUserStatus:string
     status: string
     authorizedUserID: string
 

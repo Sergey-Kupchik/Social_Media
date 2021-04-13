@@ -3,6 +3,7 @@ import axios from 'axios';
 import {LoginFormDataType} from '../components/Login/Login';
 import {PhotosType, ProfileType} from '../components/Profile/Profile';
 import {ProfileFormDataType} from '../components/Profile/ProfileInfo/ProfileForm/ProfileForm';
+import {strict} from 'assert';
 
 
 const setting = {
@@ -51,7 +52,7 @@ export const ProfileAPI = {
         return  instance.get<ProfileType>(`/profile/${userId}`).then(res => res.data)
     },
     updateUserProfile(profile: ProfileFormDataType) {
-        return  instance.put<RequestType<{profile:any}>>(`/profile`,profile).then(res => res.data)
+        return  instance.put<RequestType<{}>>(`/profile`,profile).then(res => res.data)
     },
     getUserStatus(userId: string,) {
         return instance.get<string>(`/profile/status/${userId}`).then(res => res.data)
@@ -70,6 +71,12 @@ export const ProfileAPI = {
     },
 }
 
+//Security workflow
+export const SecurityAPI = {
+    getCaptchaURL() {
+        return  instance.get<{url:string}>(`security/get-captcha-url`).then(res => res.data)
+    },
+}
 
 // Types
 

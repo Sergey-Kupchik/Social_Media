@@ -1,0 +1,58 @@
+@import "./../../../common/variables";
+@import "./../../../common/mixin";
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  .boolean{
+    display: flex;
+    span{
+      display: inline-flex;
+      align-self: center;
+      svg{
+        width: 20px;
+        height: 20px;
+      }
+    }
+
+  }
+  h3{
+    color: $iconColorTertiary;
+    margin-bottom: 2px;
+  }
+  h5{
+    font-weight: 400;
+    font-size: 14px;
+    color: $textColorSecondary;
+  }
+  .wrapper {
+    padding: 0;
+li{
+  padding-top: 4px;
+  a{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    svg {
+      height: 25px;
+      width: 25px;
+      padding: 0;
+      padding-right: 5px;
+
+      &:hover {
+        color: $iconColorSecondary;
+      }
+    }
+  }
+}
+
+  }
+
+  .btn {
+    @include btnBasic(30px);
+    padding: 4px 20px;
+    cursor: pointer;
+    margin-top: 12px;
+  }
+}

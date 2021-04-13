@@ -26,8 +26,19 @@ export const getIsAuth = (state: RootState): boolean=>state.auth.isAuth
 // checking IsFetching property (required to display data)
 export const getIsFetching = (state: RootState): boolean=>state.auth.isFetching
 
+export const getCaptchaURLValue = (state: RootState): null|string=> state.auth.captchaURL
+
 // For profile component
 export const getProfile = (state: RootState): ProfileType | null => state.profilePage.profile
+
+export const getRegisteredUserName = (state: RootState): string | null => {
+    if (state.profilePage.profile){
+        return state.auth.userName
+    }
+    else {
+        return state.auth.login
+    }
+}
 export const getTextAreaForStatus = (state: RootState): string => state.profilePage.textAreaForUserStatus
 export const getUserStatus = (state: RootState): string => state.profilePage.status
 

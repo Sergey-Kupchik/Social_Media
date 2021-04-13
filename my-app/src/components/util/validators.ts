@@ -6,11 +6,14 @@ export const required = (value:string) => (value ? undefined : 'Required')
     value && value.length > max ? `Must be ${max} characters or less` : undefined
 
 export const maxLength30=maxLength(30)
+export const maxLength90=maxLength(90)
+export const maxLength20=maxLength(20)
 
  const minLength = (min:number) => (value:string) =>
     value && value.length < min ? `Must be ${min} characters or more` : undefined
 
 export const minLength10=minLength(10)
+export const minLength3=minLength(3)
 
 
 export const emailValidator = (value:string) =>

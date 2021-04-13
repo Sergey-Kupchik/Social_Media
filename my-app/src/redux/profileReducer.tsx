@@ -12,6 +12,7 @@ import {createSlice} from '@reduxjs/toolkit';
 import {RootState} from './storeRedux';
 import {ThunkDispatch} from 'redux-thunk';
 import {AppStateType} from './appReducer';
+import {stopSubmit} from 'redux-form';
 
 // Types
 
@@ -161,7 +162,7 @@ const profileInitialState: ProfileStateType = {
             img: post1,
             time: '1 hour ago',
             userPhoto: null,
-            userId: '1034',
+            userId: '1064',
             userName: '',
         },
         {
@@ -334,14 +335,14 @@ export const updateUserStatus = (status: string,) => async (dispatch: Dispatch) 
 
 // get the profile information of user
 export const getUserProfile = (id: string) => async (dispatch:
-ThunkDispatch<AppStateType, void, ProfileReducerActionsTypes>) => {
+                                                         ThunkDispatch<AppStateType, void, ProfileReducerActionsTypes>) => {
     let res = await ProfileAPI.getUserProfile(id)
     dispatch(setNewProfile(res))
     dispatch(setUserStatus(res.userId))
 }
 
 export const changePhoto = (photo: File) => async (dispatch:
-ThunkDispatch<AppStateType, void, ProfileReducerActionsTypes|ReturnType<typeof getAuthUserPhoto> >
+                                                       ThunkDispatch<AppStateType, void, ProfileReducerActionsTypes | ReturnType<typeof getAuthUserPhoto>>
 ) => {
     let res = await ProfileAPI.changePhoto(photo)
     if (res.resultCode === 0) {
@@ -352,24 +353,44 @@ ThunkDispatch<AppStateType, void, ProfileReducerActionsTypes|ReturnType<typeof g
 
 
 //Thunk Creator for updating profile of registered user
-export const updateProfile = (profile: ProfileFormDataType,) => async (dispatch: ThunkDispatch<AppStateType, void, ProfileReducerActionsTypes>, getState:()=>RootState) => {
-    const userId =getState().auth.id
-    let data = {...profile,
+export const updateProfile = (profile: ProfileFormDataType,) => async (dispatch: ThunkDispatch<AppStateType, void, ProfileReducerActionsTypes>, getState: () => RootState) => {
+    const userId = getState().auth.id
+    let data = {
+        ...profile,
         userId
     }
     let res = await ProfileAPI.updateUserProfile(data)
-debugger
     if (res.resultCode === 0) {
-
-        debugger
-        if(userId!==null) {
+        if (userId !== null) {
             dispatch(getUserProfile(userId))
-            //@ts-ignore
             dispatch(setUserProfile())
         }
-    }
-    else {
+    } else {
+        // @ts-ignore
+        dispatch(stopSubmit('profile', {
+            fullName: 'Invalid url format for contacts'
+        }))
+        let a = Promise.reject(res.messages[0])
         debugger
+        return a
     }
 }
 
+
+//generator of error object for updateProfile Thunk Creator use for validation
+// const mistakesGenerator = (mistakesLis: String[]) => {
+//     let errors = {}
+//     let mistakes = mistakesLis.map((m) => {
+//         let arr = m.split('(Contacts->')
+//         let value = arr[0].substring(0, arr[0].length - 1)
+//         let key = arr[1].substring(0, arr[1].length - 1)
+//         return {[key]: value}
+//     })
+//     for (let i = 0; i < mistakes.length; i++) {
+//         let key = Object.keys(mistakes[i])[0]
+//         let value = mistakes[i][key]
+//         // @ts-ignore
+//         errors[key] = value
+//     }
+//     return errors
+// }

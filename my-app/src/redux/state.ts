@@ -17,7 +17,13 @@ import {
     toggle_isFetching,
     unfollow_userSUCCESS,
 } from './usersReducer';
-import {logOutAuthUserData, setAuthUserData, getAuthUserPhoto, toggleIsFetchingInAuthReducer} from './authReducer';
+import {
+    logOutAuthUserData,
+    setAuthUserData,
+    getAuthUserPhoto,
+    toggleIsFetchingInAuthReducer,
+    getCaptchaURLSuccess, getUserNameSuccess
+} from './authReducer';
 import {authorizeUserSuccess} from './appReducer';
 
 
@@ -51,6 +57,8 @@ export type ActionsTypes =
     | ReturnType<typeof toggle_followingInProgress>
     | ReturnType<typeof authorizeUserSuccess>
     | ReturnType<typeof getAuthUserPhoto>
+    | ReturnType<typeof getUserNameSuccess>
+    | ReturnType<typeof getCaptchaURLSuccess>
 
 
 export type StoreType = {
@@ -60,54 +68,3 @@ export type StoreType = {
     getState: () => StateType
     dispatch: DispatchType
 }
-
-// const oldStore: StoreType = {
-//     _state: {
-//         dialogsPage: {
-//             dialogs: [
-//                 {id: v1(), name: "Mike"},
-//                 {id: v1(), name: "Silas"},
-//                 {id: v1(), name: "Mariana"},
-//                 {id: v1(), name: "Jimmy"},
-//                 {id: v1(), name: "Andy"},
-//                 {id: v1(), name: "Delfin"}
-//             ],
-//             messages: [
-//                 {id: v1(), message: "That's a good question! I'll find out"},
-//                 {id: v1(), message: "I have the exact same question"},
-//                 {id: v1(), message: "I have no clue"},
-//                 {id: v1(), message: "Why don't we ask Alex?"},
-//                 {id: v1(), message: "How should I know?"},
-//                 {id: v1(), message: "How should I know?"}
-//             ],
-//             newMessageInTextArea: ""
-//         },
-//         profilePage: {
-//             posts: [
-//                 {id: v1(), message: "Hola Ladies", likesCount: 0},
-//                 {id: v1(), message: "How are you?", likesCount: 12},
-//                 {id: v1(), message: "I'm glad to see you", likesCount: 432},
-//                 {id: v1(), message: "Or not", likesCount: 2}
-//             ],
-//             newPostInTextArea: "",
-//             profile: null
-//         },
-//
-//         sidebar: {}
-//     },
-//     subscribe(callback: () => void) {
-//         this._rerenderEntireTree = callback
-//     },
-//     _rerenderEntireTree() {
-//         console.log("state changed");
-//     },
-//     getState() {
-//         return this._state
-//     },
-//     dispatch(action) {
-//
-//         this._state.dialogsPage=dilogsReducer(this._state.dialogsPage,action);
-//         this._state.profilePage=profileReducer(this._state.profilePage,action);
-//         this._rerenderEntireTree();
-//     }
-// }

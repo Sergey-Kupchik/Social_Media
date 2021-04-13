@@ -43,35 +43,33 @@ class App extends React.Component<AppStatePropsType> {
                     <div className={styles.app_wrapper_content}>
                         <div className={styles.app_content}>
                             <Switch>
-                                <Route exact path={'/'} component={withSuspense(UsersContainer)}/>
-                                    <Route path='/dialogs' render={() => <DialogsContainer/>}/>
-                                    <Route path='/profile/:userID?' render={() => <ProfileContainer/>}/>
-                                    <Route path='/music' component={Music}/>
-                                    <Route path='/news' component={News}/>
-                                    <Route path='/settings' component={Settings}/>
-                                    <Route path='/users'component={withSuspense(UsersContainer)}/>
-                                    <Route path='/lang' component={LoginContainer}/>
-                                    <Route path={'/404'} render={() => <div className={styles.error_content}><h1>404:
-                                        PAGE NOT FOUND</h1></div>}/>
-                                    <Redirect from={'*'} to={'/404'}/>
-                                    </Switch>
-                                    </div>
-                                    </div>
-                                    </div>
-                                    <div className={styles.footer}></div>
-                                    </div>
+                                <Route exact path={'/'} render={()=><Redirect to={'/profile'}/>}/>
+                                <Route path='/dialogs' render={() => <DialogsContainer/>}/>
+                                <Route path='/profile/:userID?' render={() => <ProfileContainer/>}/>
+                                <Route path='/music' component={Music}/>
+                                <Route path='/news' component={News}/>
+                                <Route path='/settings' component={Settings}/>
+                                <Route path='/users' component={withSuspense(UsersContainer)}/>
+                                <Route path='/lang' component={LoginContainer}/>
+                                <Route path={'/404'} render={() => <div className={styles.error_content}><h1>404:
+                                    PAGE NOT FOUND</h1></div>}/>
+                                <Redirect from={'*'} to={'/404'}/>
+                            </Switch>
+                        </div>
+                    </div>
+                </div>
+                <div className={styles.footer}></div>
+            </div>
+        );
+    }
+}
 
-
-                                    );
-                                    }
-                                    }
-
-                                    // map state to props
-                                    const mstp = (state: RootState) => ({
-                                    authorize: state.app.authorize
-                                    })
-                                    export default compose<ComponentType>(
-                                    withRouter,
-                                    connect(mstp, {authorizeUser}))(App)
+// map state to props
+const mstp = (state: RootState) => ({
+    authorize: state.app.authorize
+})
+export default compose<ComponentType>(
+    withRouter,
+    connect(mstp, {authorizeUser}))(App)
 
 

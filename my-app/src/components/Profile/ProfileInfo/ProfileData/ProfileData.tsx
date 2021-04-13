@@ -1,5 +1,14 @@
 import {ProfileType} from '../../Profile';
 import React from 'react';
+import { AiFillFacebook,AiFillLinkedin,AiFillAmazonCircle,AiFillYoutube, AiFillSkype,AiOutlineGithub,AiFillTwitterCircle,AiFillInstagram,AiFillCheckCircle,AiFillCloseCircle} from "react-icons/ai"
+import styleBar from './../../../Header/NavBar/NavBar.module.scss';
+
+import styles from './ProfileData.module.scss';
+
+
+
+
+
 
 //Types
 type ProfileDataPropsType = { profile: ProfileType, isOwner: boolean, setEditModeToTrue: () => void }
@@ -7,26 +16,25 @@ type ProfileDataPropsType = { profile: ProfileType, isOwner: boolean, setEditMod
 
 //Component that display profile of user
 export const ProfileData = React.memo(function ProfileData(props: ProfileDataPropsType) {
-    const {profile, isOwner,setEditModeToTrue} = props
+    const {profile, isOwner, setEditModeToTrue} = props
     const contacts = Object.keys(profile.contacts)
 
-    return (<>
-            <div><b>Full name:</b> {profile.fullName}</div>
-            <div><b>About me:</b> {profile.aboutMe}</div>
-            <div><b>Looking for a job:</b> {profile.lookingForAJob}</div>
-            <div><b>Job Description:</b> {profile.lookingForAJobDescription}</div>
-            <div><b>Contacts:</b>{contacts.map((c, index) => {
-                // @ts-ignore
-                return <Contact key={index} contactTitle={c} contactValue={profile.contacts[c]}/>
-            })}</div>
-
-            {isOwner && <button onClick={setEditModeToTrue}>Edit</button>}
-        </>
+    return (<div className={styles.container}>
+            <h3>{profile.fullName?profile.fullName:"No name"}</h3>
+            <h5><span> {profile.aboutMe?profile.aboutMe:"About Me:"}</span></h5>
+            <h5 className={styles.boolean}><span>Open for discussion:</span><span>{profile.lookingForAJob?<AiFillCheckCircle color={"#28a745"}/>:<AiFillCloseCircle color={"#8793a3"}/>}</span></h5>
+            <h5><span>{profile.lookingForAJobDescription?profile.lookingForAJobDescription:"No description"}</span></h5>
+            <ul className={`${styleBar.wrapper} ${styles.wrapper}`}>
+                <li><a href={`${profile.contacts.facebook}`}><AiFillFacebook/></a></li>
+                <li><a href={`${profile.contacts.mainLink}`}><AiFillLinkedin/></a></li>
+                <li><a href={`${profile.contacts.vk}`}><AiFillAmazonCircle/></a></li>
+                <li><a href={`${profile.contacts.youtube}`}><AiFillYoutube/></a></li>
+                <li><a href={`${profile.contacts.website}`}><AiFillSkype/></a></li>
+                <li><a href={`${profile.contacts.github}`}><AiOutlineGithub/></a></li>
+                <li><a href={`${profile.contacts.instagram}`}><AiFillInstagram/></a></li>
+                <li><a href={`${profile.contacts.twitter}`}><AiFillTwitterCircle/></a></li>
+            </ul>
+            {isOwner && <button onClick={setEditModeToTrue} className={styles.btn}>Settings</button>}
+        </div>
     )
-})
-
-//Component that display contact params of user
-const Contact = React.memo(function Contact(props: { contactTitle: string, contactValue: string | null }) {
-    const {contactTitle, contactValue} = props
-    return <div><b>{contactTitle}:</b> {contactValue}</div>
 })

@@ -38,8 +38,8 @@ componentDidUpdate(prevProps: Readonly<ProfilePropsType & RouteComponentProps<UR
 }
 
     render() {
-        const {status,profile,authorizedUserID,textAreaForUserStatus,showStatusTextInTextareaSuccess,updateUserStatus,changePhoto, updateProfile} = this.props;
-        return <Profile status={status}  authorizedUserID={authorizedUserID} profile={profile} showStatusTextInTextareaSuccess={showStatusTextInTextareaSuccess} textAreaForUserStatus={textAreaForUserStatus} updateUserStatus={updateUserStatus}  changePhoto={changePhoto} isOwner={!this.props.match.params.userID } updateProfile={updateProfile}/>
+        const {status,profile,authorizedUserID,updateUserStatus,changePhoto, updateProfile} = this.props;
+        return <Profile status={status}  authorizedUserID={authorizedUserID} profile={profile}  updateUserStatus={updateUserStatus}  changePhoto={changePhoto} isOwner={!this.props.match.params.userID } updateProfile={updateProfile}/>
 
     }
 }
@@ -48,12 +48,10 @@ type ProfilePropsType = {
     authorizedUserID: string
     isAuth: boolean
     profile: ProfileType | null
-    textAreaForUserStatus: string
     status: string
     getUserProfile: (id: string) => Function
-    showStatusTextInTextareaSuccess: (statusChanging: string) => void
     updateUserStatus: (status: string,) => void
-    updateProfile: (profile: ProfileFormDataType) => void
+    updateProfile: (profile: ProfileFormDataType) => Promise<string>| void
     changePhoto: (photo: File) =>void
 }
 const mapStateToProps = (state: RootState) => {

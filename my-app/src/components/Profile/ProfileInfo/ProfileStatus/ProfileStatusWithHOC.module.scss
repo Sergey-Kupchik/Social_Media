@@ -1,0 +1,73 @@
+@import "./../../../common/variables";
+@import "./../../../common/mixin";
+
+.wrapper{
+  display: flex;
+  flex-direction: column;
+  font-size: 13px;
+  line-height: 20px;
+  padding: 5px!important;
+  @include borderRadius();
+  margin-bottom: 1rem;
+  position: relative;
+  border-radius: 4px!important;
+
+  svg{
+    padding-bottom: 5px;
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    bottom: 4px;
+    right: 5px;
+    color: red;
+    cursor: pointer;
+  }
+}
+.wrapper_form{
+  background-color: transparent;
+  color: $textColorSecondary;
+  border-radius: 4px!important;
+  font-size: 14px;
+  padding: 0px;
+  .fieldLine {
+    display: flex;
+    color: #847585;
+    div {
+      width: 20px;
+    }
+  }
+
+  div{
+    padding-bottom: 5px!important;
+    label{
+
+    }
+    div{
+      padding-bottom: 0!important;
+      input{
+        border-radius: 0.3rem!important;
+        color:$iconColorTertiary!important;
+        background-color: $backgroundColorPrimary!important;
+        width: -webkit-fill-available;
+      }
+    }
+  }
+  .btn{
+    @include btnBasic(30px);
+    padding: 4px 20px;
+    cursor: pointer;
+  }
+}
+
+
+.wrapper_first{
+  display: flex;
+  flex-direction: column;
+  background-color:$backgroundColorSecondary;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+  padding-bottom: 0!important;
+  .content{
+    padding: 0 5px;
+  }
+}
